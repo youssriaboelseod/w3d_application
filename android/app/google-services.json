@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "529976543159",
+    "project_id": "w3d-app",
+    "storage_bucket": "w3d-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:529976543159:android:36ae8921a43895a2e74a32",
+        "android_client_info": {
+          "package_name": "com.moadawy.W3d"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "529976543159-468dbqtk82ao009oj6vqabmvsu89vceu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.moadawy.W3d",
+            "certificate_hash": "273304b0194e69706afdf63676bc31c7b4cf5beb"
+          }
+        },
+        {
+          "client_id": "529976543159-diib3275go9rf7pkk2tdi05vjo6thrsi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.moadawy.W3d",
+            "certificate_hash": "f80a1971c4f2b655cf22384e2c3ca9fb5f1e7a27"
+          }
+        },
+        {
+          "client_id": "529976543159-fdtjmiarc4tpfbufm61vnvqh1ptcmqgq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5F9CllJMjUcneLVPnfolZO-yejo3EoDc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "529976543159-fdtjmiarc4tpfbufm61vnvqh1ptcmqgq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
