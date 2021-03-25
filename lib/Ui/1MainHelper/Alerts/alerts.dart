@@ -12,13 +12,21 @@ void showAlertNoAction({BuildContext context, String message}) {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              message,
-              textScaleFactor: 1,
-              textAlign: TextAlign.right,
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 20,
+            Padding(
+              padding: const EdgeInsets.only(
+                bottom: 4,
+              ),
+              child: Text(
+                message,
+                textScaleFactor: 1,
+                textAlign: TextAlign.center,
+                textDirection: TextDirection.rtl,
+                style: TextStyle(
+                  fontFamily: ArabicFonts.Cairo,
+                  package: 'google_fonts_arabic',
+                  fontSize: 20,
+                  color: Colors.black,
+                ),
               ),
             ),
             Padding(
@@ -35,18 +43,20 @@ void showAlertNoAction({BuildContext context, String message}) {
                       ),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(6.0),
+                      padding: const EdgeInsets.all(4.0),
                       child: FlatButton(
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
                         child: Text(
                           "حسنا",
-                          textAlign: TextAlign.left,
                           textScaleFactor: 1,
+                          textDirection: TextDirection.rtl,
                           style: TextStyle(
+                            fontFamily: ArabicFonts.Cairo,
+                            package: 'google_fonts_arabic',
                             color: Colors.white,
-                            fontSize: 17,
+                            fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -80,16 +90,19 @@ Future<dynamic> showAlertYesOrNo({
         mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
-            padding: const EdgeInsets.only(bottom: 4,),
+            padding: const EdgeInsets.only(
+              bottom: 4,
+            ),
             child: Text(
               title,
               textScaleFactor: 1,
-              textAlign: TextAlign.right,
+              textAlign: TextAlign.center,
               textDirection: TextDirection.rtl,
               style: TextStyle(
                 fontFamily: ArabicFonts.Cairo,
                 package: 'google_fonts_arabic',
                 fontSize: 20,
+                color: Colors.black,
               ),
             ),
           ),
