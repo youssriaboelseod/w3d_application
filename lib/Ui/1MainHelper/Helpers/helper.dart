@@ -97,8 +97,8 @@ String getTypeValue(String inp) {
 }
 
 enum PaymentMethods {
-  bank,
   stcPay,
+  bank,
   paypal,
 }
 List<String> paymentMethodsList = [

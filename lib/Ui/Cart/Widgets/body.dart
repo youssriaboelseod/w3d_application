@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:w3d/Ui/AddOrder/Screen/add_order_screen.dart';
-import 'package:w3d/Ui/Cart/Functions/order_now.dart';
+import 'package:google_fonts_arabic/fonts.dart';
 import 'package:woocommerce/woocommerce.dart';
 import 'buttons.dart';
 import 'cart_item_card.dart';
@@ -29,10 +29,7 @@ class _BodyState extends State<Body> {
         .fetchCartProducts();
     cartItems =
         Provider.of<CartProvider>(context, listen: false).getCartItems();
-    cartItems.forEach((element) {
-      String valueModified = element.linePrice.replaceAll("ر.س", "");
-      totalPrice += double.parse(valueModified);
-    });
+
     _isInit = true;
   }
 
@@ -52,26 +49,55 @@ class _BodyState extends State<Body> {
         } else {
           if (!check) {
             return Center(
-              child: IconButton(
-                icon: Icon(
-                  Icons.refresh,
-                  size: 40,
-                  color: Colors.black,
-                ),
-                onPressed: () async {
-                  setState(() {
-                    _isInit = false;
-                  });
-                },
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.refresh_outlined,
+                        size: 40,
+                        color: Colors.black,
+                      ),
+                      onPressed: () async {
+                        setState(() {
+                          _isInit = false;
+                        });
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "السلة فارغة",
+                      textScaleFactor: 1,
+                      textDirection: TextDirection.rtl,
+                      style: TextStyle(
+                        fontFamily: ArabicFonts.Cairo,
+                        package: 'google_fonts_arabic',
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             );
           }
-          return Column(
-            children: [
-              Consumer<CartProvider>(
-                builder: (context, value, child) {
-                  cartItems = value.cartItems;
-                  return Expanded(
+          return Consumer<CartProvider>(
+            builder: (context, value, child) {
+              cartItems = value.cartItems;
+              totalPrice = 0;
+              cartItems.forEach((element) {
+                String valueModified = element.linePrice.replaceAll("ر.س", "");
+                totalPrice += double.parse(valueModified);
+              });
+              return Column(
+                children: [
+                  Expanded(
                     child: ListView.builder(
                       itemCount: cartItems.length,
                       itemBuilder: (context, index) {
@@ -80,24 +106,24 @@ class _BodyState extends State<Body> {
                         );
                       },
                     ),
-                  );
-                },
-              ),
-              PriceCard(
-                totalPrice: totalPrice.toString(),
-              ),
-              Button(
-                backgroundColor: Color(0xFF345757),
-                title: "التقدم لاتمام الطلب",
-                textColor: Colors.white,
-                function: () async {
-                  Navigator.of(context).pushNamed(
-                    AddOrderScreen.routeName,
-                  );
-                },
-                iconData: Icons.fact_check_rounded,
-              ),
-            ],
+                  ),
+                  PriceCard(
+                    totalPrice: totalPrice.toString(),
+                  ),
+                  Button(
+                    backgroundColor: Color(0xFF345757),
+                    title: "التقدم لاتمام الطلب",
+                    textColor: Colors.white,
+                    function: () async {
+                      Navigator.of(context).pushNamed(
+                        AddOrderScreen.routeName,
+                      );
+                    },
+                    iconData: Icons.fact_check_rounded,
+                  ),
+                ],
+              );
+            },
           );
         }
       },

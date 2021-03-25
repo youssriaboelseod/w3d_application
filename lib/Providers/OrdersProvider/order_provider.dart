@@ -82,16 +82,6 @@ class OrdersProvider with ChangeNotifier {
     }
 
     try {
-      List<WooOrder> outList = await woocommerce.getOrders(
-        customer: 134,
-      );
-      outList.forEach((element) {
-        print(element);
-        element.metaData.forEach((element) {
-          print(element);
-        });
-      });
-      return null;
       WooOrderPayloadShipping shipping = WooOrderPayloadShipping(
         firstName: firstName,
         lastName: lastName,
@@ -119,9 +109,15 @@ class OrdersProvider with ChangeNotifier {
             productId: element.id,
             quantity: element.quantity,
             total: element.linePrice,
-            variationId: int.parse(element.sku),
+            variationId: element.sku.isNotEmpty ? int.parse(element.sku) : null,
           ),
         );
+        print("-------- sku ---------");
+        print(element.sku);
+      });
+      lineItems.forEach((element) {
+        print("-------- variationId ---------");
+        print(element.variationId);
       });
 
       print("56");
@@ -139,6 +135,7 @@ class OrdersProvider with ChangeNotifier {
       print("78");
       WooOrder orderOutput = await woocommerce.createOrder(orderPayload);
       print("91");
+      print(orderOutput.lineItems[0].variationId);
       print(orderOutput);
     } on SocketException catch (_) {
       return "لايوجد لديك انترنت";

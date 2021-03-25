@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../../Providers/AuthDataProvider/auth_data_provider.dart';
 import '../../../Providers/OrdersProvider/order_provider.dart';
 import '../../1MainHelper/Helpers/helper.dart';
+import '../../Cart/Screen/cart_screen.dart';
 import 'bill_form.dart';
 import 'radio_buttons.dart';
 import '../../PaymentMethods/Screen/payment_methods_screen.dart';
@@ -89,6 +90,8 @@ class _AddOrderFormState extends State<AddOrderForm> {
             seconds: 2,
           ),
         );
+        Navigator.of(context)
+            .popUntil(ModalRoute.withName(CartScreen.routeName));
         Navigator.of(context)
             .pushReplacementNamed(PaymentMethodsScreen.routeName);
       }

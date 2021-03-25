@@ -39,6 +39,8 @@ class CartProvider with ChangeNotifier {
     var variationsTmep = jsonMap["variation"];
     print("----------- cart variation ---------- ");
     print(variationsTmep);
+    print("---------- cart variation id ---------- ");
+    print(jsonMap["variation_id"].toString());
     if (variationsTmep.length != 0) {
       variationsTmep.forEach((key, value) {
         variations.add(key);

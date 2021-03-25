@@ -7,8 +7,6 @@ import 'package:woocommerce/woocommerce.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:html/parser.dart' show parse;
 
-import 'dart:convert';
-
 //
 import '../../../Providers/CartProvider/cart_provider.dart';
 import '../../1MainHelper/Snacks/snackbar.dart';
