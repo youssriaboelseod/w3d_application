@@ -71,7 +71,7 @@ class ImageCard extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Container(
       width: (size.width / 3),
-      height: 240,
+      height: 260,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(15),
         child: CachedNetworkImage(
@@ -107,7 +107,7 @@ class ImageBackground extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Container(
       width: (size.width / 3),
-      height: 240,
+      height: 260,
       child: Card(
         elevation: 5,
         color: Color(0xFFECF0F0),
@@ -153,8 +153,6 @@ class ImageAnimation extends StatelessWidget {
                             imageUrl: cartItem.images.length != 0
                                 ? cartItem.images[0].src
                                 : "",
-                            width: 300.0,
-                            height: 320.0,
                             alignment: Alignment.center,
                             fit: BoxFit.contain,
                             errorWidget: (context, url, error) {
@@ -248,7 +246,7 @@ class DetailsCard extends StatelessWidget {
 
     return Container(
       width: (size.width / 1.5) + 10,
-      height: 214,
+      height: 234,
       color: Color(0xFFecf0f0),
       child: GestureDetector(
         onTap: () {
@@ -301,7 +299,7 @@ class DetailsCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                      height: variationsMap.length == 0 ? 25 : 1,
+                      height: variationsMap.length == 0 ? 40 : 1,
                     ),
                     ...variationsMap.map(
                       (e) => CartItemDetails(
@@ -367,7 +365,7 @@ class CartItemDetails extends StatelessWidget {
               fontFamily: ArabicFonts.Cairo,
               package: 'google_fonts_arabic',
               color: Colors.blueGrey,
-              fontSize: 17,
+              fontSize: 16,
             ),
           ),
           SizedBox(
@@ -381,7 +379,7 @@ class CartItemDetails extends StatelessWidget {
               fontFamily: ArabicFonts.Cairo,
               package: 'google_fonts_arabic',
               color: Colors.black,
-              fontSize: 17,
+              fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
           ),

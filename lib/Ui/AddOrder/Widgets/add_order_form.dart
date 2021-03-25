@@ -5,6 +5,7 @@ import 'package:w3d/Providers/OrdersProvider/order_provider.dart';
 import 'package:w3d/Ui/1MainHelper/Helpers/helper.dart';
 import 'package:w3d/Ui/AddOrder/Widgets/bill_form.dart';
 import 'package:w3d/Ui/AddOrder/Widgets/radio_buttons.dart';
+import '../../PaymentMethods/Screen/payment_methods_screen.dart';
 
 import '../../1MainHelper/Alerts/alerts.dart';
 import '../../1MainHelper/Snacks/snackbar.dart';
@@ -76,6 +77,13 @@ class _AddOrderFormState extends State<AddOrderForm> {
         title: "رائع",
         body: "تمت تنفيذ الطلب بنجاح",
       );
+      await Future.delayed(
+        Duration(
+          seconds: 2,
+        ),
+      );
+      Navigator.of(context)
+          .pushReplacementNamed(PaymentMethodsScreen.routeName);
     }
     setState(() {
       _isLoading = false;

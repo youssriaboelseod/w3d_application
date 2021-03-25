@@ -6,11 +6,11 @@ import 'package:woocommerce/models/order.dart';
 import '../Widgets/body.dart';
 
 // ignore: must_be_immutable
-class PaymentMethods extends StatelessWidget {
+class PaymentMethodsScreen extends StatelessWidget {
   static const routeName = "/payment_methods_screen";
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  PaymentMethods({Key key}) : super(key: key);
+  PaymentMethodsScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

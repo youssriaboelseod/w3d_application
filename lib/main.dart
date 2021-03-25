@@ -1,5 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'Ui/PaymentMethods/Screen/payment_methods_screen.dart';
+import 'Ui/Order/Screen/order_screen.dart';
 import 'Providers/ManageProductsProvider/manage_products_provider.dart';
 import 'Providers/OrdersProvider/order_provider.dart';
 import 'Ui/AddOrder/Screen/add_order_screen.dart';
@@ -124,6 +126,8 @@ class MyApp extends StatelessWidget {
           SearchScreen.routeName: (ctx) => SearchScreen(),
           AddOrderScreen.routeName: (ctx) => AddOrderScreen(),
           MyOrdersScreen.routeName: (ctx) => MyOrdersScreen(),
+          PaymentMethodsScreen.routeName: (ctx) => PaymentMethodsScreen(),
+          OrderScreen.routeName: (ctx) => OrderScreen(),
         },
         home: StartAppScreen(),
       ),

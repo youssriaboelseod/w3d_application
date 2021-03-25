@@ -8,11 +8,10 @@ import '../Widgets/order_form.dart';
 // ignore: must_be_immutable
 class OrderScreen extends StatelessWidget {
   final WooOrder order;
+  OrderScreen({Key key, this.order}) : super(key: key);
 
   static const routeName = "/order_screen";
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
-  OrderScreen({Key key, this.order}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +19,9 @@ class OrderScreen extends StatelessWidget {
       key: _scaffoldKey,
       appBar: buildAppBar(context),
       backgroundColor: Colors.grey[200],
-      body: OrderForm(),
+      body: OrderForm(
+        order: order,
+      ),
     );
   }
 

@@ -1,7 +1,10 @@
+import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:woocommerce/models/order_payload.dart';
 import 'package:woocommerce/woocommerce.dart';
+//
+import '../../Order/Screen/order_screen.dart';
 
 class OrderItemCard extends StatelessWidget {
   final WooOrder order;
@@ -23,7 +26,7 @@ class OrderItemCard extends StatelessWidget {
       child: Card(
         key: ValueKey(order.id),
         elevation: 5,
-        color: Color(0xFF140035),
+        color: Colors.black,
         margin: EdgeInsets.symmetric(
           horizontal: 5,
           vertical: 4,
@@ -49,7 +52,7 @@ class OrderItemCard extends StatelessWidget {
                       textScaleFactor: 1,
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 16,
+                        fontSize: 18,
                       ),
                     ),
                   ),
@@ -57,7 +60,7 @@ class OrderItemCard extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(
                     left: 4,
-                    right: 12,
+                    right: 8,
                   ),
                   child: Container(
                     width: 1,
@@ -107,7 +110,11 @@ class OrderItemCard extends StatelessWidget {
                         bottom: 5,
                       ),
                       child: Text(
-                        "التاريخ : " + order.dateCreated,
+                        "التاريخ : " +
+                            formatDate(
+                              DateTime.parse(order.dateCreated),
+                              [yyyy, '-', mm, '-', dd],
+                            ),
                         textScaleFactor: 1,
                         style: TextStyle(
                           fontSize: 17,
@@ -117,13 +124,18 @@ class OrderItemCard extends StatelessWidget {
                     ),
                   ],
                 ),
+                Spacer(),
                 IconButton(
                   icon: Icon(
                     Icons.arrow_forward_ios,
                     color: Colors.white,
                   ),
                   onPressed: () async {
-                    FocusScope.of(context).requestFocus(new FocusNode());
+                    new MaterialPageRoute(
+                      builder: (BuildContext context) => OrderScreen(
+                        order: order,
+                      ),
+                    );
 
                     //
                   },

@@ -44,8 +44,8 @@ class OrdersProvider with ChangeNotifier {
 
     try {
       List<WooOrder> outList = [];
-       outList = await woocommerce.getOrders(
-        customer: 134,
+      outList = await woocommerce.getOrders(
+        customer: int.parse(uid),
       );
       outList.forEach((element) {
         print(element);
@@ -53,8 +53,7 @@ class OrdersProvider with ChangeNotifier {
           print(element);
         });
       });
-      return null;
-     
+
       return outList;
     } on SocketException catch (_) {
       return [];
