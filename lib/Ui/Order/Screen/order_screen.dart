@@ -31,10 +31,9 @@ class OrderScreen extends StatelessWidget {
       iconTheme: IconThemeData(
         color: Colors.black,
       ),
-      // On Android by default its false
       centerTitle: true,
       title: Text(
-        order.number,
+        "طلب رقم : " + order.number,
         textScaleFactor: 1,
         textDirection: TextDirection.rtl,
         style: TextStyle(

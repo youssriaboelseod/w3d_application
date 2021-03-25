@@ -79,15 +79,18 @@ Future<dynamic> showAlertYesOrNo({
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-            title,
-            textScaleFactor: 1,
-            textAlign: TextAlign.right,
-            textDirection: TextDirection.rtl,
-            style: TextStyle(
-              fontFamily: ArabicFonts.Cairo,
-              package: 'google_fonts_arabic',
-              fontSize: 20,
+          Padding(
+            padding: const EdgeInsets.only(bottom: 4,),
+            child: Text(
+              title,
+              textScaleFactor: 1,
+              textAlign: TextAlign.right,
+              textDirection: TextDirection.rtl,
+              style: TextStyle(
+                fontFamily: ArabicFonts.Cairo,
+                package: 'google_fonts_arabic',
+                fontSize: 20,
+              ),
             ),
           ),
           Row(
@@ -99,7 +102,7 @@ Future<dynamic> showAlertYesOrNo({
                   borderRadius: BorderRadius.circular(25),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(6.0),
+                  padding: const EdgeInsets.all(4.0),
                   child: FlatButton(
                     onPressed: () => Navigator.pop(context, "no"),
                     child: Text(
@@ -122,7 +125,7 @@ Future<dynamic> showAlertYesOrNo({
                   borderRadius: BorderRadius.circular(25),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(6.0),
+                  padding: const EdgeInsets.all(4.0),
                   child: FlatButton(
                     onPressed: () => Navigator.pop(context, "yes"),
                     child: Text(
