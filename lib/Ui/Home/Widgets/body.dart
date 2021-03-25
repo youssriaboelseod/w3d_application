@@ -21,8 +21,7 @@ class Body extends StatelessWidget {
         Provider.of<ProductsProvider>(context, listen: false)
             .homePagePopularProducts;
     List<WooProduct> featuredProdcuts =
-        Provider.of<ProductsProvider>(context, listen: false)
-            .getOnSaleProducts();
+        Provider.of<ProductsProvider>(context, listen: false).onSaleProducts;
 
     return SingleChildScrollView(
       child: Column(
