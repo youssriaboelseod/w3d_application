@@ -25,72 +25,63 @@ class OrderForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     orderItems = order.lineItems;
-
+    totalPrice = double.parse(order.total);
     return Container(
-      child: Card(
-        elevation: 2,
-        color: Colors.grey[200],
-        margin: EdgeInsets.symmetric(
-          horizontal: 5,
-          vertical: 4,
-        ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(
-            15,
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ListView.builder(
-                shrinkWrap: true,
-                itemCount: orderItems.length,
-                itemBuilder: (context, index) {
-                  return Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      OrderItemDetails(
-                        orderItem: orderItems[index],
-                        index: index + 1,
-                      ),
-                      Divider(
-                        thickness: 1,
-                        color: Colors.grey,
-                      ),
-                    ],
-                  );
-                },
-              ),
-              PriceCard(
-                title: "المجموع",
-                totalPrice: totalPrice.toString(),
-              ),
-              totalPrice >= 150
-                  ? Container()
-                  : Divider(
+      margin: EdgeInsets.symmetric(
+        horizontal: 5,
+        vertical: 4,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListView.builder(
+              shrinkWrap: true,
+              itemCount: orderItems.length,
+              itemBuilder: (context, index) {
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    OrderItemDetails(
+                      orderItem: orderItems[index],
+                      index: index + 1,
+                    ),
+                    Divider(
                       thickness: 1,
                       color: Colors.grey,
                     ),
-              totalPrice >= 150
-                  ? Container()
-                  : PriceCard(
-                      title: "الشحن",
-                      totalPrice: "29",
-                    ),
-              Divider(
-                thickness: 1,
-                color: Colors.grey,
-              ),
-              PriceCard(
-                title: "الاجمالي",
-                totalPrice: totalPrice >= 150
-                    ? totalPrice.toString()
-                    : (totalPrice + delivery).toString(),
-              ),
-            ],
-          ),
+                  ],
+                );
+              },
+            ),
+            PriceCard(
+              title: "المجموع",
+              totalPrice: totalPrice.toString(),
+            ),
+            totalPrice >= 150
+                ? Container()
+                : Divider(
+                    thickness: 1,
+                    color: Colors.grey,
+                  ),
+            totalPrice >= 150
+                ? Container()
+                : PriceCard(
+                    title: "الشحن",
+                    totalPrice: "29",
+                  ),
+            Divider(
+              thickness: 1,
+              color: Colors.grey,
+            ),
+            PriceCard(
+              title: "الاجمالي",
+              totalPrice: totalPrice >= 150
+                  ? totalPrice.toString()
+                  : (totalPrice + delivery).toString(),
+            ),
+          ],
         ),
       ),
     );
@@ -152,9 +143,11 @@ class OrderItemDetails extends StatelessWidget {
                 );
                 return;
               } else {
-                new MaterialPageRoute(
-                  builder: (BuildContext context) => new ProductScreen(
-                    productModel: product,
+                Navigator.of(context).push(
+                  new MaterialPageRoute(
+                    builder: (BuildContext context) => new ProductScreen(
+                      productModel: product,
+                    ),
                   ),
                 );
               }

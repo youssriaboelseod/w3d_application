@@ -6,6 +6,7 @@ import '../../MyOrders/Screen/my_orders_screen.dart';
 import '../../../Providers/AuthDataProvider/auth_data_provider.dart';
 import '../../../Ui/Profile/Screen/profile_screen.dart';
 import '../../StartApp/Screen/start_app_screen.dart';
+import '../../PaymentMethods/Screen/payment_methods_screen.dart';
 import 'package:provider/provider.dart';
 import '../Functions/drawer_functions.dart';
 
@@ -153,8 +154,44 @@ class DrawerItems extends StatelessWidget {
                           textScaleFactor: 1,
                         ),
                         onPressed: () {
+                          if (!checkIfSignedIn) {
+                            showTopSnackBar(
+                              context: context,
+                              body: "من فضلك قم بالتسجيل اولا",
+                              title: "تنبيه",
+                            );
+                            return;
+                          }
                           Navigator.of(context)
                               .pushNamed(MyProductsScreen.routeName);
+                        },
+                      ),
+                    ],
+                  ),
+                  const Divider(
+                    thickness: 3,
+                    color: Colors.black38,
+                    indent: 15,
+                    endIndent: 60,
+                  ),
+                  Row(
+                    children: [
+                      FlatButton.icon(
+                        icon: const Icon(
+                          Icons.payments_outlined,
+                          color: Colors.white,
+                        ),
+                        label: Text(
+                          "طرق الدفع",
+                          style: TextStyle(
+                            fontSize: _fontSize,
+                            color: Colors.white,
+                          ),
+                          textScaleFactor: 1,
+                        ),
+                        onPressed: () {
+                          Navigator.of(context)
+                              .pushNamed(PaymentMethodsScreen.routeName);
                         },
                       ),
                     ],

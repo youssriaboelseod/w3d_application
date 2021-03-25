@@ -119,8 +119,7 @@ class OrdersProvider with ChangeNotifier {
             productId: element.id,
             quantity: element.quantity,
             total: element.linePrice,
-
-            //variationId: int.parse(element.variation[0]),
+            variationId: int.parse(element.sku),
           ),
         );
       });

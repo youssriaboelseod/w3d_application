@@ -1,7 +1,6 @@
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:woocommerce/models/order_payload.dart';
+import 'package:google_fonts_arabic/fonts.dart';
 import 'package:woocommerce/woocommerce.dart';
 //
 import '../../Order/Screen/order_screen.dart';
@@ -52,56 +51,41 @@ class OrderItemCard extends StatelessWidget {
                       textScaleFactor: 1,
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 18,
+                        fontSize: 19,
                       ),
                     ),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(
-                    left: 4,
-                    right: 8,
+                    left: 12,
+                    right: 4,
                   ),
                   child: Container(
                     width: 1,
-                    height: 70,
-                    color: Colors.blueAccent,
+                    height: 75,
+                    color: Colors.cyanAccent,
                   ),
                 ),
                 Column(
                   mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: EdgeInsets.only(
-                        bottom: 2,
-                      ),
-                      child: Container(
-                        child: Text(
-                          order.number,
-                          softWrap: true,
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                          textScaleFactor: 1,
-                        ),
-                      ),
-                    ),
                     Padding(
                       padding: EdgeInsets.only(
                         bottom: 5,
                       ),
-                      child: Container(
-                        width: 140,
-                        child: Text(
-                          "الاجمالي" + order.total,
-                          softWrap: true,
-                          textScaleFactor: 1,
-                          style: TextStyle(
-                            fontSize: 17,
-                            color: Colors.amberAccent,
-                          ),
+                      child: Text(
+                        "رقم الطلب  :  " + order.number,
+                        softWrap: true,
+                        textScaleFactor: 1,
+                        textDirection: TextDirection.rtl,
+                        style: TextStyle(
+                          fontFamily: ArabicFonts.Cairo,
+                          package: 'google_fonts_arabic',
+                          fontSize: 18,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
@@ -110,14 +94,35 @@ class OrderItemCard extends StatelessWidget {
                         bottom: 5,
                       ),
                       child: Text(
-                        "التاريخ : " +
+                        "الاجمالي  :  " + order.total + " ر.س",
+                        softWrap: true,
+                        textScaleFactor: 1,
+                        textDirection: TextDirection.rtl,
+                        style: TextStyle(
+                          fontFamily: ArabicFonts.Cairo,
+                          package: 'google_fonts_arabic',
+                          fontSize: 18,
+                          color: Colors.redAccent,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        bottom: 5,
+                      ),
+                      child: Text(
+                        "التاريخ  :  " +
                             formatDate(
                               DateTime.parse(order.dateCreated),
                               [yyyy, '-', mm, '-', dd],
                             ),
                         textScaleFactor: 1,
+                        softWrap: true,
+                        textDirection: TextDirection.rtl,
                         style: TextStyle(
-                          fontSize: 17,
+                          fontFamily: ArabicFonts.Cairo,
+                          package: 'google_fonts_arabic',
+                          fontSize: 18,
                           color: Colors.greenAccent,
                         ),
                       ),
@@ -131,12 +136,13 @@ class OrderItemCard extends StatelessWidget {
                     color: Colors.white,
                   ),
                   onPressed: () async {
-                    new MaterialPageRoute(
-                      builder: (BuildContext context) => OrderScreen(
-                        order: order,
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) => OrderScreen(
+                          order: order,
+                        ),
                       ),
                     );
-
                     //
                   },
                 ),

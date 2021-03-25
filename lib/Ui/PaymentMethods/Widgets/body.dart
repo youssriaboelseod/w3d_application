@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts_arabic/fonts.dart';
+import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Body extends StatelessWidget {
@@ -13,7 +14,7 @@ class Body extends StatelessWidget {
         padding: EdgeInsets.only(
           top: 4,
           left: 8,
-          right: 12,
+          right: 8,
           bottom: 4,
         ),
         children: [
@@ -151,7 +152,7 @@ class Title extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: 15,
+            width: 10,
           ),
           Text(
             title,
@@ -181,6 +182,9 @@ class Title2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(
+        right: 10,
+      ),
       child: Row(
         children: [
           Text(
@@ -198,7 +202,7 @@ class Title2 extends StatelessWidget {
             softWrap: true,
           ),
           SizedBox(
-            width: 15,
+            width: 10,
           ),
           Text(
             title2,
@@ -219,16 +223,23 @@ class Title2 extends StatelessWidget {
   }
 }
 
-void showToast(String message) {
-  Fluttertoast.showToast(
-    msg: message,
-    toastLength: Toast.LENGTH_SHORT,
-    gravity: ToastGravity.CENTER,
-    timeInSecForIosWeb: 1,
-    backgroundColor: Colors.black,
-    textColor: Colors.white,
-    fontSize: 18.0,
-  );
+void _copyText(String textInp) {
+  Clipboard.setData(
+    ClipboardData(
+      text: textInp,
+    ),
+  ).then((result) {
+    // show toast or snackbar after successfully save
+    Fluttertoast.showToast(
+      msg: "تم النسخ",
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.black,
+      textColor: Colors.white,
+      fontSize: 20.0,
+    );
+  });
 }
 
 void lunchUrl(String url) async {
@@ -246,7 +257,11 @@ class TitleWithCopy extends StatelessWidget {
   const TitleWithCopy({Key key, this.title1, this.title2}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Container(
+      margin: EdgeInsets.only(
+        right: 10,
+      ),
       child: Row(
         children: [
           Text(
@@ -264,28 +279,38 @@ class TitleWithCopy extends StatelessWidget {
             softWrap: true,
           ),
           SizedBox(
-            width: 15,
+            width: 10,
           ),
           GestureDetector(
             onTap: () {
               if (title2.contains("https")) {
                 lunchUrl(title2);
               } else {
-                showToast(title2);
+                _copyText(title2);
               }
             },
-            child: Text(
-              title2,
-              textScaleFactor: 1,
-              overflow: TextOverflow.fade,
-              textDirection: TextDirection.rtl,
-              style: TextStyle(
-                fontFamily: ArabicFonts.Cairo,
-                package: 'google_fonts_arabic',
-                fontSize: 18,
-                color: Colors.black,
+            child: Container(
+              width: size.width / 1.6,
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  title2,
+                  textAlign: TextAlign.start,
+                  textScaleFactor: 1,
+                  textDirection: TextDirection.rtl,
+                  style: TextStyle(
+                    decoration: title2.contains("https")
+                        ? TextDecoration.underline
+                        : TextDecoration.none,
+                    fontFamily: ArabicFonts.Cairo,
+                    package: 'google_fonts_arabic',
+                    fontSize: 18,
+                    color:
+                        title2.contains("https") ? Colors.blue : Colors.black,
+                  ),
+                  softWrap: true,
+                ),
               ),
-              softWrap: true,
             ),
           ),
         ],

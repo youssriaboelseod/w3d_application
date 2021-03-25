@@ -60,6 +60,7 @@ class CartProvider with ChangeNotifier {
       price: jsonMap["product_price"].toString(),
       quantity: jsonMap["quantity"],
       variation: variations,
+      sku: jsonMap["variation_id"].toString(),
     );
   }
 

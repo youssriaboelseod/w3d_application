@@ -1,10 +1,11 @@
 import 'dart:io';
 import 'package:provider/provider.dart';
-import 'package:w3d/Providers/AuthDataProvider/auth_data_provider.dart';
-import 'package:w3d/Providers/OrdersProvider/order_provider.dart';
-import 'package:w3d/Ui/1MainHelper/Helpers/helper.dart';
-import 'package:w3d/Ui/AddOrder/Widgets/bill_form.dart';
-import 'package:w3d/Ui/AddOrder/Widgets/radio_buttons.dart';
+//
+import '../../../Providers/AuthDataProvider/auth_data_provider.dart';
+import '../../../Providers/OrdersProvider/order_provider.dart';
+import '../../1MainHelper/Helpers/helper.dart';
+import 'bill_form.dart';
+import 'radio_buttons.dart';
 import '../../PaymentMethods/Screen/payment_methods_screen.dart';
 
 import '../../1MainHelper/Alerts/alerts.dart';
@@ -47,47 +48,54 @@ class _AddOrderFormState extends State<AddOrderForm> {
       return;
     }
     FocusScope.of(context).unfocus();
-
-    setState(() {
-      _isLoading = true;
-    });
-    // my function
-    String output;
-    output =
-        await Provider.of<OrdersProvider>(context, listen: false).createOrder(
+    final result = await showAlertYesOrNo(
       context: context,
-      firstName: firstName,
-      lastName: lastName,
-      city: city,
-      address: address,
-      location: location,
-      note: note,
-      email: email,
-      phoneNumber: phoneNumber,
-      paymentMethod: paymentMethod,
+      title: "هل تريد اتمام الطلب ؟",
     );
-    if (output != null) {
-      showAlertNoAction(
+    if (result == "no") {
+      return;
+    } else if (result == "yes") {
+      setState(() {
+        _isLoading = true;
+      });
+      // my function
+      String output;
+      output =
+          await Provider.of<OrdersProvider>(context, listen: false).createOrder(
         context: context,
-        message: output,
+        firstName: firstName,
+        lastName: lastName,
+        city: city,
+        address: address,
+        location: location,
+        note: note,
+        email: email,
+        phoneNumber: phoneNumber,
+        paymentMethod: paymentMethod,
       );
-    } else {
-      showTopSnackBar(
-        context: context,
-        title: "رائع",
-        body: "تمت تنفيذ الطلب بنجاح",
-      );
-      await Future.delayed(
-        Duration(
-          seconds: 2,
-        ),
-      );
-      Navigator.of(context)
-          .pushReplacementNamed(PaymentMethodsScreen.routeName);
+      if (output != null) {
+        showAlertNoAction(
+          context: context,
+          message: output,
+        );
+      } else {
+        showTopSnackBar(
+          context: context,
+          title: "رائع",
+          body: "تمت تنفيذ الطلب بنجاح",
+        );
+        await Future.delayed(
+          Duration(
+            seconds: 2,
+          ),
+        );
+        Navigator.of(context)
+            .pushReplacementNamed(PaymentMethodsScreen.routeName);
+      }
+      setState(() {
+        _isLoading = false;
+      });
     }
-    setState(() {
-      _isLoading = false;
-    });
   }
 
   @override
@@ -192,8 +200,7 @@ class _AddOrderFormState extends State<AddOrderForm> {
                 ),
                 InputTextCard(
                   type: "الملاحظات",
-                  hintText: email,
-                  readOnly: true,
+                  hintText: "اي ملاحظات للبائع",
                 ),
                 const Divider(
                   color: Colors.blueGrey,

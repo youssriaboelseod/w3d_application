@@ -75,55 +75,74 @@ Future<dynamic> showAlertYesOrNo({
           20,
         ),
       ),
-      content: Text(
-        title,
-        textScaleFactor: 1,
-        textAlign: TextAlign.right,
-        textDirection: TextDirection.rtl,
-        style: TextStyle(
-          fontFamily: ArabicFonts.Cairo,
-          package: 'google_fonts_arabic',
-          fontSize: 20,
-        ),
-      ),
-      title: Text(
-        "تحذير",
-        textScaleFactor: 1,
-        textAlign: TextAlign.right,
-        textDirection: TextDirection.rtl,
-        style: TextStyle(
-          fontFamily: ArabicFonts.Cairo,
-          package: 'google_fonts_arabic',
-        ),
-      ),
-      actions: [
-        FlatButton(
-          onPressed: () => Navigator.pop(context, "no"),
-          child: Text(
-            "لا",
+      content: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            title,
             textScaleFactor: 1,
+            textAlign: TextAlign.right,
             textDirection: TextDirection.rtl,
             style: TextStyle(
               fontFamily: ArabicFonts.Cairo,
               package: 'google_fonts_arabic',
-              fontSize: 18,
+              fontSize: 20,
             ),
           ),
-        ),
-        FlatButton(
-          onPressed: () => Navigator.pop(context, "yes"),
-          child: Text(
-            "نعم",
-            textScaleFactor: 1,
-            textDirection: TextDirection.rtl,
-            style: TextStyle(
-              fontFamily: ArabicFonts.Cairo,
-              package: 'google_fonts_arabic',
-              fontSize: 18,
-            ),
-          ),
-        ),
-      ],
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Card(
+                color: Colors.black,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(6.0),
+                  child: FlatButton(
+                    onPressed: () => Navigator.pop(context, "no"),
+                    child: Text(
+                      "لا",
+                      textScaleFactor: 1,
+                      textDirection: TextDirection.rtl,
+                      style: TextStyle(
+                        fontFamily: ArabicFonts.Cairo,
+                        package: 'google_fonts_arabic',
+                        fontSize: 18,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Card(
+                color: Colors.black,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(6.0),
+                  child: FlatButton(
+                    onPressed: () => Navigator.pop(context, "yes"),
+                    child: Text(
+                      "نعم",
+                      textScaleFactor: 1,
+                      textDirection: TextDirection.rtl,
+                      style: TextStyle(
+                        fontFamily: ArabicFonts.Cairo,
+                        package: 'google_fonts_arabic',
+                        fontSize: 18,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
     ),
   );
 }
