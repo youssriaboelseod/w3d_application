@@ -25,7 +25,9 @@ class OrderForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     orderItems = order.lineItems;
-    totalPrice = double.parse(order.total);
+    orderItems.forEach((element) {
+      totalPrice = totalPrice + double.parse(element.total);
+    });
     return Container(
       margin: EdgeInsets.symmetric(
         horizontal: 5,
@@ -33,27 +35,23 @@ class OrderForm extends StatelessWidget {
       ),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
+        child: ListView(
           children: [
-            ListView.builder(
-              shrinkWrap: true,
-              itemCount: orderItems.length,
-              itemBuilder: (context, index) {
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    OrderItemDetails(
-                      orderItem: orderItems[index],
-                      index: index + 1,
-                    ),
-                    Divider(
-                      thickness: 1,
-                      color: Colors.grey,
-                    ),
-                  ],
-                );
-              },
+            ...List.generate(
+              orderItems.length,
+              (index) => Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  OrderItemDetails(
+                    orderItem: orderItems[index],
+                    index: index + 1,
+                  ),
+                  Divider(
+                    thickness: 1,
+                    color: Colors.grey,
+                  ),
+                ],
+              ),
             ),
             PriceCard(
               title: "المجموع",
@@ -101,8 +99,6 @@ class OrderItemDetails extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Row(
-        //mainAxisAlignment: MainAxisAlignment.end,
-        //crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           CircleAvatar(
             backgroundColor: Colors.black,

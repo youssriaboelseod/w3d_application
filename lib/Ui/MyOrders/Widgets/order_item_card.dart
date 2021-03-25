@@ -17,9 +17,6 @@ class OrderItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(order.number);
-    print(order.lineItems[0].variationId);
-    print(order.paymentMethodTitle);
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 5,

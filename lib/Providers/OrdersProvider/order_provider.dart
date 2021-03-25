@@ -47,12 +47,15 @@ class OrdersProvider with ChangeNotifier {
       outList = await woocommerce.getOrders(
         customer: int.parse(uid),
       );
-      outList.forEach((element) {
-        print(element);
-        element.metaData.forEach((element) {
-          print(element);
-        });
-      });
+      print("outList[0].lineItems[0].variationId");
+      print(outList[0].lineItems[0].variationId);
+      print("outList[1].lineItems[0].variationId");
+      print(outList[1].lineItems[0].variationId);
+
+      if (outList[0].lineItems[0].variationId ==
+          outList[1].lineItems[0].variationId) {
+        print("yessssssssss");
+      }
 
       return outList;
     } on SocketException catch (_) {

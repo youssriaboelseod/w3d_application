@@ -92,19 +92,10 @@ class _BodyState extends State<Body> {
     }
   }
 
-  //https://050saa.com/wp-json/wc/v3/products/
   @override
   Widget build(BuildContext context) {
-    print(widget.productModel.id);
-    widget.productModel.variations.forEach((element) {
-      print("---- element ----");
-      print(element);
-    });
-    print("8888888");
-    widget.productModel.attributes.forEach((element) {
-      print(element.name);
-      print(element.id);
-    });
+    print("widget.productModel.attributes");
+    print(widget.productModel.attributes.length);
     return Container(
       child: Column(
         children: [
