@@ -67,6 +67,29 @@ class AuthDataProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> updateUserOrderInforInAuthDataTable({
+    String firstNameInp,
+    String lastNameInp,
+    String cityInp,
+    String addressInp,
+    String locationInp,
+  }) async {
+    await AppDB.update(
+      table: "AuthData",
+      data: {
+        "address": addressInp,
+        "city": cityInp,
+        "firstName": firstNameInp,
+        "lastName": lastNameInp,
+        "location": locationInp,
+      },
+      whereStatement: null,
+      whereValue: null,
+    );
+    await fetchAndSetTable();
+    notifyListeners();
+  }
+
   Future<void> updatestoreNameInAuthDataTable({
     String storeNameInp,
   }) async {

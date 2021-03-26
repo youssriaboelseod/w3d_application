@@ -14,8 +14,6 @@ Future<bool> startApp(BuildContext context) async {
   await Provider.of<AuthDataProvider>(context, listen: false)
       .fetchAndSetTable();
 
-  await Provider.of<FavouritesProvider>(context, listen: false)
-      .fetchAndSetFavouriteProductsFromAppDatabase();
   String id =
       Provider.of<AuthDataProvider>(context, listen: false).currentUser.id;
   // Set cart key == user's id
@@ -25,6 +23,12 @@ Future<bool> startApp(BuildContext context) async {
   Provider.of<OrdersProvider>(context, listen: false).setUid(
     uidInp: id,
   );
+  Provider.of<FavouritesProvider>(context, listen: false).setUid(
+    uidInp: id,
+  );
+
+  await Provider.of<FavouritesProvider>(context, listen: false)
+      .fetchAndSetFavouriteProductsFromAppDatabase();
 
   // Fetch products
   String output = await Provider.of<ProductsProvider>(context, listen: false)

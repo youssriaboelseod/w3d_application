@@ -13,14 +13,14 @@ class AppDB {
       version: 1,
       onCreate: (db, version) {
         db.execute(
-          'CREATE TABLE AuthData(id TEXT, userName TEXT, storeName TEXT, email TEXET, password TEXT, phoneNumber TEXT)',
+          'CREATE TABLE AuthData(id TEXT, userName TEXT, storeName TEXT, email TEXT, password TEXT, phoneNumber TEXT, firstName TEXT, lastName TEXT, city TEXT, address TEXT, location TEXT)',
         );
 
         db.execute(
           'CREATE TABLE AppConfigurations(version INTEGER, language TEXT, updateProductsDate TEXT)',
         );
         db.execute(
-          'CREATE TABLE Favourites(productId INTEGER)',
+          'CREATE TABLE Favourites(productId INTEGER, uid TEXT)',
         );
       },
     );
@@ -68,7 +68,7 @@ class AppDB {
   static Future<void> delete({
     String table,
     String whereStatement,
-    dynamic whereValue,
+    List<dynamic> whereArgs,
   }) async {
     final db = await AppDB.database();
     db.delete(
@@ -76,19 +76,17 @@ class AppDB {
       //
       where: whereStatement,
       //
-      whereArgs: [
-        whereValue,
-      ],
+      whereArgs: whereArgs,
     );
   }
 
   static Future<List<Map<String, dynamic>>> select({
     String table,
     String whereStatement,
-    String whereValue,
+    List<dynamic> whereArgs,
   }) async {
     final db = await AppDB.database();
-    List<Map<String, dynamic>> output;
+    List<Map<String, dynamic>> output = [];
     if (whereStatement == null) {
       output = await db.rawQuery(
         "SELECT * FROM " + table,
@@ -96,9 +94,7 @@ class AppDB {
     } else {
       output = await db.rawQuery(
         "SELECT * FROM " + table + " WHERE " + whereStatement,
-        [
-          whereValue,
-        ],
+        whereArgs,
       );
     }
 

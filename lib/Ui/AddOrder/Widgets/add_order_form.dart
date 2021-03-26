@@ -24,12 +24,12 @@ class AddOrderForm extends StatefulWidget {
 }
 
 class _AddOrderFormState extends State<AddOrderForm> {
-  String firstName = "";
-  String lastName = "";
-  String city = "";
-  String address = "";
-  String location = "";
-  String note = "";
+  String firstName;
+  String lastName;
+  String city;
+  String address;
+  String location;
+  String note;
   String email;
   String phoneNumber;
   PaymentMethods paymentMethod = PaymentMethods.bank;
@@ -85,9 +85,17 @@ class _AddOrderFormState extends State<AddOrderForm> {
           title: "رائع",
           body: "تمت تنفيذ الطلب بنجاح",
         );
+        await Provider.of<AuthDataProvider>(context, listen: false)
+            .updateUserOrderInforInAuthDataTable(
+          addressInp: address,
+          cityInp: city,
+          firstNameInp: firstName,
+          lastNameInp: lastName,
+          locationInp: location,
+        );
         await Future.delayed(
           Duration(
-            seconds: 2,
+            seconds: 1,
           ),
         );
         Navigator.of(context)
@@ -108,6 +116,21 @@ class _AddOrderFormState extends State<AddOrderForm> {
     phoneNumber = Provider.of<AuthDataProvider>(context, listen: false)
         .currentUser
         .phoneNumber;
+    //
+    firstName = Provider.of<AuthDataProvider>(context, listen: false)
+        .currentUser
+        .firstName;
+    lastName = Provider.of<AuthDataProvider>(context, listen: false)
+        .currentUser
+        .lastName;
+    city =
+        Provider.of<AuthDataProvider>(context, listen: false).currentUser.city;
+    address = Provider.of<AuthDataProvider>(context, listen: false)
+        .currentUser
+        .address;
+    location = Provider.of<AuthDataProvider>(context, listen: false)
+        .currentUser
+        .location;
     super.initState();
   }
 
@@ -131,6 +154,7 @@ class _AddOrderFormState extends State<AddOrderForm> {
                 InputTextCard(
                   hintText: "ادخل الاسم الاول",
                   type: "الاسم الاول",
+                  initialText: firstName,
                   onChange: (value) {
                     firstName = value;
                   },
@@ -142,6 +166,7 @@ class _AddOrderFormState extends State<AddOrderForm> {
                 InputTextCard(
                   hintText: "ادخل الاسم الاخير",
                   type: "الاسم الاخير",
+                  initialText: lastName,
                   onChange: (value) {
                     lastName = value;
                   },
@@ -153,6 +178,7 @@ class _AddOrderFormState extends State<AddOrderForm> {
                 InputTextCard(
                   hintText: "ادخل اسم المدينة",
                   type: "المدينة",
+                  initialText: city,
                   onChange: (value) {
                     city = value;
                   },
@@ -164,6 +190,7 @@ class _AddOrderFormState extends State<AddOrderForm> {
                 InputTextCard(
                   hintText: "ادخل عنوان الشارع / الحي",
                   type: "العنوان",
+                  initialText: address,
                   onChange: (value) {
                     address = value;
                   },
@@ -175,6 +202,7 @@ class _AddOrderFormState extends State<AddOrderForm> {
                 InputTextCard(
                   hintText: "ادخل المنطقة",
                   type: "المنطقة",
+                  initialText: location,
                   onChange: (value) {
                     location = value;
                   },

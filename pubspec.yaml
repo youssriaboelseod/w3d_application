@@ -57,6 +57,7 @@ dependencies:
   flutter_absolute_path: ^1.0.6
   dio: ^3.0.10
   date_format: ^1.0.2
+  webview_flutter: ^1.0.0
 
   
 

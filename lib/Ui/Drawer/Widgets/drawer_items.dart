@@ -8,6 +8,8 @@ import '../../../Providers/AuthDataProvider/auth_data_provider.dart';
 import '../../../Ui/Profile/Screen/profile_screen.dart';
 import '../../StartApp/Screen/start_app_screen.dart';
 import '../../PaymentMethods/Screen/payment_methods_screen.dart';
+import '../../Design/Screen/design_screen.dart';
+import '../../OrderDesign/Screen/order_design_screen.dart';
 import 'package:provider/provider.dart';
 import '../Functions/drawer_functions.dart';
 
@@ -235,11 +237,11 @@ class DrawerItems extends StatelessWidget {
                     children: [
                       FlatButton.icon(
                         icon: const Icon(
-                          Icons.language,
+                          Icons.design_services,
                           color: Colors.white,
                         ),
                         label: Text(
-                          "تواصل معانا",
+                          "صمم",
                           style: TextStyle(
                             fontSize: _fontSize,
                             color: Colors.white,
@@ -247,7 +249,8 @@ class DrawerItems extends StatelessWidget {
                           textScaleFactor: 1,
                         ),
                         onPressed: () {
-                          showContact(context);
+                          Navigator.of(context)
+                              .pushNamed(DesignScreen.routeName);
                         },
                       ),
                     ],
@@ -262,11 +265,11 @@ class DrawerItems extends StatelessWidget {
                     children: [
                       FlatButton.icon(
                         icon: const Icon(
-                          Icons.update,
+                          Icons.design_services,
                           color: Colors.white,
                         ),
                         label: Text(
-                          "تحديث التطبيق",
+                          "اطلب تصميمك الخاص",
                           style: TextStyle(
                             fontSize: _fontSize,
                             color: Colors.white,
@@ -274,7 +277,35 @@ class DrawerItems extends StatelessWidget {
                           textScaleFactor: 1,
                         ),
                         onPressed: () {
-                          updateAppUrl();
+                          Navigator.of(context)
+                              .pushNamed(OrderDesignScreen.routeName);
+                        },
+                      ),
+                    ],
+                  ),
+                  const Divider(
+                    thickness: 3,
+                    color: Colors.black38,
+                    indent: 15,
+                    endIndent: 60,
+                  ),
+                  Row(
+                    children: [
+                      FlatButton.icon(
+                        icon: const Icon(
+                          Icons.language,
+                          color: Colors.white,
+                        ),
+                        label: Text(
+                          "تواصل معانا",
+                          style: TextStyle(
+                            fontSize: _fontSize,
+                            color: Colors.white,
+                          ),
+                          textScaleFactor: 1,
+                        ),
+                        onPressed: () {
+                          showContact(context);
                         },
                       ),
                     ],

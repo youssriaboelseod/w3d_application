@@ -5,6 +5,11 @@ class UserAuthModel {
   String password;
   String id;
   String phoneNumber;
+  String firstName;
+  String lastName;
+  String city;
+  String address;
+  String location;
 
   Map<String, dynamic> toAppDatabase() {
     return {
@@ -14,6 +19,11 @@ class UserAuthModel {
       "phoneNumber": phoneNumber,
       "storeName": storeName,
       "userName": userName,
+      "address": address,
+      "city": city,
+      "firstName": firstName,
+      "lastName": lastName,
+      "location": location,
     };
   }
 
@@ -21,9 +31,14 @@ class UserAuthModel {
     this.email,
     this.storeName,
     this.password,
-    this.phoneNumber,
     this.id,
     this.userName,
+    this.phoneNumber = "",
+    this.firstName = "",
+    this.lastName = "",
+    this.city = "",
+    this.address = "",
+    this.location = "",
   });
 
   factory UserAuthModel.getEmptyUserAuthModel() {
@@ -34,6 +49,11 @@ class UserAuthModel {
       password: null,
       phoneNumber: null,
       id: null,
+      address: null,
+      city: null,
+      firstName: null,
+      lastName: null,
+      location: null,
     );
   }
 
@@ -45,6 +65,11 @@ class UserAuthModel {
       phoneNumber: map["phoneNumber"],
       storeName: map["storeName"],
       userName: map["userName"],
+      address: map["address"],
+      city: map["city"],
+      firstName: map["firstName"],
+      lastName: map["lastName"],
+      location: map["location"],
     );
   }
 
@@ -56,7 +81,6 @@ class UserAuthModel {
       email: map["data"]["user_email"],
       password: passwordInp,
       storeName: map["data"]["user_nicename"],
-      phoneNumber: "",
     );
   }
 }

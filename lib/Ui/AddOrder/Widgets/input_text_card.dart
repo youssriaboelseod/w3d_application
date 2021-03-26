@@ -1,19 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts_arabic/fonts.dart';
 
-class InputTextCard extends StatelessWidget {
+class InputTextCard extends StatefulWidget {
   final String type;
+  final String initialText;
   final String hintText;
   final ValueChanged<String> onChange;
   final bool readOnly;
 
-  const InputTextCard({
+  InputTextCard({
     Key key,
     this.type,
+    this.initialText,
     this.hintText,
     this.onChange,
     this.readOnly = false,
   }) : super(key: key);
+
+  @override
+  _InputTextCardState createState() => _InputTextCardState();
+}
+
+class _InputTextCardState extends State<InputTextCard> {
+  TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    String textTemp = widget.initialText.isEmpty ? null : widget.initialText;
+    _controller = TextEditingController(text: textTemp);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +45,6 @@ class InputTextCard extends StatelessWidget {
         horizontal: 5,
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Expanded(
             child: Container(
@@ -33,10 +54,11 @@ class InputTextCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: TextField(
-                  onChanged: onChange,
-                  readOnly: readOnly,
-                  textAlign: TextAlign.right,
+                  controller: _controller,
+                  onChanged: widget.onChange,
+                  readOnly: widget.readOnly,
                   textDirection: TextDirection.rtl,
+                  textAlign: TextAlign.right,
                   style: TextStyle(
                     fontFamily: ArabicFonts.Cairo,
                     package: 'google_fonts_arabic',
@@ -46,13 +68,8 @@ class InputTextCard extends StatelessWidget {
                   minLines: 1,
                   maxLines: 2,
                   decoration: InputDecoration(
-                    hintText: hintText,
-                    hintStyle: TextStyle(
-                      fontFamily: ArabicFonts.Cairo,
-                      package: 'google_fonts_arabic',
-                      color: Colors.grey,
-                    ),
                     helperMaxLines: 2,
+                    hintText: widget.hintText,
                     enabledBorder: InputBorder.none,
                     focusedBorder: InputBorder.none,
                     errorBorder: InputBorder.none,
@@ -73,10 +90,10 @@ class InputTextCard extends StatelessWidget {
               right: 2,
             ),
             child: Text(
-              type + " : ",
+              widget.type + " : ",
               textScaleFactor: 1,
-              textAlign: TextAlign.right,
               textDirection: TextDirection.rtl,
+              textAlign: TextAlign.right,
               style: TextStyle(
                 fontFamily: ArabicFonts.Cairo,
                 package: 'google_fonts_arabic',

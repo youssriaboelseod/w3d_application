@@ -14,6 +14,7 @@ class FavouritesProvider with ChangeNotifier {
     consumerKey: "ck_da5c9ea679814a228bcd5cda0c3c1b932c98ff1d",
     consumerSecret: "cs_aa9486fe01e314e72b5b2d50ae109c84a682f749",
   );
+  String uid = "";
   List<int> favouriteProductsIds = [];
   List<WooProduct> favouriteProducts = [];
 
@@ -29,7 +30,16 @@ class FavouritesProvider with ChangeNotifier {
 
   Future<bool> fetchAndSetFavouriteProductsFromAppDatabase() async {
     List<Map<String, dynamic>> outList = [];
-    outList = await AppDB.getData("Favourites");
+    if (uid == null) {
+      return false;
+    }
+    outList = await AppDB.select(
+      table: "Favourites",
+      whereStatement: "uid=?",
+      whereArgs: [
+        uid,
+      ],
+    );
 
     if (outList.length == 0) {
       return false;
@@ -50,6 +60,7 @@ class FavouritesProvider with ChangeNotifier {
       "Favourites",
       {
         "productId": productId,
+        "uid": uid,
       },
     );
     favouriteProductsIds.add(productId);
@@ -59,8 +70,11 @@ class FavouritesProvider with ChangeNotifier {
   Future<void> removeFavouriteProduct({@required int productId}) async {
     await AppDB.delete(
       table: "Favourites",
-      whereStatement: "productId = ?",
-      whereValue: productId,
+      whereStatement: "productId = ? AND uid = ?",
+      whereArgs: [
+        productId,
+        uid,
+      ],
     );
     favouriteProductsIds.removeWhere((element) => element == productId);
     int index =
@@ -136,5 +150,9 @@ class FavouritesProvider with ChangeNotifier {
       return null;
     }
     return fetchedProduct;
+  }
+
+  void setUid({String uidInp}) {
+    uid = uidInp;
   }
 }
