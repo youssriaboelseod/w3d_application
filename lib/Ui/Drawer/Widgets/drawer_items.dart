@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import '../../Favourites/Screen/favourites_screen.dart';
 import '../../1MainHelper/Snacks/snackbar.dart';
 import '../../MyProducts/Screen/my_products_screen.dart';
 import '../../MyOrders/Screen/my_orders_screen.dart';
@@ -192,6 +193,34 @@ class DrawerItems extends StatelessWidget {
                         onPressed: () {
                           Navigator.of(context)
                               .pushNamed(PaymentMethodsScreen.routeName);
+                        },
+                      ),
+                    ],
+                  ),
+                  const Divider(
+                    thickness: 3,
+                    color: Colors.black38,
+                    indent: 15,
+                    endIndent: 60,
+                  ),
+                  Row(
+                    children: [
+                      FlatButton.icon(
+                        icon: const Icon(
+                          Icons.favorite,
+                          color: Colors.white,
+                        ),
+                        label: Text(
+                          "المفضلة",
+                          style: TextStyle(
+                            fontSize: _fontSize,
+                            color: Colors.white,
+                          ),
+                          textScaleFactor: 1,
+                        ),
+                        onPressed: () {
+                          Navigator.of(context)
+                              .pushNamed(FavouritesScreen.routeName);
                         },
                       ),
                     ],

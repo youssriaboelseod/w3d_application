@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:google_fonts_arabic/fonts.dart';
-
+import 'package:provider/provider.dart';
 import 'package:woocommerce/woocommerce.dart';
 //
 import '../../Product/Screen/product_screen.dart';
-import '../Functions/add_remove_favourite.dart';
+import '../../../Providers/FavouritesProvider/favourites_provider.dart';
 import '../Snacks/snackbar.dart';
 
 class ProductItemGrid extends StatelessWidget {
@@ -84,7 +84,9 @@ class ImageCard extends StatelessWidget {
           Positioned(
             right: 0,
             top: 0,
-            child: FavoriteStar(),
+            child: FavoriteStar(
+              product: product,
+            ),
           ),
           (product.onSale && product.regularPrice.isNotEmpty)
               ? Positioned(
@@ -386,11 +388,17 @@ class FavoriteStar extends StatefulWidget {
 class _FavoriteStarState extends State<FavoriteStar> {
   bool _isFavorite = false;
 
-  bool check = false;
-
   String action = "";
 
   bool _isProcessing = false;
+  @override
+  void initState() {
+    _isFavorite = Provider.of<FavouritesProvider>(context, listen: false)
+        .checkIfFavourite(
+      productId: widget.product.id,
+    );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -401,41 +409,34 @@ class _FavoriteStarState extends State<FavoriteStar> {
         size: 35,
       ),
       onPressed: () async {
-        return;
         if (_isProcessing) {
           return;
         }
         _isProcessing = true;
         if (_isFavorite) {
-          check = await removeFavouriteProduct(
-            context: context,
-            //product: widget.WooProduct,
-          );
-          action = "removed from";
-        } else {
-          check = await addFavouriteProduct(
-            context: context,
-            //product: widget.WooProduct,
-          );
-          action = "added to";
-        }
-        if (check) {
-          showTopSnackBar(
-            context: context,
-            body: "Product is $action your favourites",
-            title: "Great",
+          await Provider.of<FavouritesProvider>(context, listen: false)
+              .removeFavouriteProduct(
+            productId: widget.product.id,
           );
 
-          setState(() {
-            _isFavorite = !_isFavorite;
-          });
+          action = "تمت حذف المنتج من المفضلة";
         } else {
-          showTopSnackBar(
-            context: context,
-            body: "Please, try again",
-            title: "Failed",
+          await Provider.of<FavouritesProvider>(context, listen: false)
+              .addFavouriteProduct(
+            productId: widget.product.id,
           );
+          action = "تمت اضافة المنتج الي المفضلة";
         }
+        showTopSnackBar(
+          context: context,
+          body: action,
+          title: "رائع",
+        );
+
+        setState(() {
+          _isFavorite = !_isFavorite;
+        });
+
         _isProcessing = false;
       },
     );

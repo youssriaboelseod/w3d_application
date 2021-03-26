@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:w3d/Providers/ProductsProvider/products_provider.dart';
+import '../../../Providers/FavouritesProvider/favourites_provider.dart';
+import '../../../Providers/ProductsProvider/products_provider.dart';
 import '../../../Providers/AppConfigurationsProvider/app_configurations_provider.dart';
 import '../../../Providers/AuthDataProvider/auth_data_provider.dart';
 import '../../../Providers/OrdersProvider/order_provider.dart';
@@ -12,6 +13,9 @@ Future<bool> startApp(BuildContext context) async {
 
   await Provider.of<AuthDataProvider>(context, listen: false)
       .fetchAndSetTable();
+
+  await Provider.of<FavouritesProvider>(context, listen: false)
+      .fetchAndSetFavouriteProductsFromAppDatabase();
   String id =
       Provider.of<AuthDataProvider>(context, listen: false).currentUser.id;
   // Set cart key == user's id

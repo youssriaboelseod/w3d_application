@@ -19,6 +19,9 @@ class AppDB {
         db.execute(
           'CREATE TABLE AppConfigurations(version INTEGER, language TEXT, updateProductsDate TEXT)',
         );
+        db.execute(
+          'CREATE TABLE Favourites(productId INTEGER)',
+        );
       },
     );
   }
@@ -65,7 +68,7 @@ class AppDB {
   static Future<void> delete({
     String table,
     String whereStatement,
-    String whereValue,
+    dynamic whereValue,
   }) async {
     final db = await AppDB.database();
     db.delete(

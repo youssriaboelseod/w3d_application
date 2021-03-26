@@ -39,6 +39,7 @@ class PaymentMethodsScreen extends StatelessWidget {
           package: 'google_fonts_arabic',
           fontSize: 18,
           color: Colors.black,
+          fontWeight: FontWeight.bold,
         ),
       ),
       actions: [

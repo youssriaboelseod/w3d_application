@@ -1,78 +1,115 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts_arabic/fonts.dart';
+import 'package:woocommerce/woocommerce.dart';
 import 'package:provider/provider.dart';
-
-import '../../../Models/Product/product_model.dart';
+//
 import '../../../Providers/FavouritesProvider/favourites_provider.dart';
-
-import '../../../Models/Category/category.dart';
-import 'search_card.dart';
+import '../../1MainHelper/Functions/main_functions.dart';
+import '../../1MainHelper/Widgets/product_item_grid.dart';
 
 class Body extends StatefulWidget {
-  final CategoryModel categoryModel;
-
-  const Body({Key key, this.categoryModel}) : super(key: key);
   @override
   _BodyState createState() => _BodyState();
 }
 
 class _BodyState extends State<Body> {
-  @override
-  void initState() {
-    super.initState();
-  }
+  List<WooProduct> favouritesProductsList = [];
 
-  List<ProductModel> favouriteProducts = [];
-  List<ProductModel> searchProducts = [];
+  bool _isInit = false;
 
-  String searchValue = '';
-
-  void search() {
-    searchProducts.clear();
-
-    if (searchValue.isEmpty) {
-      searchProducts = favouriteProducts;
+  Future<void> fetchFavouritesProducts(BuildContext context) async {
+    if (_isInit) {
       return;
     }
-
-    favouriteProducts.forEach((element) {
-      if (element.name.toLowerCase().contains(searchValue.toLowerCase())) {
-        searchProducts.add(element);
-      }
-    });
-    print(searchProducts.length);
+    favouritesProductsList =
+        await Provider.of<FavouritesProvider>(context, listen: false)
+            .fetchFavouritesProductsFromWooCommerce();
+    _isInit = true;
   }
 
   @override
   Widget build(BuildContext context) {
-    // Perform search
-    search();
-    return Column(
-      children: [
-        SearchCard(
-          onChange: (value) {
-            setState(() {
-              searchValue = value;
-            });
-          },
-        ),
-        Consumer<FavouritesProvider>(
-          builder: (context, value, child) {
-            favouriteProducts = value.getFavouritesProducts();
-
-            search();
-            return searchProducts.length == 0
-                ? Container()
-                : Expanded(
-                    child: ListView.builder(
-                      itemCount: searchProducts.length,
-                      itemBuilder: (context, index) {
-                        return;
+    Size size = MediaQuery.of(context).size;
+    double ratio = getRatio(size.width);
+    return FutureBuilder(
+      future: fetchFavouritesProducts(context),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(
+                Colors.black,
+              ),
+            ),
+          );
+        } else {
+          if (favouritesProductsList.length == 0) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.refresh_outlined,
+                        size: 40,
+                        color: Colors.black,
+                      ),
+                      onPressed: () async {
+                        setState(() {
+                          _isInit = false;
+                        });
                       },
                     ),
-                  );
-          },
-        ),
-      ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "لا يوجد لديك اي منتجات مفضلة",
+                      textScaleFactor: 1,
+                      textDirection: TextDirection.rtl,
+                      style: TextStyle(
+                        fontFamily: ArabicFonts.Cairo,
+                        package: 'google_fonts_arabic',
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }
+          return Consumer<FavouritesProvider>(
+            builder: (context, value, child) {
+              favouritesProductsList = value.favouriteProducts;
+              return GridView(
+                padding: const EdgeInsets.all(2),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: ratio,
+                  crossAxisSpacing: 2,
+                  mainAxisSpacing: 2,
+                ),
+                shrinkWrap: true,
+                primary: false,
+                children: List.generate(
+                  favouritesProductsList.length,
+                  (index) => ProductItemGrid(
+                    product: favouritesProductsList[index],
+                    key: ValueKey(
+                      favouritesProductsList[index].id,
+                    ),
+                  ),
+                ),
+              );
+            },
+          );
+        }
+      },
     );
   }
 }

@@ -45,6 +45,13 @@
             {
               "client_id": "529976543159-fdtjmiarc4tpfbufm61vnvqh1ptcmqgq.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "529976543159-81u0mnpssriuu3qmqna26pfhc3trutas.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.moadawy.W3d"
+              }
             }
           ]
         }
