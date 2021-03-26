@@ -112,7 +112,8 @@ class CartProvider with ChangeNotifier {
       );
       cartItemsProducts.add(product);
       cartItems[counter].permalink = product.permalink;
-      cartItems[counter].images[0].src = product.images[0].src ?? "";
+      cartItems[counter].images[0].src =
+          product.images.length == 0 ? "" : product.images[0].src ?? "";
 
       counter += 1;
     }

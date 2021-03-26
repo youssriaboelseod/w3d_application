@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:share/share.dart';
-import 'package:w3d/Ui/1MainHelper/Alerts/alerts.dart';
-import 'package:w3d/Ui/UpdateProduct/Screen/update_product_screen.dart';
+import '../../1MainHelper/Alerts/alerts.dart';
+import '../../UpdateProduct/Screen/update_product_screen.dart';
 import 'package:woocommerce/woocommerce.dart';
 
 import '../../1MainHelper/Snacks/snackbar.dart';
@@ -11,7 +11,7 @@ import '../../../Providers/AuthDataProvider/auth_data_provider.dart';
 
 import '../../../Providers/ManageProductsProvider/manage_products_provider.dart';
 import '../../../Providers/ProductsProvider/products_provider.dart';
-import '../../../Models/Product/product_model.dart';
+import '../../../Providers/FavouritesProvider/favourites_provider.dart';
 import '../../1MainHelper/carousel_pro/src/carousel_pro.dart';
 
 class ImageSwitcherCard extends StatelessWidget {
@@ -279,8 +279,6 @@ class OptionsIcons extends StatefulWidget {
 }
 
 class _OptionsIconsState extends State<OptionsIcons> {
-  bool _isFavorite = false;
-
   bool check = false;
 
   String action = "";
@@ -316,13 +314,8 @@ class _OptionsIconsState extends State<OptionsIcons> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          IconButton(
-            icon: Icon(
-              _isFavorite ? Icons.favorite : Icons.favorite_border,
-              color: Colors.grey[800],
-              size: 35,
-            ),
-            onPressed: () async {},
+          FavoriteStar(
+            product: widget.product,
           ),
           IconButton(
             icon: Icon(
@@ -431,6 +424,73 @@ class _OptionsIconsState extends State<OptionsIcons> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class FavoriteStar extends StatefulWidget {
+  final WooProduct product;
+
+  FavoriteStar({Key key, this.product}) : super(key: key);
+
+  @override
+  _FavoriteStarState createState() => _FavoriteStarState();
+}
+
+class _FavoriteStarState extends State<FavoriteStar> {
+  bool _isFavorite = false;
+
+  String action = "";
+
+  bool _isProcessing = false;
+  @override
+  void initState() {
+    _isFavorite = Provider.of<FavouritesProvider>(context, listen: false)
+        .checkIfFavourite(
+      productId: widget.product.id,
+    );
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: Icon(
+        _isFavorite ? Icons.favorite : Icons.favorite_border,
+        color: Colors.grey[800],
+        size: 35,
+      ),
+      onPressed: () async {
+        if (_isProcessing) {
+          return;
+        }
+        _isProcessing = true;
+        if (_isFavorite) {
+          await Provider.of<FavouritesProvider>(context, listen: false)
+              .removeFavouriteProduct(
+            productId: widget.product.id,
+          );
+
+          action = "تمت حذف المنتج من المفضلة";
+        } else {
+          await Provider.of<FavouritesProvider>(context, listen: false)
+              .addFavouriteProduct(
+            productId: widget.product.id,
+          );
+          action = "تمت اضافة المنتج الي المفضلة";
+        }
+        showTopSnackBar(
+          context: context,
+          body: action,
+          title: "رائع",
+        );
+
+        setState(() {
+          _isFavorite = !_isFavorite;
+        });
+
+        _isProcessing = false;
+      },
     );
   }
 }

@@ -131,6 +131,11 @@ class _AddOrderFormState extends State<AddOrderForm> {
     location = Provider.of<AuthDataProvider>(context, listen: false)
         .currentUser
         .location;
+    print(firstName);
+    print(lastName);
+    print(city);
+    print(address);
+    print(location);
     super.initState();
   }
 
@@ -213,7 +218,8 @@ class _AddOrderFormState extends State<AddOrderForm> {
                 ),
                 InputTextCard(
                   type: "الهاتف",
-                  hintText: phoneNumber,
+                  initialText: phoneNumber,
+                  //hintText: phoneNumber,
                   readOnly: true,
                 ),
                 const Divider(
@@ -222,7 +228,8 @@ class _AddOrderFormState extends State<AddOrderForm> {
                 ),
                 InputTextCard(
                   type: "البريد",
-                  hintText: email,
+                  initialText: email,
+                  //hintText: email,
                   readOnly: true,
                 ),
                 const Divider(
@@ -232,6 +239,7 @@ class _AddOrderFormState extends State<AddOrderForm> {
                 InputTextCard(
                   type: "الملاحظات",
                   hintText: "اي ملاحظات للبائع",
+                  initialText: "",
                 ),
                 const Divider(
                   color: Colors.blueGrey,

@@ -51,6 +51,10 @@ class OrdersProvider with ChangeNotifier {
       print(outList[0].lineItems[0].variationId);
       print("outList[1].lineItems[0].variationId");
       print(outList[1].lineItems[0].variationId);
+      print("outList[2].lineItems[0].variationId");
+      print(outList[2].lineItems[0].variationId);
+      print("outList[3].lineItems[0].variationId");
+      print(outList[3].lineItems[0].variationId);
 
       if (outList[0].lineItems[0].variationId ==
           outList[1].lineItems[0].variationId) {

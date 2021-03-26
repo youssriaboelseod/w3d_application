@@ -5,6 +5,8 @@ import 'dart:convert';
 import '../../../../Models/UserAuthModel/user_auth_model.dart';
 import '../../../../Providers/AuthDataProvider/auth_data_provider.dart';
 import '../../../../Providers/CartProvider/cart_provider.dart';
+import '../../../../Providers/FavouritesProvider/favourites_provider.dart';
+import '../../../../Providers/OrdersProvider/order_provider.dart';
 import 'package:provider/provider.dart';
 
 // Note:
@@ -51,6 +53,17 @@ Future<String> loginWithEmailAndPassword({
       Provider.of<CartProvider>(context, listen: false).setUid(
         uidInp: outMap["ID"].toString(),
       );
+
+      Provider.of<OrdersProvider>(context, listen: false).setUid(
+        uidInp: outMap["ID"].toString(),
+      );
+      Provider.of<FavouritesProvider>(context, listen: false).setUid(
+        uidInp: outMap["ID"].toString(),
+      );
+
+      await Provider.of<FavouritesProvider>(context, listen: false)
+          .fetchAndSetFavouriteProductsFromAppDatabase();
+
       output = null;
     } else {
       if (response.body.contains("incorrect_password")) {

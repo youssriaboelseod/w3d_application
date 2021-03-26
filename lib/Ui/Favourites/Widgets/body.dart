@@ -94,7 +94,6 @@ class _BodyState extends State<Body> {
                   crossAxisSpacing: 2,
                   mainAxisSpacing: 2,
                 ),
-                shrinkWrap: true,
                 primary: false,
                 children: List.generate(
                   favouritesProductsList.length,
