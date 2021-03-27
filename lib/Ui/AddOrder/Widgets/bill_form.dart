@@ -69,9 +69,26 @@ class BillForm extends StatelessWidget {
                     ),
               totalPrice >= 150
                   ? Container()
-                  : PriceCard(
-                      title: "الشحن",
-                      totalPrice: "29",
+                  : Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        PriceCard(
+                          title: "الشحن",
+                          totalPrice: "29",
+                        ),
+                        const Text(
+                          "تنويه : تضاف قيمة الشحن للمنتجات اقل من 150 ريال سعودي",
+                          overflow: TextOverflow.fade,
+                          textDirection: TextDirection.rtl,
+                          style: TextStyle(
+                            fontFamily: ArabicFonts.Cairo,
+                            package: 'google_fonts_arabic',
+                            fontSize: 17,
+                            color: Colors.black,
+                          ),
+                          softWrap: true,
+                        ),
+                      ],
                     ),
               Divider(
                 thickness: 1,

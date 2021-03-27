@@ -33,7 +33,7 @@ class Button extends StatelessWidget {
         color: backgroundColor,
         icon: Icon(
           iconData,
-          color: Colors.tealAccent,
+          color: Colors.white,
         ),
         label: Text(
           title,

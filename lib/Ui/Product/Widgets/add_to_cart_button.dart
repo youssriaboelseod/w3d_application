@@ -18,7 +18,7 @@ class AddToCartButton extends StatelessWidget {
         ),
         color: Colors.blue,
         child: Container(
-          width: (size.width / 2) - 8,
+          width: size.width,
           padding: const EdgeInsets.all(8.0),
           child: Row(
             mainAxisSize: MainAxisSize.min,

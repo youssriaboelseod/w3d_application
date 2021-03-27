@@ -92,8 +92,12 @@ class _BodyState extends State<Body> {
               cartItems = value.cartItems;
               totalPrice = 0;
               cartItems.forEach((element) {
-                String valueModified = element.linePrice.replaceAll("ر.س", "");
-                totalPrice += double.parse(valueModified);
+                String valueModified = "0";
+                valueModified = element.linePrice.replaceAll("ر.س", "");
+
+                if (valueModified != null) {
+                  totalPrice += double.tryParse(valueModified);
+                }
               });
               return Column(
                 children: [
@@ -111,7 +115,7 @@ class _BodyState extends State<Body> {
                     totalPrice: totalPrice.toString(),
                   ),
                   Button(
-                    backgroundColor: Color(0xFF345757),
+                    backgroundColor: Colors.black,
                     title: "التقدم لاتمام الطلب",
                     textColor: Colors.white,
                     function: () async {

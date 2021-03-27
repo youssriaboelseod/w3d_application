@@ -114,12 +114,12 @@ class _OptionsButtonState extends State<OptionsButton> {
 
                       if (output != null) {
                         output.forEach((e) {
-                          //print(e["attributes"][0]["option"]);
-
-                          if (dropdownValue ==
-                              e["attributes"][0]["option"].toString()) {
-                            price = e["price"].toString();
-                            regularPrice = e["regular_price"].toString();
+                          if (e["attributes"].length != 0) {
+                            if (dropdownValue ==
+                                e["attributes"][0]["option"].toString()) {
+                              price = e["price"].toString();
+                              regularPrice = e["regular_price"].toString();
+                            }
                           }
                         });
                       }

@@ -88,6 +88,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'الواعد',
+        color: Colors.black,
         theme: ThemeData(
           // backgroundColor: Colors.white,
           scaffoldBackgroundColor: Colors.white,
@@ -96,6 +97,8 @@ class MyApp extends StatelessWidget {
             color: Colors.white,
             elevation: 0,
           ),
+          cursorColor: Colors.black,
+
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         routes: {

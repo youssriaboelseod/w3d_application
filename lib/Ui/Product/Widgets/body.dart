@@ -87,7 +87,7 @@ class _BodyState extends State<Body> {
       showTopSnackBar(
         context: context,
         body: "لقد حدث خطأ من فضلك حاول مرة اخرة",
-        title: "تبيه",
+        title: "تنبيه",
       );
     }
   }
@@ -188,15 +188,8 @@ class _BodyState extends State<Body> {
                   ? ContactButton(
                       product: widget.productModel,
                     )
-                  : Row(
-                      children: [
-                        AddToCartButton(
-                          function: addToCartFunction,
-                        ),
-                        OrderButton(
-                            //productModel: widget.productModel,
-                            ),
-                      ],
+                  : AddToCartButton(
+                      function: addToCartFunction,
                     ),
         ],
       ),

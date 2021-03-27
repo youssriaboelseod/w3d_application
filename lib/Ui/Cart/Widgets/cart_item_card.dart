@@ -271,8 +271,8 @@ class DetailsCard extends StatelessWidget {
                 width: size.width / 1.3,
                 child: Padding(
                   padding: const EdgeInsets.only(
-                    left: 20,
-                    right: 40,
+                    left: 23,
+                    right: 45,
                     top: 3,
                   ),
                   child: Align(
@@ -300,7 +300,13 @@ class DetailsCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                      height: variationsMap.length == 0 ? 40 : 1,
+                      height: variationsMap.length == 0
+                          ? 40
+                          : variationsMap.length == 1
+                              ? 20
+                              : variationsMap.length == 2
+                                  ? 10
+                                  : 1,
                     ),
                     ...variationsMap.map(
                       (e) => CartItemDetails(
@@ -428,7 +434,7 @@ class _RemoveIconState extends State<RemoveIcon> {
           : IconButton(
               icon: Icon(
                 Icons.delete,
-                color: CupertinoColors.activeGreen,
+                color: Colors.grey[800],
                 size: 30,
               ),
               onPressed: () async {

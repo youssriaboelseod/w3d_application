@@ -34,13 +34,8 @@ class CartProvider with ChangeNotifier {
     //List<WooCartItemImages> images;
 
     List<String> variations = [];
-    print("----------- cart map ---------- ");
-    print(jsonMap);
     var variationsTmep = jsonMap["variation"];
-    print("----------- cart variation ---------- ");
-    print(variationsTmep);
-    print("---------- cart variation id ---------- ");
-    print(jsonMap["variation_id"].toString());
+
     if (variationsTmep.length != 0) {
       variationsTmep.forEach((key, value) {
         variations.add(key);
@@ -173,6 +168,31 @@ class CartProvider with ChangeNotifier {
       } else {
         return false;
       }
+    } on SocketException catch (_) {
+      return false;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
+  Future<bool> removeAllProductsFromCart({List<WooCartItem> cartItems}) async {
+    try {
+      // ?clear-cart
+      int counter = 0;
+
+      while (counter < cartItems.length) {
+        String cartItemKey = cartItems[counter].key;
+
+        final response = await http.delete(
+          "https://050saa.com/wp-json/cocart/v1/item?cart_key=$uid&cart_item_key=$cartItemKey",
+          headers: headers,
+        );
+        print(response.statusCode);
+
+        counter += 1;
+      }
+      cartItems.clear();
     } on SocketException catch (_) {
       return false;
     } catch (e) {

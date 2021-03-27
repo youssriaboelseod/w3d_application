@@ -175,78 +175,80 @@ class _ImagesSwitcherNewState extends State<ImagesSwitcherNew> {
     return new Material(
       color: Colors.black54,
       child: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: 8,
-        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CircleAvatar(
-              backgroundColor: Colors.black,
-              child: IconButton(
-                icon: Icon(
-                  Icons.arrow_back_ios_outlined,
-                  color: Colors.white,
-                ),
-                onPressed: () {
-                  selectedIndex = selectedIndex - 1;
-                  if (selectedIndex == -1) {
-                    selectedIndex = widget.imagesUrls.length - 1;
-                  }
-                  setState(() {});
-                },
-              ),
-            ),
-            SizedBox(
-              width: 3,
-            ),
-            InkWell(
-              child: Hero(
-                tag: widget.imagesUrls[selectedIndex],
-                child: CachedNetworkImage(
-                  imageUrl: widget.imagesUrls[selectedIndex],
-                  alignment: Alignment.center,
-                  fit: BoxFit.contain,
-                  width: size.width - 116,
-                  height: size.height - 40,
-                  errorWidget: (context, url, error) {
-                    return Image.asset(
-                      "assets/images/placeholder.png",
-                      width: 150.0,
-                      height: 150.0,
-                    );
-                  },
-                  placeholder: (context, url) {
-                    return Image.asset(
-                      "assets/images/placeholder.png",
-                      width: 150.0,
-                      height: 150.0,
-                    );
+            Stack(
+              children: [
+                InkWell(
+                  child: Hero(
+                    tag: widget.imagesUrls[selectedIndex],
+                    child: CachedNetworkImage(
+                      imageUrl: widget.imagesUrls[selectedIndex],
+                      alignment: Alignment.center,
+                      fit: BoxFit.contain,
+                      width: size.width - 8,
+                      height: size.height - 20,
+                      errorWidget: (context, url, error) {
+                        return Image.asset(
+                          "assets/images/placeholder.png",
+                          width: 150.0,
+                          height: 150.0,
+                        );
+                      },
+                      placeholder: (context, url) {
+                        return Image.asset(
+                          "assets/images/placeholder.png",
+                          width: 150.0,
+                          height: 150.0,
+                        );
+                      },
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
                   },
                 ),
-              ),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            SizedBox(
-              width: 3,
-            ),
-            CircleAvatar(
-              backgroundColor: Colors.black,
-              child: IconButton(
-                icon: Icon(
-                  Icons.arrow_forward_ios_outlined,
-                  color: Colors.white,
+                Positioned(
+                  top: size.height / 2.1,
+                  child: CircleAvatar(
+                    backgroundColor: Colors.black,
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.arrow_back_ios_outlined,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {
+                        selectedIndex = selectedIndex - 1;
+                        if (selectedIndex == -1) {
+                          selectedIndex = widget.imagesUrls.length - 1;
+                        }
+                        setState(() {});
+                      },
+                    ),
+                  ),
                 ),
-                onPressed: () {
-                  selectedIndex = selectedIndex + 1;
-                  if (selectedIndex == widget.imagesUrls.length) {
-                    selectedIndex = 0;
-                  }
-                  setState(() {});
-                },
-              ),
+                Positioned(
+                  top: size.height / 2.1,
+                  right: 0,
+                  child: CircleAvatar(
+                    backgroundColor: Colors.black,
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.arrow_forward_ios_outlined,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {
+                        selectedIndex = selectedIndex + 1;
+                        if (selectedIndex == widget.imagesUrls.length) {
+                          selectedIndex = 0;
+                        }
+                        setState(() {});
+                      },
+                    ),
+                  ),
+                )
+              ],
             ),
           ],
         ),

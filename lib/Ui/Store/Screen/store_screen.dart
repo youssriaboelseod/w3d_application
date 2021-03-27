@@ -131,12 +131,12 @@ class StoreScreen extends StatelessWidget {
           icon: Icon(
             Icons.person,
             size: 30,
-            color: Colors.black,
+            color: Colors.grey,
           ),
           activeIcon: Icon(
             Icons.person,
             size: 30,
-            color: CupertinoColors.activeGreen,
+            color: Colors.black,
           ),
           label: "",
         ),
@@ -144,12 +144,12 @@ class StoreScreen extends StatelessWidget {
           icon: Icon(
             Icons.store,
             size: 30,
-            color: Colors.black,
+            color: Colors.grey,
           ),
           activeIcon: Icon(
             Icons.store,
             size: 30,
-            color: CupertinoColors.activeGreen,
+            color: Colors.black,
           ),
           label: "",
         ),
@@ -157,12 +157,12 @@ class StoreScreen extends StatelessWidget {
           icon: Icon(
             Icons.add_circle,
             size: 30,
-            color: Colors.black,
+            color: Colors.grey,
           ),
           activeIcon: Icon(
             Icons.add_circle,
             size: 30,
-            color: CupertinoColors.activeGreen,
+            color: Colors.black,
           ),
           label: "",
         ),
@@ -170,12 +170,12 @@ class StoreScreen extends StatelessWidget {
           icon: Icon(
             Icons.search,
             size: 30,
-            color: Colors.black,
+            color: Colors.grey,
           ),
           activeIcon: Icon(
             Icons.search,
             size: 30,
-            color: CupertinoColors.activeGreen,
+            color: Colors.black,
           ),
           label: "",
         ),
@@ -183,12 +183,12 @@ class StoreScreen extends StatelessWidget {
           icon: Icon(
             Icons.home,
             size: 30,
-            color: Colors.black,
+            color: Colors.grey,
           ),
           activeIcon: Icon(
             Icons.home,
             size: 30,
-            color: CupertinoColors.activeGreen,
+            color: Colors.black,
           ),
           label: "",
         ),

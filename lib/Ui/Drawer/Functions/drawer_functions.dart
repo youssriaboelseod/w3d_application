@@ -6,7 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:share/share.dart';
 
 void whatsAppOpen() async {
-  const url = "whatsapp://send?phone=213793187939";
+  const url = "whatsapp://send?phone=966501722732";
   if (await canLaunch(url)) {
     await launch(url, forceSafariVC: false);
   } else {
@@ -54,8 +54,7 @@ _openFacebookUrl() async {
 }
 
 _sendEmail() async {
-  const url =
-      'mailto:info.mt.adawy.group@gmail.com?subject=TM Planners App User&body=';
+  const url = 'mailto:alw3dx@gmail.com?subject=W3D App User&body=';
   if (await canLaunch(url)) {
     await launch(url);
   } else {
@@ -91,7 +90,7 @@ void showContact(BuildContext context) {
     context: context,
     builder: (context) {
       return AlertDialog(
-        backgroundColor: Color(0xFF151A25),
+        backgroundColor: Colors.black,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(
             25,
@@ -105,63 +104,7 @@ void showContact(BuildContext context) {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   CircleAvatar(
-                    backgroundColor: Colors.lightBlueAccent,
-                    child: IconButton(
-                      icon: SvgPicture.asset(
-                        "assets/icons/facebook.svg",
-                      ),
-                      onPressed: () {
-                        _openFacebookUrl();
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: 5,
-                    ),
-                    child: Text(
-                      "FB",
-                      textScaleFactor: 1,
-                      style: TextStyle(
-                        color: Colors.lightBlueAccent,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  CircleAvatar(
-                    backgroundColor: Colors.lightBlueAccent,
-                    child: IconButton(
-                      icon: SvgPicture.asset(
-                        "assets/icons/instagram.svg",
-                      ),
-                      onPressed: () {
-                        _openInstagram();
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: 5,
-                    ),
-                    child: Text(
-                      "Insta",
-                      textScaleFactor: 1,
-                      style: TextStyle(
-                        color: Colors.lightBlueAccent,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  CircleAvatar(
-                    backgroundColor: Colors.lightBlueAccent,
+                    backgroundColor: Colors.white,
                     child: IconButton(
                       icon: Icon(
                         Icons.email,
@@ -180,7 +123,7 @@ void showContact(BuildContext context) {
                       "Email",
                       textScaleFactor: 1,
                       style: TextStyle(
-                        color: Colors.lightBlueAccent,
+                        color: Colors.white,
                       ),
                     ),
                   ),
@@ -190,7 +133,7 @@ void showContact(BuildContext context) {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   CircleAvatar(
-                    backgroundColor: Colors.lightBlueAccent,
+                    backgroundColor: Colors.white,
                     child: IconButton(
                       icon: SvgPicture.asset(
                         "assets/icons/whatsapp1.svg",
@@ -208,7 +151,7 @@ void showContact(BuildContext context) {
                       "Whats",
                       textScaleFactor: 1,
                       style: TextStyle(
-                        color: Colors.lightBlueAccent,
+                        color: Colors.white,
                       ),
                     ),
                   ),

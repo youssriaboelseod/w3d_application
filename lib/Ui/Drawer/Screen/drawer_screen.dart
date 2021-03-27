@@ -17,7 +17,7 @@ class DrawerApp extends StatelessWidget {
     return Drawer(
       elevation: 10,
       child: Container(
-        color: Color(0xFF416D6D),
+        color: Colors.grey[800],
         child: Column(
           children: [
             Container(
@@ -26,7 +26,7 @@ class DrawerApp extends StatelessWidget {
                 bottom: 10,
               ),
               child: Text(
-                "Hello $name !",
+                "$name ",
                 textScaleFactor: 1,
                 style: TextStyle(
                   color: Colors.white,

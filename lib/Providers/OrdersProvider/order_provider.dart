@@ -70,7 +70,6 @@ class OrdersProvider with ChangeNotifier {
   Future<String> createOrder({
     BuildContext context,
     String firstName,
-    String lastName,
     String city,
     String address,
     String location,
@@ -89,7 +88,7 @@ class OrdersProvider with ChangeNotifier {
     try {
       WooOrderPayloadShipping shipping = WooOrderPayloadShipping(
         firstName: firstName,
-        lastName: lastName,
+        lastName: "",
         city: city,
         address1: address,
         state: location,
@@ -98,18 +97,27 @@ class OrdersProvider with ChangeNotifier {
       );
       WooOrderPayloadBilling billing = WooOrderPayloadBilling(
         firstName: firstName,
-        lastName: lastName,
+        lastName: "",
         city: city,
         address1: address,
         address2: phoneNumber,
         state: location,
+        email: email,
+        phone: phoneNumber,
         country: "المملكة العربية السعودية",
       );
-      print("34");
+      double totalPrice = 0;
       List<LineItems> lineItems = [];
       cartItems =
           Provider.of<CartProvider>(context, listen: false).getCartItems();
+
       cartItems.forEach((element) {
+        String valueModified = "0";
+        valueModified = element.linePrice.replaceAll("ر.س", "");
+        if (valueModified != null) {
+          totalPrice += double.tryParse(valueModified);
+        }
+
         lineItems.add(
           LineItems(
             name: element.name,
@@ -119,19 +127,21 @@ class OrdersProvider with ChangeNotifier {
             variationId: element.sku.isNotEmpty ? int.parse(element.sku) : null,
           ),
         );
-        print("-------- sku ---------");
-        print(element.sku);
       });
-      lineItems.forEach((element) {
-        print("-------- variationId ---------");
-        print(element.variationId);
-      });
-
-      print("56");
+      ShippingLines shippingLines = ShippingLines(
+        methodId: "flat_rate",
+        methodTitle: "Flat Rate",
+        total: "29.00",
+      );
 
       WooOrderPayload orderPayload = WooOrderPayload(
         customerId: int.parse(uid),
         customerNote: note,
+        shippingLines: totalPrice > 150
+            ? []
+            : [
+                shippingLines,
+              ],
         shipping: shipping,
         lineItems: lineItems,
         billing: billing,
@@ -139,11 +149,15 @@ class OrdersProvider with ChangeNotifier {
         paymentMethodTitle:
             paymentMethodTitlesList.elementAt(paymentMethod.index),
       );
-      print("78");
+
       WooOrder orderOutput = await woocommerce.createOrder(orderPayload);
-      print("91");
-      print(orderOutput.lineItems[0].variationId);
+      await Provider.of<CartProvider>(context, listen: false)
+          .removeAllProductsFromCart(
+        cartItems: cartItems,
+      );
+
       print(orderOutput);
+      return null;
     } on SocketException catch (_) {
       return "لايوجد لديك انترنت";
     } catch (e) {

@@ -165,62 +165,6 @@ class DrawerItems extends StatelessWidget {
                     children: [
                       FlatButton.icon(
                         icon: const Icon(
-                          Icons.design_services,
-                          color: Colors.white,
-                        ),
-                        label: Text(
-                          "صمم",
-                          style: TextStyle(
-                            fontSize: _fontSize,
-                            color: Colors.white,
-                          ),
-                          textScaleFactor: 1,
-                        ),
-                        onPressed: () {
-                          Navigator.of(context)
-                              .pushNamed(DesignScreen.routeName);
-                        },
-                      ),
-                    ],
-                  ),
-                  const Divider(
-                    thickness: 3,
-                    color: Colors.black38,
-                    indent: 15,
-                    endIndent: 60,
-                  ),
-                  Row(
-                    children: [
-                      FlatButton.icon(
-                        icon: const Icon(
-                          Icons.design_services,
-                          color: Colors.white,
-                        ),
-                        label: Text(
-                          "اطلب تصميمك الخاص",
-                          style: TextStyle(
-                            fontSize: _fontSize,
-                            color: Colors.white,
-                          ),
-                          textScaleFactor: 1,
-                        ),
-                        onPressed: () {
-                          Navigator.of(context)
-                              .pushNamed(OrderDesignScreen.routeName);
-                        },
-                      ),
-                    ],
-                  ),
-                  const Divider(
-                    thickness: 3,
-                    color: Colors.black38,
-                    indent: 15,
-                    endIndent: 60,
-                  ),
-                  Row(
-                    children: [
-                      FlatButton.icon(
-                        icon: const Icon(
                           Icons.language,
                           color: Colors.white,
                         ),
@@ -348,10 +292,10 @@ class DrawerItems extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                "MT-Adawy Group",
+                "https://050saa.com/",
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: CupertinoColors.systemTeal,
+                  color: Colors.white,
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
                 ),

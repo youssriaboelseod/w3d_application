@@ -19,7 +19,8 @@ Future<String> addProductFn({
   String phoneNumber = Provider.of<AuthDataProvider>(context, listen: false)
       .currentUser
       .phoneNumber;
-  if (phoneNumber.isNotEmpty) {
+
+  if (phoneNumber.isEmpty) {
     return "من فضلك قم باضافة رقم هاتفك اولا , لكي يستطيع المشتري ان يتواصل معك";
   }
   //
@@ -38,7 +39,8 @@ Future<String> addProductFn({
   };
   int counter = 0;
   List<String> imagesUrl = [];
-
+  print("imagesFiles.length");
+  print(imagesFiles.length);
   while (counter < imagesFiles.length) {
     String imageUrl =
         await Provider.of<ManageProductsProvider>(context, listen: false)
@@ -49,6 +51,7 @@ Future<String> addProductFn({
     imagesUrl.add(imageUrl);
     counter += 1;
   }
+
   if (imagesUrl.length != 0) {
     productMap.addAll(
       {
@@ -61,7 +64,6 @@ Future<String> addProductFn({
     productMap.addAll(
       {
         "gallery_images": imagesUrl.map((element) {
-          print(element);
           if (element.isNotEmpty) {
             return {
               "src": element,

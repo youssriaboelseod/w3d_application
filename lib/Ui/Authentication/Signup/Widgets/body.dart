@@ -122,7 +122,7 @@ class _BodyState extends State<Body> {
               height: 10,
             ),
             RoundedInputField(
-              hintText: "اسم متجرك",
+              hintText: "الاسم كما يظهر للاخرين",
               onChanged: (value) {
                 storeName = value;
               },

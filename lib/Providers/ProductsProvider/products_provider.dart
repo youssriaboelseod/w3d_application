@@ -89,19 +89,21 @@ class ProductsProvider with ChangeNotifier {
       print("My random number = " + randomNumber.toString());
       fetchedProducts = await woocommerce.getProducts(
         page: randomNumber,
-        perPage: 8,
+        perPage: 6,
         onSale: false,
         category: "152",
       );
       homePageMostViewedProducts.addAll(
         fetchedProducts.getRange(0, (fetchedProducts.length / 2).round()),
       );
+
       //---------------------------------------------------------
       // Home page --> Souq
       homePageSouqProducts.addAll(
         fetchedProducts.getRange(
             (fetchedProducts.length / 2).round(), fetchedProducts.length),
       );
+
       //---------------------------------------------------------
       randomNumber = random.nextInt(5);
       if (randomNumber == 0) {
@@ -110,7 +112,7 @@ class ProductsProvider with ChangeNotifier {
       print("My random number = " + randomNumber.toString());
       fetchedProducts = await woocommerce.getProducts(
         page: randomNumber,
-        perPage: 8,
+        perPage: 6,
         onSale: false,
         category: "149",
       );
@@ -123,6 +125,7 @@ class ProductsProvider with ChangeNotifier {
         fetchedProducts.getRange(
             (fetchedProducts.length / 2).round(), fetchedProducts.length),
       );
+
       //---------------------------------------------------------
       //---------------------------------------------------------
       // Home page --> popular
@@ -133,7 +136,7 @@ class ProductsProvider with ChangeNotifier {
       print("My random number = " + randomNumber.toString());
       fetchedProducts = await woocommerce.getProducts(
         page: randomNumber,
-        perPage: 5,
+        perPage: 4,
         onSale: false,
         category: "151",
       );
@@ -154,7 +157,7 @@ class ProductsProvider with ChangeNotifier {
       print("My random number = " + randomNumber.toString());
       fetchedProducts = await woocommerce.getProducts(
         page: randomNumber,
-        perPage: 5,
+        perPage: 4,
         onSale: false,
         category: "198",
       );
@@ -175,7 +178,7 @@ class ProductsProvider with ChangeNotifier {
       print("My random number = " + randomNumber.toString());
       fetchedProducts = await woocommerce.getProducts(
         page: randomNumber,
-        perPage: 5,
+        perPage: 4,
         onSale: false,
         category: "154",
       );
@@ -199,7 +202,7 @@ class ProductsProvider with ChangeNotifier {
       print("My random number = " + randomNumber.toString());
       fetchedProducts = await woocommerce.getProducts(
         onSale: true,
-        perPage: 12,
+        perPage: 10,
         page: randomNumber,
       );
       onSaleProducts.addAll(fetchedProducts);
@@ -316,6 +319,7 @@ class ProductsProvider with ChangeNotifier {
       List<WooProduct> fetchedProductsList = [];
       fetchedProductsList = await woocommerce.getProducts(
         search: searchValue,
+        perPage: 100,
       );
       return fetchedProductsList;
     } on SocketException catch (_) {

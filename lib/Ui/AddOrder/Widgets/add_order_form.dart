@@ -1,6 +1,9 @@
 import 'dart:io';
 import 'package:provider/provider.dart';
+
+import 'package:google_fonts_arabic/fonts.dart';
 //
+
 import '../../../Providers/AuthDataProvider/auth_data_provider.dart';
 import '../../../Providers/OrdersProvider/order_provider.dart';
 import '../../1MainHelper/Helpers/helper.dart';
@@ -25,7 +28,7 @@ class AddOrderForm extends StatefulWidget {
 
 class _AddOrderFormState extends State<AddOrderForm> {
   String firstName;
-  String lastName;
+
   String city;
   String address;
   String location;
@@ -38,7 +41,6 @@ class _AddOrderFormState extends State<AddOrderForm> {
 
   Future<void> addOrder() async {
     if (firstName.isEmpty ||
-        lastName.isEmpty ||
         city.isEmpty ||
         location.isEmpty ||
         address.isEmpty) {
@@ -48,6 +50,15 @@ class _AddOrderFormState extends State<AddOrderForm> {
       );
       return;
     }
+
+    if (phoneNumber.isEmpty) {
+      showAlertNoAction(
+        context: context,
+        message: "من فضلك قم باضافة رقم هاتفك اولا",
+      );
+      return;
+    }
+
     FocusScope.of(context).unfocus();
     final result = await showAlertYesOrNo(
       context: context,
@@ -65,7 +76,6 @@ class _AddOrderFormState extends State<AddOrderForm> {
           await Provider.of<OrdersProvider>(context, listen: false).createOrder(
         context: context,
         firstName: firstName,
-        lastName: lastName,
         city: city,
         address: address,
         location: location,
@@ -90,9 +100,10 @@ class _AddOrderFormState extends State<AddOrderForm> {
           addressInp: address,
           cityInp: city,
           firstNameInp: firstName,
-          lastNameInp: lastName,
+          lastNameInp: "", //lastName,
           locationInp: location,
         );
+
         await Future.delayed(
           Duration(
             seconds: 1,
@@ -120,9 +131,7 @@ class _AddOrderFormState extends State<AddOrderForm> {
     firstName = Provider.of<AuthDataProvider>(context, listen: false)
         .currentUser
         .firstName;
-    lastName = Provider.of<AuthDataProvider>(context, listen: false)
-        .currentUser
-        .lastName;
+
     city =
         Provider.of<AuthDataProvider>(context, listen: false).currentUser.city;
     address = Provider.of<AuthDataProvider>(context, listen: false)
@@ -131,11 +140,7 @@ class _AddOrderFormState extends State<AddOrderForm> {
     location = Provider.of<AuthDataProvider>(context, listen: false)
         .currentUser
         .location;
-    print(firstName);
-    print(lastName);
-    print(city);
-    print(address);
-    print(location);
+
     super.initState();
   }
 
@@ -157,8 +162,8 @@ class _AddOrderFormState extends State<AddOrderForm> {
               children: [
                 BillForm(),
                 InputTextCard(
-                  hintText: "ادخل الاسم الاول",
-                  type: "الاسم الاول",
+                  hintText: "ادخل الاسم الكامل",
+                  type: "الاسم",
                   initialText: firstName,
                   onChange: (value) {
                     firstName = value;
@@ -169,12 +174,9 @@ class _AddOrderFormState extends State<AddOrderForm> {
                   thickness: 1,
                 ),
                 InputTextCard(
-                  hintText: "ادخل الاسم الاخير",
-                  type: "الاسم الاخير",
-                  initialText: lastName,
-                  onChange: (value) {
-                    lastName = value;
-                  },
+                  type: "الدولة",
+                  initialText: "المملكة العربية السعودية",
+                  readOnly: true,
                 ),
                 const Divider(
                   color: Colors.blueGrey,
@@ -220,7 +222,7 @@ class _AddOrderFormState extends State<AddOrderForm> {
                   type: "الهاتف",
                   initialText: phoneNumber,
                   //hintText: phoneNumber,
-                  readOnly: true,
+                  //readOnly: true,
                 ),
                 const Divider(
                   color: Colors.blueGrey,
@@ -249,6 +251,22 @@ class _AddOrderFormState extends State<AddOrderForm> {
                   onChange: (value) {
                     paymentMethod = value;
                   },
+                ),
+                const Divider(
+                  color: Colors.blueGrey,
+                  thickness: 1,
+                ),
+                const Text(
+                  "تنويه : يتم الشحن ما بين 3 ايام الى 7 ايام",
+                  overflow: TextOverflow.fade,
+                  textDirection: TextDirection.rtl,
+                  style: TextStyle(
+                    fontFamily: ArabicFonts.Cairo,
+                    package: 'google_fonts_arabic',
+                    fontSize: 17,
+                    color: Colors.black,
+                  ),
+                  softWrap: true,
                 ),
                 const Divider(
                   color: Colors.blueGrey,
