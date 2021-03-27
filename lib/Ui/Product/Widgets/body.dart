@@ -94,8 +94,6 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    print("widget.productModel.attributes");
-    print(widget.productModel.attributes.length);
     return Container(
       child: Column(
         children: [

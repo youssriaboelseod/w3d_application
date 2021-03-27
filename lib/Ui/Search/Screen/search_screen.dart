@@ -33,16 +33,14 @@ class SearchScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
+      backgroundColor: Colors.grey[200],
       appBar: buildAppBar(context),
       drawer: DrawerApp(),
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).requestFocus(new FocusNode());
         },
-        child: Container(
-          color: Colors.grey[200],
-          child: Body(),
-        ),
+        child: Body(),
       ),
       bottomNavigationBar: buildBottomNavigationBar(context),
     );

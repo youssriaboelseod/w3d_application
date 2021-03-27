@@ -21,12 +21,7 @@ class FavouritesScreen extends StatelessWidget {
       key: _scaffoldKey,
       appBar: buildAppBar(context),
       backgroundColor: Colors.grey[200],
-      body: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).requestFocus(new FocusNode());
-        },
-        child: Body(),
-      ),
+      body: Body(),
     );
   }
 

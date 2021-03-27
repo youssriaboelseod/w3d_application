@@ -11,7 +11,7 @@ import 'package:google_fonts_arabic/fonts.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class OrderDesignScreen extends StatefulWidget {
-  static const routeName = "/design_screen";
+  static const routeName = "/order_design_screen";
   @override
   _OrderDesignScreenState createState() => _OrderDesignScreenState();
 }
@@ -30,6 +30,7 @@ class _OrderDesignScreenState extends State<OrderDesignScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(context),
+      backgroundColor: Colors.grey[200],
       // We're using a Builder here so we have a context that is below the Scaffold
       // to allow calling Scaffold.of(context) so we can show a snackbar.
       body: Builder(builder: (BuildContext context) {

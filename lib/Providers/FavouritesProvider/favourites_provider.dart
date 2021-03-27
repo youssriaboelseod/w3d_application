@@ -45,6 +45,7 @@ class FavouritesProvider with ChangeNotifier {
       return false;
     } else {
       favouriteProductsIds.clear();
+      favouriteProducts.clear();
       outList.forEach((element) async {
         favouriteProductsIds.add(
           element["productId"],
