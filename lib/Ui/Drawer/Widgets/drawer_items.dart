@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import '../../Favourites/Screen/favourites_screen.dart';
 import '../../1MainHelper/Snacks/snackbar.dart';
-import '../../MyProducts/Screen/my_products_screen.dart';
+import '../../Authentication/Login_Or_Signup/Screen/login_or_signup_screen.dart';
 import '../../MyOrders/Screen/my_orders_screen.dart';
 import '../../../Providers/AuthDataProvider/auth_data_provider.dart';
 import '../../../Ui/Profile/Screen/profile_screen.dart';
@@ -95,78 +95,6 @@ class DrawerItems extends StatelessWidget {
                           }
                           Navigator.of(context)
                               .pushNamed(MyOrdersScreen.routeName);
-                        },
-                      ),
-                    ],
-                  ),
-                  const Divider(
-                    thickness: 3,
-                    color: Colors.black38,
-                    indent: 15,
-                    endIndent: 60,
-                  ),
-                  Row(
-                    children: [
-                      FlatButton.icon(
-                        icon: const Icon(
-                          Icons.location_city,
-                          color: Colors.white,
-                        ),
-                        label: Text(
-                          "العناوين",
-                          style: TextStyle(
-                            fontSize: _fontSize,
-                            color: Colors.white,
-                          ),
-                          textScaleFactor: 1,
-                        ),
-                        onPressed: () {
-                          if (!checkIfSignedIn) {
-                            showTopSnackBar(
-                              context: context,
-                              body: "من فضلك قم بالتسجيل اولا",
-                              title: "تنبيه",
-                            );
-                            return;
-                          }
-                          Navigator.of(context)
-                              .pushNamed(ProfileScreen.routeName);
-                        },
-                      ),
-                    ],
-                  ),
-                  const Divider(
-                    thickness: 3,
-                    color: Colors.black38,
-                    indent: 15,
-                    endIndent: 60,
-                  ),
-                  Row(
-                    children: [
-                      FlatButton.icon(
-                        icon: const Icon(
-                          Icons.store_mall_directory_outlined,
-                          color: Colors.white,
-                        ),
-                        label: Text(
-                          "منتجاتي",
-                          style: TextStyle(
-                            fontSize: _fontSize,
-                            color: Colors.white,
-                          ),
-                          textScaleFactor: 1,
-                        ),
-                        onPressed: () {
-                          if (!checkIfSignedIn) {
-                            showTopSnackBar(
-                              context: context,
-                              body: "من فضلك قم بالتسجيل اولا",
-                              title: "تنبيه",
-                            );
-                            return;
-                          }
-                          Navigator.of(context)
-                              .pushNamed(MyProductsScreen.routeName);
                         },
                       ),
                     ],
@@ -337,16 +265,36 @@ class DrawerItems extends StatelessWidget {
                       ),
                     ],
                   ),
+                  const Divider(
+                    thickness: 3,
+                    color: Colors.black38,
+                    indent: 15,
+                    endIndent: 60,
+                  ),
                   !checkIfSignedIn
-                      ? Container()
-                      : const Divider(
-                          thickness: 3,
-                          color: Colors.black38,
-                          indent: 15,
-                          endIndent: 60,
-                        ),
-                  !checkIfSignedIn
-                      ? Container()
+                      ? Row(
+                          children: [
+                            FlatButton.icon(
+                              icon: const Icon(
+                                Icons.logout,
+                                color: Colors.white,
+                              ),
+                              label: Text(
+                                "تسجيل الدخول",
+                                style: TextStyle(
+                                  fontSize: _fontSize,
+                                  color: Colors.white,
+                                ),
+                                textScaleFactor: 1,
+                              ),
+                              onPressed: () async {
+                                Navigator.of(context).pushNamed(
+                                  LoginOrSignupScreen.routeName,
+                                );
+                              },
+                            ),
+                          ],
+                        )
                       : Row(
                           children: [
                             FlatButton.icon(
@@ -372,9 +320,13 @@ class DrawerItems extends StatelessWidget {
                                 }
                                 // state = true --> we will fetch data
                                 // state = false --> we don't need to fetch data
-                                Navigator.of(context).pushReplacementNamed(
-                                  StartAppScreen.routeName,
-                                  arguments: false,
+                                Navigator.of(context).pushReplacement(
+                                  new MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        new StartAppScreen(
+                                      state: false,
+                                    ),
+                                  ),
                                 );
                               },
                             ),

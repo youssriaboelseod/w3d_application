@@ -311,6 +311,20 @@ class ProductsProvider with ChangeNotifier {
     return fetchedProduct;
   }
 
+  Future<List<WooProduct>> getProductByName(String searchValue) async {
+    try {
+      List<WooProduct> fetchedProductsList = [];
+      fetchedProductsList = await woocommerce.getProducts(
+        search: searchValue,
+      );
+      return fetchedProductsList;
+    } on SocketException catch (_) {
+      return [];
+    } catch (e) {
+      return [];
+    }
+  }
+
   void resetVendorProducts() {
     vendorPageNumber = 1;
     vendorProducts.clear();

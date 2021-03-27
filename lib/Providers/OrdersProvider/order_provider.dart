@@ -93,6 +93,7 @@ class OrdersProvider with ChangeNotifier {
         city: city,
         address1: address,
         state: location,
+        address2: phoneNumber,
         country: "المملكة العربية السعودية",
       );
       WooOrderPayloadBilling billing = WooOrderPayloadBilling(
@@ -100,6 +101,7 @@ class OrdersProvider with ChangeNotifier {
         lastName: lastName,
         city: city,
         address1: address,
+        address2: phoneNumber,
         state: location,
         country: "المملكة العربية السعودية",
       );

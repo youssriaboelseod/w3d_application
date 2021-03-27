@@ -12,8 +12,14 @@ class Body extends StatelessWidget {
   Future<void> futureFn(BuildContext context) async {
     // state = null --> we will fetch data
     // state = false --> we don't need to fetch data
+
     if (state != null) {
-      Navigator.of(context).pushReplacementNamed(LoginOrSignupScreen.routeName);
+      Future.delayed(Duration.zero, () {
+        Navigator.of(context).pushReplacementNamed(
+          LoginOrSignupScreen.routeName,
+        );
+      });
+
       return;
     }
     bool checkSignedIn;

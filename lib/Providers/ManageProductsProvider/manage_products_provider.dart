@@ -99,6 +99,8 @@ class ManageProductsProvider with ChangeNotifier {
       print(response.statusCode);
       //print(response.body);
       if (response.statusCode == 200) {
+        final outputProdcut = json.decode(response.body);
+        print(outputProdcut);
         return null;
       } else {
         return "لقد حدث خطأ";
@@ -226,8 +228,10 @@ class ManageProductsProvider with ChangeNotifier {
       );
 
       print(response.statusCode);
-      print(response.body);
+      // print(response.body);
       if (response.statusCode == 200) {
+        final outputProdcut = json.decode(response.body);
+        print(outputProdcut);
         return null;
       } else {
         return "لقد حدث خطأ";

@@ -19,7 +19,7 @@ Future<String> addProductFn({
   String phoneNumber = Provider.of<AuthDataProvider>(context, listen: false)
       .currentUser
       .phoneNumber;
-  if (phoneNumber.isEmpty) {
+  if (phoneNumber.isNotEmpty) {
     return "من فضلك قم باضافة رقم هاتفك اولا , لكي يستطيع المشتري ان يتواصل معك";
   }
   //
@@ -32,7 +32,9 @@ Future<String> addProductFn({
     "categories": [
       categoryId,
     ],
-    "external_url": phoneNumber,
+    "external_url": "https://wsend.co/" + "+201024696049", // phoneNumber,
+
+    "button_text": "للتواصل",
   };
   int counter = 0;
   List<String> imagesUrl = [];

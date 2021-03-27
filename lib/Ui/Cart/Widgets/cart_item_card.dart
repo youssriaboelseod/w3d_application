@@ -248,9 +248,12 @@ class DetailsCard extends StatelessWidget {
       color: Color(0xFFecf0f0),
       child: GestureDetector(
         onTap: () {
-          Navigator.of(context).pushNamed(
-            ProductScreen.routeName,
-            arguments: product,
+          Navigator.of(context).push(
+            new MaterialPageRoute(
+              builder: (BuildContext context) => new ProductScreen(
+                productModel: product,
+              ),
+            ),
           );
         },
         child: Card(

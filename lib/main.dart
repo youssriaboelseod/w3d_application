@@ -133,7 +133,9 @@ class MyApp extends StatelessWidget {
           DesignScreen.routeName: (ctx) => DesignScreen(),
           OrderDesignScreen.routeName: (ctx) => OrderDesignScreen(),
         },
-        home: StartAppScreen(),
+        home: StartAppScreen(
+          state: null,
+        ),
       ),
     );
   }

@@ -13,8 +13,8 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  List<WooProduct> allProducts = [];
   List<WooProduct> searchProducts = [];
+  bool _isLoading = false;
   @override
   void initState() {
     super.initState();
@@ -22,22 +22,22 @@ class _BodyState extends State<Body> {
 
   String searchValue = "";
 
-  void search() {
-    allProducts = Provider.of<ProductsProvider>(context, listen: false)
-        .getProductsByCategory(
-      categoryId: "0",
-    );
-
-    searchProducts.clear();
+  void search() async {
     if (searchValue.isEmpty) {
-      searchProducts = allProducts;
       return;
     }
-
-    allProducts.forEach((element) {
-      if (element.name.toLowerCase().contains(searchValue.toLowerCase())) {
-        searchProducts.add(element);
-      }
+    setState(() {
+      _isLoading = true;
+    });
+    //
+    searchProducts.clear();
+    searchProducts = await Provider.of<ProductsProvider>(
+      context,
+      listen: false,
+    ).getProductByName(searchValue);
+    //
+    setState(() {
+      _isLoading = false;
     });
   }
 
@@ -46,41 +46,47 @@ class _BodyState extends State<Body> {
     Size size = MediaQuery.of(context).size;
     double ratio = getRatio(size.width);
 
-    // Perform search
-    search();
     return Column(
       children: [
         SearchCard(
-          onChange: (value) {
-            setState(
-              () {
-                searchValue = value;
-              },
-            );
+          onChange: (value) async {
+            searchValue = value;
+            search();
           },
         ),
-        Expanded(
-          child: GridView.builder(
-            padding: const EdgeInsets.all(2),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: ratio,
-              crossAxisSpacing: 2,
-              mainAxisSpacing: 2,
-            ),
-            shrinkWrap: true,
-            primary: false,
-            itemCount: searchProducts.length,
-            itemBuilder: (context, index) {
-              return ProductItemGrid(
-                product: searchProducts[index],
-                key: ValueKey(
-                  searchProducts[index].id,
+        _isLoading
+            ? Padding(
+                padding: const EdgeInsets.only(
+                  top: 30,
                 ),
-              );
-            },
-          ),
-        ),
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    Colors.black,
+                  ),
+                ),
+              )
+            : Expanded(
+                child: GridView.builder(
+                  padding: const EdgeInsets.all(2),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: ratio,
+                    crossAxisSpacing: 2,
+                    mainAxisSpacing: 2,
+                  ),
+                  shrinkWrap: true,
+                  primary: false,
+                  itemCount: searchProducts.length,
+                  itemBuilder: (context, index) {
+                    return ProductItemGrid(
+                      product: searchProducts[index],
+                      key: ValueKey(
+                        searchProducts[index].id,
+                      ),
+                    );
+                  },
+                ),
+              ),
       ],
     );
   }

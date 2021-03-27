@@ -94,6 +94,9 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
+    print("--------- My product Data -----------");
+    print(widget.productModel.id);
+    print("--------- That is it -----------");
     return Container(
       child: Column(
         children: [
@@ -138,6 +141,7 @@ class _BodyState extends State<Body> {
                       children: [
                         OptionsButton(
                           options: e.options,
+                          productModel: widget.productModel,
                           onChangeValue: (value) {
                             if (e.name == "اللون") {
                               attributePaColor = value;
