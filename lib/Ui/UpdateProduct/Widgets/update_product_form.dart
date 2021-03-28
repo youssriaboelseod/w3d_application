@@ -10,7 +10,6 @@ import 'input_text_card.dart';
 
 import 'input_double_card.dart';
 
-import 'image_picker_card.dart';
 import 'buttons.dart';
 import '../Functions/update_product.dart';
 import '../../../Models/Product/product_model.dart';

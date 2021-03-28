@@ -4,12 +4,9 @@ import 'package:woocommerce/models/products.dart';
 import 'description_card.dart';
 import 'package:provider/provider.dart';
 import '../../../Providers/CartProvider/cart_provider.dart';
-import '../../../Models/Cart/cart_model.dart';
+
 import '../../1MainHelper/Snacks/snackbar.dart';
-import '../Functions/add_to_cart.dart';
-import '../../../Models/Product/product_model.dart';
-import 'order_button.dart';
-import 'options_card.dart';
+
 import '../../1MainHelper/Helpers/helper.dart';
 import 'image_switcher_card.dart';
 
@@ -19,9 +16,8 @@ import '../../../Providers/AuthDataProvider/auth_data_provider.dart';
 
 import '../Widgets/title_card.dart';
 
-import '../../1MainHelper/Helpers/helper.dart';
+import '../../1MainHelper/Alerts/alerts.dart';
 import 'contact_button.dart';
-import '../Functions/order_now.dart';
 
 class Body extends StatefulWidget {
   final WooProduct productModel;
@@ -34,8 +30,8 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   int selectedQuantityValue = 1;
-  String selectedPaperSize = "S";
-
+  String newPrice = "";
+  String newRegularPrice = "";
   String attributePaColor = ""; // id = 7
   String attributePaSex = ""; // id = 6
   String attributePaSize = ""; // id = 5
@@ -43,6 +39,10 @@ class _BodyState extends State<Body> {
 
   @override
   void initState() {
+    newPrice = widget.productModel.price;
+
+    newRegularPrice = widget.productModel.regularPrice;
+
     super.initState();
   }
 
@@ -58,6 +58,14 @@ class _BodyState extends State<Body> {
         body: "من فضلك قم بالتسجيل اولا",
         title: "تنبيه",
       );
+      return;
+    }
+    if (selectedQuantityValue > widget.productModel.stockQuantity) {
+      showAlertNoAction(
+        context: context,
+        message: "الكمية المتاحة فقط ${widget.productModel.stockQuantity}",
+      );
+
       return;
     }
 
@@ -96,7 +104,35 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     print("--------- My product Data -----------");
     print(widget.productModel.id);
+    print("-------  rating ------");
+    print(widget.productModel.averageRating);
+    print("------- expiry  ------");
+    print(widget.productModel.downloadExpiry);
+    print("------- limit  ------");
+    print(widget.productModel.downloadLimit);
+
+    print("-------  purchasable ------");
+    print(widget.productModel.purchasable);
+    print("------- rating count  ------");
+    print(widget.productModel.ratingCount);
+    print("-------  stock quantity ------");
+    print(widget.productModel.stockQuantity);
+    print("-------  status ------");
+    print(widget.productModel.status);
+
+    print("------- total sales  ------");
+    print(widget.productModel.totalSales);
+
+    print("------- averageRating  ------");
+    print(widget.productModel.averageRating);
+
+    print("------- reviewsAllowed  ------");
+    print(widget.productModel.reviewsAllowed);
+    print("------- price html  ------");
+    print(widget.productModel.priceHtml);
+
     print("--------- That is it -----------");
+
     return Container(
       child: Column(
         children: [
@@ -131,6 +167,8 @@ class _BodyState extends State<Body> {
                 children: [
                   TitleCard(
                     productModel: widget.productModel,
+                    newPrice: newPrice,
+                    newRegularPrice: newRegularPrice,
                   ),
                   Divider(
                     color: Colors.grey,
@@ -152,6 +190,13 @@ class _BodyState extends State<Body> {
                             }
                           },
                           title: e.name,
+                          onChangePrice: (value) {
+                            setState(() {});
+                            newPrice = value;
+                          },
+                          onChangeRegularPrice: (value) {
+                            newRegularPrice = value;
+                          },
                         ),
                         Divider(
                           color: Colors.grey,

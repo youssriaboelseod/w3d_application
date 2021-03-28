@@ -1,5 +1,6 @@
 import 'dart:io';
-
+import 'package:provider/provider.dart';
+import '../AuthDataProvider/auth_data_provider.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter/material.dart';
@@ -60,6 +61,60 @@ class ProductsProvider with ChangeNotifier {
       return false;
     }
     return true;
+  }
+
+  Future<void> getSellerName({String productId, BuildContext context}) async {
+    // Check internet connection
+    bool check = await checkInternetConnection();
+
+    if (!check) {
+      return "No internet connection!";
+    }
+    try {
+      //"https://050saa.com/wp-json/wc/v3/products/$productId"
+
+      String url = "https://050saa.com/wp-json/wc/v3/products/$productId";
+
+      http.Response response;
+
+      String username = Provider.of<AuthDataProvider>(context, listen: false)
+          .currentUser
+          .userName;
+      String password = Provider.of<AuthDataProvider>(context, listen: false)
+          .currentUser
+          .password;
+
+      String basicAuth =
+          'Basic ' + base64Encode(utf8.encode('$username:$password'));
+      print(basicAuth);
+
+      final Map<String, String> headerCreate = {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'authorization': basicAuth,
+      };
+
+      response = await http.get(
+        url,
+        headers: headerCreate,
+      );
+      print(response.statusCode);
+      //print(response.body);
+      if (response.statusCode == 200) {
+        final outputProduct = json.decode(response.body);
+        //print(outputProduct);
+        print(outputProduct["post_author"]);
+        print(outputProduct['vendor_name']);
+        print(outputProduct['vendor_id']);
+
+        return;
+      } else {
+        return;
+      }
+    } on SocketException catch (_) {
+      return "No internet connection!";
+    } catch (e) {
+      return "Database problem";
+    }
   }
 
   Future<String> fetchAndSetProductsForHomePage() async {

@@ -8,6 +8,8 @@ class OptionsButton extends StatefulWidget {
   final WooProduct productModel;
   final List<String> options;
   final ValueChanged<String> onChangeValue;
+  final ValueChanged<String> onChangePrice;
+  final ValueChanged<String> onChangeRegularPrice;
 
   OptionsButton({
     Key key,
@@ -15,6 +17,8 @@ class OptionsButton extends StatefulWidget {
     this.options,
     this.onChangeValue,
     this.productModel,
+    this.onChangePrice,
+    this.onChangeRegularPrice,
   }) : super(key: key);
 
   @override
@@ -119,6 +123,8 @@ class _OptionsButtonState extends State<OptionsButton> {
                                 e["attributes"][0]["option"].toString()) {
                               price = e["price"].toString();
                               regularPrice = e["regular_price"].toString();
+                              widget.onChangePrice(price);
+                              widget.onChangeRegularPrice(regularPrice);
                             }
                           }
                         });
@@ -172,8 +178,7 @@ class _OptionsButtonState extends State<OptionsButton> {
           _isLoading
               ? Padding(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 4,
+                    vertical: 6,
                   ),
                   child: CircularProgressIndicator(
                     valueColor: AlwaysStoppedAnimation<Color>(
@@ -181,50 +186,7 @@ class _OptionsButtonState extends State<OptionsButton> {
                     ),
                   ),
                 )
-              : Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Spacer(),
-                    (price != regularPrice)
-                        ? regularPrice.isEmpty
-                            ? Container()
-                            : Text(
-                                regularPrice + "  ر.س",
-                                textAlign: TextAlign.center,
-                                maxLines: 1,
-                                textDirection: TextDirection.rtl,
-                                textScaleFactor: 1,
-                                style: TextStyle(
-                                  fontFamily: ArabicFonts.Cairo,
-                                  package: 'google_fonts_arabic',
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                  decoration: TextDecoration.lineThrough,
-                                ),
-                              )
-                        : Container(),
-                    price.isEmpty
-                        ? Container()
-                        : SizedBox(
-                            width: 15,
-                          ),
-                    price.isEmpty
-                        ? Container()
-                        : Text(
-                            price + "  ر.س",
-                            textAlign: TextAlign.center,
-                            maxLines: 1,
-                            textDirection: TextDirection.rtl,
-                            textScaleFactor: 1,
-                            style: TextStyle(
-                              fontFamily: ArabicFonts.Cairo,
-                              package: 'google_fonts_arabic',
-                              fontSize: 18,
-                              color: Colors.black,
-                            ),
-                          ),
-                  ],
-                ),
+              : Container()
         ],
       ),
     );

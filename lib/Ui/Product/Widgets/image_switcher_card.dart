@@ -82,32 +82,6 @@ class ImageSwitcherCard extends StatelessWidget {
   }
 }
 
-class Background extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: 280,
-      margin: EdgeInsets.only(
-        top: 10,
-      ),
-      child: Card(
-        elevation: 3,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(7),
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(7),
-          child: Image.asset(
-            "assets/products_background/3.jpg",
-            fit: BoxFit.fill,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class ImageAnimation extends StatelessWidget {
   final List<String> imagesUrls;
   final int index;

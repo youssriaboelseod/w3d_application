@@ -38,11 +38,6 @@ class MyProductsScreen extends StatelessWidget {
 
   Future<void> fetchProductsForFirstTime(BuildContext context) async {
     Provider.of<ProductsProvider>(context, listen: false).resetVendorProducts();
-    List<WooProduct> products =
-        Provider.of<ProductsProvider>(context, listen: false).vendorProducts;
-    if (products.length > 0) {
-      return;
-    }
 
     String userId =
         Provider.of<AuthDataProvider>(context, listen: false).currentUser.id;
