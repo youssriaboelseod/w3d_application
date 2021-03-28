@@ -6,10 +6,10 @@ import '../../Authentication/Login_Or_Signup/Screen/login_or_signup_screen.dart'
 import '../../MyOrders/Screen/my_orders_screen.dart';
 import '../../../Providers/AuthDataProvider/auth_data_provider.dart';
 import '../../../Ui/Profile/Screen/profile_screen.dart';
-import '../../StartApp/Screen/start_app_screen.dart';
+
 import '../../PaymentMethods/Screen/payment_methods_screen.dart';
-import '../../Design/Screen/design_screen.dart';
-import '../../OrderDesign/Screen/order_design_screen.dart';
+
+import '../../../Providers/CartProvider/cart_provider.dart';
 import 'package:provider/provider.dart';
 import '../Functions/drawer_functions.dart';
 
@@ -149,6 +149,14 @@ class DrawerItems extends StatelessWidget {
                           textScaleFactor: 1,
                         ),
                         onPressed: () {
+                          if (!checkIfSignedIn) {
+                            showTopSnackBar(
+                              context: context,
+                              body: "من فضلك قم بالتسجيل اولا",
+                              title: "تنبيه",
+                            );
+                            return;
+                          }
                           Navigator.of(context)
                               .pushNamed(FavouritesScreen.routeName);
                         },
@@ -258,19 +266,17 @@ class DrawerItems extends StatelessWidget {
                                 await Provider.of<AuthDataProvider>(context,
                                         listen: false)
                                     .clearAuthDataTable();
+                                await Provider.of<CartProvider>(context,
+                                        listen: false)
+                                    .clearCart();
 
                                 while (Navigator.canPop(context)) {
                                   Navigator.pop(context);
                                 }
                                 // state = true --> we will fetch data
                                 // state = false --> we don't need to fetch data
-                                Navigator.of(context).pushReplacement(
-                                  new MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        new StartAppScreen(
-                                      state: false,
-                                    ),
-                                  ),
+                                Navigator.of(context).pushReplacementNamed(
+                                  LoginOrSignupScreen.routeName,
                                 );
                               },
                             ),

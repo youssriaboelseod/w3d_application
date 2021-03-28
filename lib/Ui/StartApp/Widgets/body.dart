@@ -13,15 +13,6 @@ class Body extends StatelessWidget {
     // state = null --> we will fetch data
     // state = false --> we don't need to fetch data
 
-    if (state != null) {
-      Future.delayed(Duration.zero, () {
-        Navigator.of(context).pushReplacementNamed(
-          LoginOrSignupScreen.routeName,
-        );
-      });
-
-      return;
-    }
     bool checkSignedIn;
     checkSignedIn = await startApp(context);
 
