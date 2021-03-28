@@ -117,7 +117,11 @@ class _OptionsButtonState extends State<OptionsButton> {
                       // [{id: 5, name: المقاس, option: XL}]
 
                       if (output != null) {
+                        print("output");
+                        print(output);
+
                         output.forEach((e) {
+                          print(e["attributes"].length);
                           if (e["attributes"].length != 0) {
                             if (dropdownValue ==
                                 e["attributes"][0]["option"].toString()) {

@@ -57,6 +57,7 @@ dependencies:
   dio: ^3.0.10
   date_format: ^1.0.2
   webview_flutter: ^1.0.0
+  flutter_rating_bar: ^3.0.0
 
   
 

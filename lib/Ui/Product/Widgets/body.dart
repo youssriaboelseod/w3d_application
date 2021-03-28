@@ -206,16 +206,9 @@ class _BodyState extends State<Body> {
                   ? ContactButton(
                       product: widget.productModel,
                     )
-                  : RaisedButton(
-                      onPressed: () async {
-                        await Provider.of<ReviewsProvider>(context,
-                                listen: false)
-                            .getProductReviews(
-                          productId: widget.productModel.id,
-                        );
-                      },
-                      child: Text("555"),
-                    )
+                  : AddToCartButton(
+                      function: addToCartFunction,
+                    ),
         ],
       ),
     );
@@ -224,3 +217,13 @@ class _BodyState extends State<Body> {
 //AddToCartButton(
 //                   function: addToCartFunction,
 //               ),
+//RaisedButton(
+//                    onPressed: () async {
+// //                   await Provider.of<ReviewsProvider>(context,
+//                       listen: false)
+//                 .getProductReviews(
+//             productId: widget.productModel.id,
+//        );
+//    },
+//  child: Text("555"),
+//)

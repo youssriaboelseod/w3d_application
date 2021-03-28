@@ -46,7 +46,7 @@ class ReviewsProvider with ChangeNotifier {
       print(productId);
 
       String url =
-          "https://050saa.com/wp-json/wc/v3/products/reviews/?product_id=$productId";
+          "https://050saa.com/wp-json/wc/v3/products/reviews?product_id=$productId";
 
       final Map<String, String> headerCreate = {
         'Content-Type': 'application/json; charset=UTF-8',
@@ -63,10 +63,6 @@ class ReviewsProvider with ChangeNotifier {
         final outputProduct = json.decode(response.body);
         print(outputProduct);
         print(outputProduct.length);
-        outputProduct.forEach((k, v) {
-          print(k);
-          print(v);
-        });
 
         return [];
       } else {
@@ -79,53 +75,57 @@ class ReviewsProvider with ChangeNotifier {
     }
   }
 
-  Future<List<WooProductReview>> createReview(
-      {int productId, BuildContext context, String review}) async {
+  Future<String> createReview(
+      {int productId, BuildContext context, String review, int rating}) async {
     // Check internet connection
     bool check = await checkInternetConnection();
 
     if (!check) {
-      return null;
+      return "لايوجد لديك اتصال بالانترنت";
     }
     try {
+      String userName = Provider.of<AuthDataProvider>(context, listen: false)
+          .currentUser
+          .userName;
+      String email = Provider.of<AuthDataProvider>(context, listen: false)
+          .currentUser
+          .email;
+
+      Map body = {
+        'product_id': productId,
+        'review': review,
+        'reviewer': userName,
+        'reviewer_email': email,
+        'rating': rating,
+      };
       http.Response response;
 
       String basicAuth =
           'Basic ' + base64Encode(utf8.encode('$username:$password'));
-      print(basicAuth);
-      print(productId);
 
-      String url =
-          "https://050saa.com/wp-json/wc/v3/products/reviews/?product_id=$productId";
+      String url = "https://050saa.com/wp-json/wc/v3/products/reviews";
 
       final Map<String, String> headerCreate = {
         'Content-Type': 'application/json; charset=UTF-8',
         'authorization': basicAuth,
       };
 
-      response = await http.get(
+      response = await http.post(
         url,
         headers: headerCreate,
+        body: json.encode(body),
       );
       print("Status Code: " + response.statusCode.toString());
 
-      if (response.statusCode == 200) {
-        final outputProduct = json.decode(response.body);
-        print(outputProduct);
-        print(outputProduct.length);
-        outputProduct.forEach((k, v) {
-          print(k);
-          print(v);
-        });
-
-        return [];
-      } else {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         return null;
+      } else {
+        return "لقد حدث خطأ من فضلك حاول مرة اخرى";
       }
     } on SocketException catch (_) {
-      return [];
+      return "لايوجد لديك اتصال بالانترنت";
     } catch (e) {
-      return [];
+      return "لقد حدث خطأ من فضلك حاول مرة اخرى";
     }
   }
 }

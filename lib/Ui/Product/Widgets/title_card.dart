@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:w3d/Providers/ProductsProvider/products_provider.dart';
+import 'package:w3d/Ui/Product/Functions/add_review.dart';
 import 'package:w3d/Ui/Product/Widgets/rating_stars.dart';
 import 'package:w3d/Ui/Seller/Screen/seller_products_screen.dart';
 import 'package:woocommerce/woocommerce.dart';
@@ -111,11 +112,45 @@ class TitleCard extends StatelessWidget {
               ],
             ),
           ),
-          productModel.ratingCount == null
-              ? Container()
-              : RatingStars(
-                  number: productModel.ratingCount,
-                ),
+          Directionality(
+            textDirection: TextDirection.rtl,
+            child: Row(
+              children: [
+                productModel.ratingCount == null
+                    ? Container()
+                    : RatingStars(
+                        number: productModel.ratingCount,
+                      ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 8,
+                    left: 8,
+                    right: 15,
+                    bottom: 8,
+                  ),
+                  child: GestureDetector(
+                    onTap: () {
+                      showAddReviewForm(
+                        context: context,
+                        productId: productModel.id,
+                      );
+                    },
+                    child: Text(
+                      "اضف تقيمك",
+                      textDirection: TextDirection.rtl,
+                      textScaleFactor: 1,
+                      style: TextStyle(
+                        fontFamily: ArabicFonts.Cairo,
+                        package: 'google_fonts_arabic',
+                        fontSize: 18,
+                        color: Colors.blueGrey,
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
           !showPurchaseQuantity
               ? Container()
               : Directionality(
@@ -204,7 +239,7 @@ class TitleCard extends StatelessWidget {
                         textDirection: TextDirection.rtl,
                         child: Row(
                           children: [
-                            Text(
+                            const Text(
                               "بواسطة : ",
                               maxLines: 1,
                               textDirection: TextDirection.rtl,
@@ -216,7 +251,7 @@ class TitleCard extends StatelessWidget {
                                 color: Colors.black,
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 8,
                             ),
                             GestureDetector(
