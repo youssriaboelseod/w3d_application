@@ -13,13 +13,8 @@ import 'Ui/MyProducts/Screen/my_products_screen.dart';
 import 'Providers/SlidersProvider/slider_provider.dart';
 import 'Providers/FavouritesProvider/favourites_provider.dart';
 import 'Ui/Favourites/Screen/favourites_screen.dart';
-import 'CustomerService/Ui/Main/Screen/main_screen.dart';
 import 'Ui/Store/Screen/store_screen.dart';
 import 'Ui/Product/Screen/product_screen.dart';
-import 'CustomerService/Ui/Opps/Screen/opps_screen.dart';
-import 'CustomerService/providers/upload_message_provider.dart';
-import 'CustomerService/providers/user_provider.dart';
-import 'CustomerService/Ui/Chat/Screen/chat_screen.dart';
 import 'Providers/AppConfigurationsProvider/app_configurations_provider.dart';
 import 'Providers/AuthDataProvider/auth_data_provider.dart';
 import 'Ui/Authentication/Login/Screen/login_screen.dart';
@@ -34,7 +29,6 @@ import 'Ui/Profile/Screen/profile_screen.dart';
 import 'Ui/Cart/Screen/cart_screen.dart';
 import 'Ui/StartApp/Screen/start_app_screen.dart';
 import 'package:provider/provider.dart';
-import 'CustomerService/Ui/Waiting/Screen/waiting_screen.dart';
 import 'Ui/UpdateProduct/Screen/update_product_screen.dart';
 import 'Ui/Search/Screen/search_screen.dart';
 
@@ -51,13 +45,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        // Customer Serivce
-        ChangeNotifierProvider(
-          create: (_) => UserProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => UploadMessageProvider(),
-        ),
         // App database
         ChangeNotifierProvider(
           create: (_) => AppConfigurationsProvider(),
@@ -102,15 +89,6 @@ class MyApp extends StatelessWidget {
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         routes: {
-          // Customer Serivce
-          ChatScreen.routeName: (ctx) => ChatScreen(),
-          CustomerServiceMainScreen.routeName: (ctx) =>
-              CustomerServiceMainScreen(),
-          CustomerServiceOppsScreen.routeName: (ctx) =>
-              CustomerServiceOppsScreen(),
-
-          CustomerServiceWaitingScreen.routeName: (ctx) =>
-              CustomerServiceWaitingScreen(),
           // Authentication
           LoginOrSignupScreen.routeName: (ctx) => LoginOrSignupScreen(),
           LoginScreen.routeName: (ctx) => LoginScreen(),
