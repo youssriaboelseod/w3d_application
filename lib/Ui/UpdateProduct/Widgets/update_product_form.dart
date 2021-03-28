@@ -1,20 +1,17 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:w3d/Ui/1MainHelper/Alerts/alerts.dart';
-import 'package:w3d/Ui/1MainHelper/Helpers/helper.dart';
-import 'package:w3d/Ui/1MainHelper/Snacks/snackbar.dart';
 import 'package:woocommerce/models/products.dart';
 import 'package:html/parser.dart' show parse;
+//
 import 'input_text_card.dart';
-
 import 'input_double_card.dart';
-
 import 'buttons.dart';
 import '../Functions/update_product.dart';
-import '../../../Models/Product/product_model.dart';
 import 'multi_select_images_card.dart';
 import 'options_button.dart';
+import '../../1MainHelper/Alerts/alerts.dart';
+import '../../1MainHelper/Helpers/helper.dart';
+import '../../1MainHelper/Snacks/snackbar.dart';
 
 // ignore: must_be_immutable
 class UpdateProductForm extends StatefulWidget {

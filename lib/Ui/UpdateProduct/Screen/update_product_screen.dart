@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:woocommerce/models/products.dart';
 //
 import '../Widgets/update_product_form.dart';
-import '../../../Models/Product/product_model.dart';
 
 class UpdateProductScreen extends StatelessWidget {
   final WooProduct product;

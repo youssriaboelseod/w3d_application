@@ -1,17 +1,15 @@
 import 'dart:io';
-import 'package:w3d/Ui/1MainHelper/Alerts/alerts.dart';
-import 'package:w3d/Ui/1MainHelper/Snacks/snackbar.dart';
-import 'package:w3d/Ui/AddProduct/Widgets/multi_select_images_card.dart';
-
+//
+import 'multi_select_images_card.dart';
 import '../../1MainHelper/Helpers/helper.dart';
 import 'package:flutter/material.dart';
 import 'options_button.dart';
 import '../Widgets/input_text_card.dart';
-
 import 'input_double_card.dart';
-
 import 'buttons.dart';
 import '../Functions/add_product.dart';
+import '../../1MainHelper/Alerts/alerts.dart';
+import '../../1MainHelper/Snacks/snackbar.dart';
 
 class AddProductForm extends StatefulWidget {
   @override

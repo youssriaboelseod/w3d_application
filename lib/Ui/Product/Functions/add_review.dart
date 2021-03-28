@@ -3,9 +3,9 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts_arabic/fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
-import 'package:w3d/Ui/1MainHelper/Alerts/alerts.dart';
-import 'package:w3d/Ui/1MainHelper/Snacks/snackbar.dart';
-
+//
+import '../../1MainHelper/Alerts/alerts.dart';
+import '../../1MainHelper/Snacks/snackbar.dart';
 import '../../../Providers/ReviewsProvider/reviews_provider.dart';
 
 void showAddReviewForm({BuildContext context, int productId}) {
@@ -98,7 +98,7 @@ void showAddReviewForm({BuildContext context, int productId}) {
                     return;
                   }
                   FocusScope.of(context).unfocus();
-                  Navigator.of(context).pop();
+
                   showTopSnackBar(
                     context: context,
                     title: "انتظر لحظات",
@@ -126,6 +126,7 @@ void showAddReviewForm({BuildContext context, int productId}) {
                       title: "رائع",
                       body: "تمت اضافة تقيمك بنجاح",
                     );
+                    Navigator.of(context).pop();
                     return;
                   }
                 },

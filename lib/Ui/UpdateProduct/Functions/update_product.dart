@@ -2,8 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:w3d/Providers/AuthDataProvider/auth_data_provider.dart';
-import 'package:w3d/Providers/ManageProductsProvider/manage_products_provider.dart';
+//
+import '../../../Providers/AuthDataProvider/auth_data_provider.dart';
+import '../../../Providers/ManageProductsProvider/manage_products_provider.dart';
 
 Future<String> updateProductFn({
   BuildContext context,
