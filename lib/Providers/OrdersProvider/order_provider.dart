@@ -44,12 +44,10 @@ class OrdersProvider with ChangeNotifier {
 
     try {
       List<WooOrder> outList = [];
+      print(uid);
       outList = await woocommerce.getOrders(
         customer: int.parse(uid),
       );
-
-      if (outList[0].lineItems[0].variationId ==
-          outList[1].lineItems[0].variationId) {}
 
       return outList;
     } on SocketException catch (_) {
@@ -86,6 +84,7 @@ class OrdersProvider with ChangeNotifier {
         state: location,
         address2: phoneNumber,
         country: "المملكة العربية السعودية",
+        postcode: note,
       );
       WooOrderPayloadBilling billing = WooOrderPayloadBilling(
         firstName: firstName,
@@ -97,6 +96,7 @@ class OrdersProvider with ChangeNotifier {
         email: email,
         phone: phoneNumber,
         country: "المملكة العربية السعودية",
+        postcode: note,
       );
       double totalPrice = 0;
       List<LineItems> lineItems = [];

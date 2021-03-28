@@ -11,11 +11,15 @@ class ContactButton extends StatelessWidget {
   const ContactButton({Key key, @required this.product}) : super(key: key);
 
   whatsAppOpen() async {
-    //"whatsapp://send?phone=218911299270"
+    String myUrl = "";
     print(product.externalUrl);
+    if (product.externalUrl.isNotEmpty) {
+      myUrl = product.externalUrl
+          .replaceAll("https://wsend.co/", "whatsapp://send?phone=");
+    } else {
+      myUrl = product.sku;
+    }
 
-    String myUrl = product.externalUrl
-        .replaceAll("https://wsend.co/", "whatsapp://send?phone=");
     myUrl = myUrl + "&text=P: ${product.permalink}";
     if (await canLaunch(myUrl)) {
       await launch(myUrl, forceSafariVC: false);

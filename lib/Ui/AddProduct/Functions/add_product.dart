@@ -33,9 +33,10 @@ Future<String> addProductFn({
     "categories": [
       categoryId,
     ],
-    "external_url": "https://wsend.co/" + "+201024696049", // phoneNumber,
+    "external_url": "https://wsend.co/" + phoneNumber, // phoneNumber,
 
     "button_text": "للتواصل",
+    "sku": "whatsapp://send?phone=" + phoneNumber,
   };
   int counter = 0;
   List<String> imagesUrl = [];

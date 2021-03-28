@@ -5,6 +5,7 @@ import 'package:woocommerce/models/order_payload.dart';
 import 'package:woocommerce/woocommerce.dart';
 import 'package:provider/provider.dart';
 
+// ignore: must_be_immutable
 class Body extends StatelessWidget {
   List<WooOrder> ordersList = [];
   Future<void> fetchOrders(BuildContext context) async {

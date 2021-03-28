@@ -61,13 +61,15 @@ class _BodyState extends State<Body> {
       );
       return;
     }
-    if (selectedQuantityValue > widget.productModel.stockQuantity) {
-      showAlertNoAction(
-        context: context,
-        message: "الكمية المتاحة فقط ${widget.productModel.stockQuantity}",
-      );
+    if (widget.productModel.stockQuantity != null) {
+      if (selectedQuantityValue > widget.productModel.stockQuantity) {
+        showAlertNoAction(
+          context: context,
+          message: "الكمية المتاحة فقط ${widget.productModel.stockQuantity}",
+        );
 
-      return;
+        return;
+      }
     }
 
     setState(() {
@@ -103,9 +105,6 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    print("--------- My product Data -----------");
-    print("--------- That is it -----------");
-
     return Container(
       child: Column(
         children: [

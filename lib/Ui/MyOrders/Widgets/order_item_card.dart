@@ -47,7 +47,7 @@ class OrderItemCard extends StatelessWidget {
                     alignment: Alignment.center,
                     fit: BoxFit.scaleDown,
                     child: Text(
-                      index.toString(),
+                      (index + 1).toString(),
                       textScaleFactor: 1,
                       style: TextStyle(
                         color: Colors.white,
@@ -102,7 +102,7 @@ class OrderItemCard extends StatelessWidget {
                           fontFamily: ArabicFonts.Cairo,
                           package: 'google_fonts_arabic',
                           fontSize: 18,
-                          color: Colors.redAccent,
+                          color: Colors.blue,
                         ),
                       ),
                     ),
