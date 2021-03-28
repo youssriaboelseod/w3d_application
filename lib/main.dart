@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'Providers/ReviewsProvider/reviews_provider.dart';
 import 'Ui/Design/Screen/design_screen.dart';
 import 'Ui/OrderDesign/Screen/order_design_screen.dart';
 import 'Ui/PaymentMethods/Screen/payment_methods_screen.dart';
@@ -13,6 +14,7 @@ import 'Ui/MyProducts/Screen/my_products_screen.dart';
 import 'Providers/SlidersProvider/slider_provider.dart';
 import 'Providers/FavouritesProvider/favourites_provider.dart';
 import 'Ui/Favourites/Screen/favourites_screen.dart';
+import 'Ui/Seller/Screen/seller_products_screen.dart';
 import 'Ui/Store/Screen/store_screen.dart';
 import 'Ui/Product/Screen/product_screen.dart';
 import 'Providers/AppConfigurationsProvider/app_configurations_provider.dart';
@@ -52,7 +54,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => AuthDataProvider(),
         ),
-        // Categories
+        //
         ChangeNotifierProvider(
           create: (_) => SlidersProvider(),
         ),
@@ -70,6 +72,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => OrdersProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ReviewsProvider(),
         ),
       ],
       child: MaterialApp(
@@ -113,6 +118,7 @@ class MyApp extends StatelessWidget {
           OrderScreen.routeName: (ctx) => OrderScreen(),
           DesignScreen.routeName: (ctx) => DesignScreen(),
           OrderDesignScreen.routeName: (ctx) => OrderDesignScreen(),
+          SellerProductsScreen.routeName: (ctx) => SellerProductsScreen(),
         },
         home: StartAppScreen(
           state: null,

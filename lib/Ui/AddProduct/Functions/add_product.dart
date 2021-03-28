@@ -39,8 +39,7 @@ Future<String> addProductFn({
   };
   int counter = 0;
   List<String> imagesUrl = [];
-  print("imagesFiles.length");
-  print(imagesFiles.length);
+
   while (counter < imagesFiles.length) {
     String imageUrl =
         await Provider.of<ManageProductsProvider>(context, listen: false)

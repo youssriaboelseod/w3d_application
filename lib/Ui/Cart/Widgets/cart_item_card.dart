@@ -208,7 +208,7 @@ class DetailsCard extends StatelessWidget {
   String _parseHtmlString(String htmlString) {
     final document = parse(htmlString);
     final String parsedString = parse(document.body.text).documentElement.text;
-    //print(parsedString);
+
     return parsedString;
   }
 
@@ -225,7 +225,7 @@ class DetailsCard extends StatelessWidget {
       }
       String value = cartItem.variation[counter + 1];
       //value = utf8.encode(value.codeUnits);
-      print(value);
+
       variationsMap.add({
         "key": key,
         "value": value,

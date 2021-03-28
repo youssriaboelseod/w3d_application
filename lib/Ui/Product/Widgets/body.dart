@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:w3d/Providers/ReviewsProvider/reviews_provider.dart';
 import 'package:w3d/Ui/Product/Widgets/options_button.dart';
 import 'package:woocommerce/models/products.dart';
 import 'description_card.dart';
@@ -103,34 +104,6 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     print("--------- My product Data -----------");
-    print(widget.productModel.id);
-    print("-------  rating ------");
-    print(widget.productModel.averageRating);
-    print("------- expiry  ------");
-    print(widget.productModel.downloadExpiry);
-    print("------- limit  ------");
-    print(widget.productModel.downloadLimit);
-
-    print("-------  purchasable ------");
-    print(widget.productModel.purchasable);
-    print("------- rating count  ------");
-    print(widget.productModel.ratingCount);
-    print("-------  stock quantity ------");
-    print(widget.productModel.stockQuantity);
-    print("-------  status ------");
-    print(widget.productModel.status);
-
-    print("------- total sales  ------");
-    print(widget.productModel.totalSales);
-
-    print("------- averageRating  ------");
-    print(widget.productModel.averageRating);
-
-    print("------- reviewsAllowed  ------");
-    print(widget.productModel.reviewsAllowed);
-    print("------- price html  ------");
-    print(widget.productModel.priceHtml);
-
     print("--------- That is it -----------");
 
     return Container(
@@ -233,11 +206,21 @@ class _BodyState extends State<Body> {
                   ? ContactButton(
                       product: widget.productModel,
                     )
-                  : AddToCartButton(
-                      function: addToCartFunction,
-                    ),
+                  : RaisedButton(
+                      onPressed: () async {
+                        await Provider.of<ReviewsProvider>(context,
+                                listen: false)
+                            .getProductReviews(
+                          productId: widget.productModel.id,
+                        );
+                      },
+                      child: Text("555"),
+                    )
         ],
       ),
     );
   }
 }
+//AddToCartButton(
+//                   function: addToCartFunction,
+//               ),

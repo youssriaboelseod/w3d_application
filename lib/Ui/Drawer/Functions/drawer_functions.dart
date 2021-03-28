@@ -63,7 +63,6 @@ _sendEmail() async {
 }
 
 double getFontSize(double width) {
-  print(width);
   double factor;
   if (320 <= width && width < 330) {
     factor = .042;

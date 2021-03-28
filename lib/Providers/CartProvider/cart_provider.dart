@@ -122,8 +122,6 @@ class CartProvider with ChangeNotifier {
     String attributePaSize,
   }) async {
     try {
-      print("yyyyyyyyyyyyy");
-      print(uid);
       final response = await http.post(
         "https://050saa.com/wp-json/cocart/v1/add-item?cart_key=$uid",
         headers: headers,

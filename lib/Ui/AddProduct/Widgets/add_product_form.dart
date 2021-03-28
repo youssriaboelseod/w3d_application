@@ -132,7 +132,6 @@ class _AddProductFormState extends State<AddProductForm> {
                   type: "القسم",
                   onChangeValue: (value) {
                     categoryId = getCategoryId(nameInp: value);
-                    print(categoryId);
                   },
                   options: getCategoriesNames(),
                 ),

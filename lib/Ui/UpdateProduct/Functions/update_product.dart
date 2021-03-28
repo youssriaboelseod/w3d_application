@@ -53,7 +53,6 @@ Future<String> updateProductFn({
     productMap.addAll(
       {
         "gallery_images": imagesUrls.map((element) {
-          print(element);
           if (element.isNotEmpty) {
             return {
               "src": element,

@@ -47,17 +47,9 @@ class OrdersProvider with ChangeNotifier {
       outList = await woocommerce.getOrders(
         customer: int.parse(uid),
       );
-      outList.forEach((element) {
-        print("outList[0].lineItems[0].variationId");
-        print(element.number);
-        print(element.lineItems[0].variationId);
-      });
-      //3798
 
       if (outList[0].lineItems[0].variationId ==
-          outList[1].lineItems[0].variationId) {
-        print("yessssssssss");
-      }
+          outList[1].lineItems[0].variationId) {}
 
       return outList;
     } on SocketException catch (_) {
@@ -156,7 +148,6 @@ class OrdersProvider with ChangeNotifier {
         cartItems: cartItems,
       );
 
-      print(orderOutput);
       return null;
     } on SocketException catch (_) {
       return "لايوجد لديك انترنت";

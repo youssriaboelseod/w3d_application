@@ -44,7 +44,6 @@ class _BodyState extends State<Body> {
     if (_isLoading) {
       return;
     }
-    print("-----------");
     _isLoading = true;
     String userId =
         Provider.of<AuthDataProvider>(context, listen: false).currentUser.id;
@@ -58,7 +57,6 @@ class _BodyState extends State<Body> {
       products =
           Provider.of<ProductsProvider>(context, listen: false).vendorProducts;
       _isLoading = false;
-      print(products.length);
     });
     return;
   }

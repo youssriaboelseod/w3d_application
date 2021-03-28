@@ -269,18 +269,23 @@ class _OptionsIconsState extends State<OptionsIcons> {
   }
 
   Future<void> future() async {
-    print(widget.product.id);
     id = Provider.of<AuthDataProvider>(
       context,
       listen: false,
     ).currentUser.id;
-    checkIfItIsYourProduct = await Provider.of<ProductsProvider>(
+    String output = await Provider.of<ProductsProvider>(
       context,
       listen: false,
-    ).checkIfItIsYourProduct(
+    ).getVendorIdOfProduct(
+      context: context,
       productId: widget.product.id,
-      vendroId: id,
     );
+
+    if (output != null) {
+      if (output == id) {
+        checkIfItIsYourProduct = true;
+      }
+    }
   }
 
   @override
@@ -300,7 +305,6 @@ class _OptionsIconsState extends State<OptionsIcons> {
               size: 35,
             ),
             onPressed: () async {
-              print(widget.product.permalink);
               await Share.share(
                 widget.product.permalink ?? "",
               );

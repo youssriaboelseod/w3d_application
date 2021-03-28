@@ -32,9 +32,6 @@ class _MultiSelectImagesCardState extends State<MultiSelectImagesCard> {
     for (int i = 0; i < images.length; i++) {
       var filePath =
           await FlutterAbsolutePath.getAbsolutePath(images[i].identifier);
-      print(filePath);
-      print("-----------");
-      print(File(filePath));
 
       imagesFiles.add(
         File(filePath),
@@ -102,8 +99,7 @@ class _MultiSelectImagesCardState extends State<MultiSelectImagesCard> {
     }
     images.clear();
     images.addAll(resultList);
-    print("--------- lenght images");
-    //print(images.length);
+
     await getFileList();
     setState(() {});
   }

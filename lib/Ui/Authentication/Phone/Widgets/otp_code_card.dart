@@ -22,18 +22,10 @@ class OtpCodeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("111111111111111111");
     final node = FocusScope.of(context);
 
     //
     Future<void> submitCode(BuildContext context) async {
-      print(code1);
-      print(code2);
-      print(code3);
-      print(code4);
-      print(code6);
-      print(code5);
-
       // Validate the code
       bool check = validateOtpInputs(
         code1: code1,

@@ -88,7 +88,7 @@ class _UpdateProductFormState extends State<UpdateProductForm> {
   String _parseHtmlString(String htmlString) {
     final document = parse(htmlString);
     final String parsedString = parse(document.body.text).documentElement.text;
-    //print(parsedString);
+
     return parsedString;
   }
 

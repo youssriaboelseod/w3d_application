@@ -1,12 +1,9 @@
 import 'dart:io';
-import 'package:provider/provider.dart';
-import '../AuthDataProvider/auth_data_provider.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:woocommerce/woocommerce.dart';
 import 'dart:math';
-import '../../Database/app_database.dart';
 
 class ProductsProvider with ChangeNotifier {
   Random random = new Random();
@@ -63,57 +60,28 @@ class ProductsProvider with ChangeNotifier {
     return true;
   }
 
-  Future<void> getSellerName({String productId, BuildContext context}) async {
+  Future<WooCustomer> getSellerName(
+      {int productId, BuildContext context}) async {
     // Check internet connection
     bool check = await checkInternetConnection();
 
     if (!check) {
-      return "No internet connection!";
+      return null;
     }
     try {
-      //"https://050saa.com/wp-json/wc/v3/products/$productId"
-
-      String url = "https://050saa.com/wp-json/wc/v3/products/$productId";
-
-      http.Response response;
-
-      String username = Provider.of<AuthDataProvider>(context, listen: false)
-          .currentUser
-          .userName;
-      String password = Provider.of<AuthDataProvider>(context, listen: false)
-          .currentUser
-          .password;
-
-      String basicAuth =
-          'Basic ' + base64Encode(utf8.encode('$username:$password'));
-      print(basicAuth);
-
-      final Map<String, String> headerCreate = {
-        'Content-Type': 'application/json; charset=UTF-8',
-        'authorization': basicAuth,
-      };
-
-      response = await http.get(
-        url,
-        headers: headerCreate,
+      String sellerId = await getVendorIdOfProduct(
+        context: context,
+        productId: productId,
       );
-      print(response.statusCode);
-      //print(response.body);
-      if (response.statusCode == 200) {
-        final outputProduct = json.decode(response.body);
-        //print(outputProduct);
-        print(outputProduct["post_author"]);
-        print(outputProduct['vendor_name']);
-        print(outputProduct['vendor_id']);
+      WooCustomer vendorOfProduct = await woocommerce.getCustomerById(
+        id: int.parse(sellerId),
+      );
 
-        return;
-      } else {
-        return;
-      }
+      return vendorOfProduct;
     } on SocketException catch (_) {
-      return "No internet connection!";
+      return null;
     } catch (e) {
-      return "Database problem";
+      return null;
     }
   }
 
@@ -307,7 +275,7 @@ class ProductsProvider with ChangeNotifier {
     }
   }
 
-  Future<bool> fetchVendorProducts({int page, String vendroId}) async {
+  Future<bool> fetchVendorProducts({@required String vendroId}) async {
     // Check internet connection
     bool check = await checkInternetConnection();
 
@@ -462,43 +430,50 @@ class ProductsProvider with ChangeNotifier {
     return [...productsByCategory[index]["value"]];
   }
 
-  Future<bool> checkIfItIsYourProduct({int productId, String vendroId}) async {
+  Future<String> getVendorIdOfProduct(
+      {int productId, BuildContext context}) async {
     // Check internet connection
     bool check = await checkInternetConnection();
 
     if (!check) {
-      return false;
+      return null;
     }
 
     try {
-      List<String> productIds = [];
-      productIds.clear();
-      bool check = false;
-      //var test = await
-      final response = await http.get(
-          "https://050saa.com/wp-json/wcfmmp/v1/store-vendors/$vendroId/products/");
+      http.Response response;
+
+      String username = "auth@gmail.com";
+      String password = "ASD123456zxc#";
+
+      String basicAuth =
+          'Basic ' + base64Encode(utf8.encode('$username:$password'));
+      print(basicAuth);
+
+      //https: //050saa.com/wp-json/wcfmmp/v1/products/?
+      String url = "https://050saa.com/wp-json/wcfmmp/v1/products/$productId";
+
+      final Map<String, String> headerCreate = {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'authorization': basicAuth,
+      };
+
+      response = await http.get(
+        url,
+        headers: headerCreate,
+      );
       print("Status Code: " + response.statusCode.toString());
+
       if (response.statusCode == 200) {
-        List outData = json.decode(response.body);
+        final outputProduct = json.decode(response.body);
 
-        //external_url
-        outData.forEach((element) {
-          if (element["id"] == productId) {
-            print("Yeah, that is my product");
-            check = true;
-          } else {
-            //
-          }
-        });
-
-        return check;
+        return outputProduct["post_author"];
       } else {
-        return false;
+        return null;
       }
     } on SocketException catch (_) {
-      return false;
+      return null;
     } catch (e) {
-      return false;
+      return null;
     }
   }
 }

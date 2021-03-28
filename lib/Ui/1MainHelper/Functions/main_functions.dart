@@ -10,7 +10,6 @@ void whatsAppOpen() async {
 }
 
 double getRatio(double width) {
-  print(width);
   double factor;
   if (320 <= width && width < 360) {
     factor = .6;
@@ -31,6 +30,5 @@ double getRatio(double width) {
   } else {
     factor = .7;
   }
-  print(factor);
   return factor;
 }

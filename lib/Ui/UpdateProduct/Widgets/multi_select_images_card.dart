@@ -138,8 +138,7 @@ class _MultiSelectImagesCardState extends State<MultiSelectImagesCard> {
     }
     images.clear();
     images.addAll(resultList);
-    print("--------- lenght images");
-    //print(images.length);
+
     await getFileList();
     setState(() {});
   }

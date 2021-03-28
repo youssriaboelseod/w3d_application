@@ -41,7 +41,6 @@ class _RadioButtonsState extends State<RadioButtons> {
                 setState(() {
                   _character = value;
                   widget.onChange(value);
-                  print(_character);
                 });
               },
             ),
@@ -68,7 +67,6 @@ class _RadioButtonsState extends State<RadioButtons> {
                 setState(() {
                   _character = value;
                   widget.onChange(value);
-                  print(_character);
                 });
               },
             ),
@@ -96,7 +94,6 @@ class _RadioButtonsState extends State<RadioButtons> {
                 setState(() {
                   _character = value;
                   widget.onChange(value);
-                  print(_character);
                 });
               },
             ),

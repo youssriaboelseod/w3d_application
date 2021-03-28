@@ -60,7 +60,7 @@ Future<void> sendVerificationCode({
       verificationCompleted: (phoneAuthCredential) async {
         // Automatic verification
         // Available on android only
-        print("------------------");
+
         //await verifyCode(
         //context: context,
         //phoneAuthCredential: phoneAuthCredential,

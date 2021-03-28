@@ -6,7 +6,6 @@ class VerifyCodeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("0000000000000000000");
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xff416d6d),

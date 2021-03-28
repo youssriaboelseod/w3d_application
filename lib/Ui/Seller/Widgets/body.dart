@@ -9,8 +9,10 @@ import '../../../Providers/ProductsProvider/products_provider.dart';
 import '../../../Providers/AuthDataProvider/auth_data_provider.dart';
 
 class Body extends StatefulWidget {
+  final WooCustomer vendorOfProduct;
   const Body({
     Key key,
+    this.vendorOfProduct,
   }) : super(key: key);
   @override
   _BodyState createState() => _BodyState();
@@ -44,21 +46,17 @@ class _BodyState extends State<Body> {
     if (_isLoading) {
       return;
     }
-    print("-----------");
     _isLoading = true;
-    String userId =
-        Provider.of<AuthDataProvider>(context, listen: false).currentUser.id;
 
     await Provider.of<ProductsProvider>(context, listen: false)
         .fetchVendorProducts(
-      vendroId: userId,
+      vendroId: widget.vendorOfProduct.id.toString(),
     );
 
     setState(() {
       products =
           Provider.of<ProductsProvider>(context, listen: false).vendorProducts;
       _isLoading = false;
-      print(products.length);
     });
     return;
   }

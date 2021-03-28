@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:w3d/Providers/ProductsProvider/products_provider.dart';
 import 'package:w3d/Ui/Product/Widgets/rating_stars.dart';
+import 'package:w3d/Ui/Seller/Screen/seller_products_screen.dart';
 import 'package:woocommerce/woocommerce.dart';
 import 'package:google_fonts_arabic/fonts.dart';
 
@@ -18,21 +19,24 @@ class TitleCard extends StatelessWidget {
   }) : super(key: key);
   String purchaseQuantity = "";
   bool showPurchaseQuantity = true;
+  String sellerName = "";
+  WooCustomer vendorOfProduct;
 
   Future<void> getSellerName(BuildContext context) async {
-    await Provider.of<ProductsProvider>(
+    vendorOfProduct = await Provider.of<ProductsProvider>(
       context,
       listen: false,
     ).getSellerName(
-      productId: productModel.id.toString(),
+      productId: productModel.id,
       context: context,
     );
+    if (vendorOfProduct != null) {
+      sellerName = vendorOfProduct.username;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-
     try {
       purchaseQuantity =
           productModel.priceHtml.split("class=\"items-sold-texts\" >")[1];
@@ -194,39 +198,54 @@ class TitleCard extends StatelessWidget {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Container();
               } else {
-                return Directionality(
-                  textDirection: TextDirection.rtl,
-                  child: Row(
-                    children: [
-                      Text(
-                        "بواسطة : ",
-                        maxLines: 1,
+                return sellerName.isEmpty
+                    ? Container()
+                    : Directionality(
                         textDirection: TextDirection.rtl,
-                        textScaleFactor: 1,
-                        style: TextStyle(
-                          fontFamily: ArabicFonts.Cairo,
-                          package: 'google_fonts_arabic',
-                          fontSize: 17,
-                          color: Colors.black,
+                        child: Row(
+                          children: [
+                            Text(
+                              "بواسطة : ",
+                              maxLines: 1,
+                              textDirection: TextDirection.rtl,
+                              textScaleFactor: 1,
+                              style: TextStyle(
+                                fontFamily: ArabicFonts.Cairo,
+                                package: 'google_fonts_arabic',
+                                fontSize: 17,
+                                color: Colors.black,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  new MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        new SellerProductsScreen(
+                                      vendorOfProduct: vendorOfProduct,
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                sellerName,
+                                textScaleFactor: 1,
+                                textDirection: TextDirection.rtl,
+                                style: TextStyle(
+                                  fontFamily: ArabicFonts.Cairo,
+                                  package: 'google_fonts_arabic',
+                                  fontSize: 17,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      Text(
-                        "محمد ايمن ",
-                        textScaleFactor: 1,
-                        textDirection: TextDirection.rtl,
-                        style: TextStyle(
-                          fontFamily: ArabicFonts.Cairo,
-                          package: 'google_fonts_arabic',
-                          fontSize: 17,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ],
-                  ),
-                );
+                      );
               }
             },
           ),

@@ -14,7 +14,7 @@ class ImageSwitcherCard extends StatelessWidget {
     List<String> sliders =
         Provider.of<SlidersProvider>(context, listen: false).getSliders;
     Size size = MediaQuery.of(context).size;
-    print(size.height);
+
     return Container(
       height: size.height < 500 ? 170 : 200,
       width: double.infinity,

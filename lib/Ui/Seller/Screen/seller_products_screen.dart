@@ -2,36 +2,28 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts_arabic/fonts.dart';
 import 'package:provider/provider.dart';
-import '../../Cart/Screen/cart_screen.dart';
-import '../../Home/Screen/home_screen.dart';
-import '../../Search/Screen/search_screen.dart';
-import '../../Store/Screen/store_screen.dart';
-import '../../Drawer/Screen/drawer_screen.dart';
 
 import 'package:woocommerce/woocommerce.dart';
 
-import '../../AddProduct/Screen/add_product_screen.dart';
-
 import '../../../Providers/ProductsProvider/products_provider.dart';
-import '../../../Providers/AuthDataProvider/auth_data_provider.dart';
+
 //
 import '../Widgets/body.dart';
 
 // ignore: must_be_immutable
 class SellerProductsScreen extends StatelessWidget {
+  final WooCustomer vendorOfProduct;
+  SellerProductsScreen({Key key, this.vendorOfProduct}) : super(key: key);
+
   static const routeName = "/seller_products_screen";
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  int _currentIndex = 0;
 
   Future<void> fetchProductsForFirstTime(BuildContext context) async {
     Provider.of<ProductsProvider>(context, listen: false).resetVendorProducts();
 
-    String userId =
-        Provider.of<AuthDataProvider>(context, listen: false).currentUser.id;
-
     await Provider.of<ProductsProvider>(context, listen: false)
         .fetchVendorProducts(
-      vendroId: userId,
+      vendroId: vendorOfProduct.id.toString(),
     );
 
     return;
@@ -55,7 +47,9 @@ class SellerProductsScreen extends StatelessWidget {
               ),
             );
           } else {
-            return Body();
+            return Body(
+              vendorOfProduct: vendorOfProduct,
+            );
           }
         },
       ),
@@ -70,7 +64,7 @@ class SellerProductsScreen extends StatelessWidget {
       ),
       centerTitle: true,
       title: Text(
-        "اسم المتجر",
+        vendorOfProduct.username,
         textScaleFactor: 1,
         textDirection: TextDirection.rtl,
         style: TextStyle(

@@ -42,7 +42,6 @@ class _OrderDesignScreenState extends State<OrderDesignScreen> {
             _controller.complete(webViewController);
           },
           navigationDelegate: (NavigationRequest request) {
-            print('allowing navigation to $request');
             return NavigationDecision.navigate;
           },
           debuggingEnabled: false,

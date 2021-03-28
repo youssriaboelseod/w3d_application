@@ -15,14 +15,14 @@ class DescriptionCard extends StatelessWidget {
   String _parseHtmlString(String htmlString) {
     final document = parse(htmlString);
     final String parsedString = parse(document.body.text).documentElement.text;
-    //print(parsedString);
+
     return parsedString;
   }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    print(productModel.priceHtml);
+
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: 8,
