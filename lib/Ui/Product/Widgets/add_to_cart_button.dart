@@ -25,7 +25,7 @@ class AddToCartButton extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "اضف الي السلة",
+                "اضف إلى السلة",
                 textScaleFactor: 1,
                 textDirection: TextDirection.rtl,
                 style: TextStyle(

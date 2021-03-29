@@ -31,7 +31,7 @@ void showTopSnackBar({BuildContext context, String title, String body}) {
         package: 'google_fonts_arabic',
         fontWeight: FontWeight.bold,
         fontSize: 20.0,
-        color: Colors.blueAccent,
+        color: Colors.white,
       ),
       //fontFamily: "ShadowsIntoLightTwo"
     ),
@@ -44,7 +44,7 @@ void showTopSnackBar({BuildContext context, String title, String body}) {
         fontFamily: ArabicFonts.Cairo,
         package: 'google_fonts_arabic',
         fontSize: 18.0,
-        color: Colors.cyanAccent,
+        color: Colors.white,
       ),
     ),
   )..show(context);

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:w3d/Providers/ReviewsProvider/reviews_provider.dart';
 import 'package:w3d/Ui/Product/Widgets/options_button.dart';
-import 'package:woocommerce/models/products.dart';
+import 'package:w3d/Ui/Product/Widgets/reviews.dart';
+
 import 'description_card.dart';
 import 'package:provider/provider.dart';
 import '../../../Providers/CartProvider/cart_provider.dart';
@@ -188,6 +188,12 @@ class _BodyState extends State<Body> {
                     onChangeValue: (value) {
                       selectedQuantityValue = value;
                     },
+                  ),
+                  Divider(
+                    color: Colors.grey,
+                  ),
+                  Reviews(
+                    productId: widget.productMap["value"].id,
                   ),
                 ],
               ),

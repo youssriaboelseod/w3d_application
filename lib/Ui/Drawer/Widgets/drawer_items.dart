@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
+//
 import '../../Favourites/Screen/favourites_screen.dart';
 import '../../1MainHelper/Snacks/snackbar.dart';
 import '../../Authentication/Login_Or_Signup/Screen/login_or_signup_screen.dart';
 import '../../MyOrders/Screen/my_orders_screen.dart';
 import '../../../Providers/AuthDataProvider/auth_data_provider.dart';
 import '../../../Ui/Profile/Screen/profile_screen.dart';
-
 import '../../PaymentMethods/Screen/payment_methods_screen.dart';
-
 import '../../../Providers/CartProvider/cart_provider.dart';
-import 'package:provider/provider.dart';
 import '../Functions/drawer_functions.dart';
 
 class DrawerItems extends StatelessWidget {
@@ -186,6 +185,33 @@ class DrawerItems extends StatelessWidget {
                         ),
                         onPressed: () {
                           showContact(context);
+                        },
+                      ),
+                    ],
+                  ),
+                  const Divider(
+                    thickness: 3,
+                    color: Colors.black38,
+                    indent: 15,
+                    endIndent: 60,
+                  ),
+                  Row(
+                    children: [
+                      FlatButton.icon(
+                        icon: const Icon(
+                          Icons.info,
+                          color: Colors.white,
+                        ),
+                        label: Text(
+                          "عن الواعد",
+                          style: TextStyle(
+                            fontSize: _fontSize,
+                            color: Colors.white,
+                          ),
+                          textScaleFactor: 1,
+                        ),
+                        onPressed: () {
+                          showAboutW3d(context);
                         },
                       ),
                     ],

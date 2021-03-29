@@ -39,12 +39,7 @@ class HomeScreen extends StatelessWidget {
       appBar: buildAppBar(context),
       drawer: DrawerApp(),
       backgroundColor: Colors.grey[200],
-      body: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).requestFocus(new FocusNode());
-        },
-        child: Body(),
-      ),
+      body: Body(),
       bottomNavigationBar: buildBottomNavigationBar(context),
     );
   }

@@ -1,5 +1,7 @@
 import 'dart:io';
 //
+import 'package:w3d/Ui/MyProducts/Screen/my_products_screen.dart';
+
 import 'multi_select_images_card.dart';
 import '../../1MainHelper/Helpers/helper.dart';
 import 'package:flutter/material.dart';
@@ -70,6 +72,15 @@ class _AddProductFormState extends State<AddProductForm> {
         context: context,
         title: "رائع",
         body: "تمت اضافة المنتج بنجاح",
+      );
+      await Future.delayed(
+        Duration(
+          milliseconds: 1500,
+        ),
+      );
+
+      Navigator.of(context).pushReplacementNamed(
+        MyProductsScreen.routeName,
       );
     }
     setState(() {

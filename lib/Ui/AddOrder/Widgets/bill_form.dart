@@ -84,7 +84,7 @@ class BillForm extends StatelessWidget {
                             fontFamily: ArabicFonts.Cairo,
                             package: 'google_fonts_arabic',
                             fontSize: 17,
-                            color: Colors.black,
+                            color: Colors.red,
                           ),
                           softWrap: true,
                         ),

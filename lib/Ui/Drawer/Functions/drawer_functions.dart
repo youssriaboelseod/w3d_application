@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts_arabic/fonts.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 import 'package:in_app_review/in_app_review.dart';
@@ -25,27 +26,7 @@ updateAppUrl() async {
   inAppReview.openStoreListing(appStoreId: 'com.moadawy.T_Planners');
 }
 
-_openPrivacy() async {
-  const url = '';
-  if (await canLaunch(url)) {
-    await launch(url);
-  } else {
-    throw 'Could not launch $url';
-  }
-}
-
-_openInstagram() async {
-  const url =
-      'https://www.instagram.com/tm_planners/?igshid=jg62k3q9ef3k&fbclid=IwAR1l3Ize9FtiLNNq39ccpzQ9OlIoOdh7zUVqYydWu72Nn-uovclbZCZz6Fc';
-  if (await canLaunch(url)) {
-    await launch(url);
-  } else {
-    throw 'Could not launch $url';
-  }
-}
-
-_openFacebookUrl() async {
-  const url = 'https://www.facebook.com/tm.planners';
+_openUrl(String url) async {
   if (await canLaunch(url)) {
     await launch(url, forceSafariVC: false);
   } else {
@@ -155,6 +136,113 @@ void showContact(BuildContext context) {
                     ),
                   ),
                 ],
+              ),
+            ],
+          ),
+        ),
+      );
+    },
+  );
+}
+
+void showAboutW3d(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        backgroundColor: Colors.black,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(
+            25,
+          ),
+        ),
+        content: Container(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 200,
+                child: RaisedButton(
+                  color: Colors.grey,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  onPressed: () {
+                    _openUrl("");
+                  },
+                  child: Text(
+                    "من نحن",
+                    textScaleFactor: 1,
+                    overflow: TextOverflow.fade,
+                    textDirection: TextDirection.rtl,
+                    style: TextStyle(
+                      fontFamily: ArabicFonts.Cairo,
+                      package: 'google_fonts_arabic',
+                      fontSize: 17,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    softWrap: true,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                width: 200,
+                child: RaisedButton(
+                  color: Colors.grey,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  onPressed: () {
+                    _openUrl("");
+                  },
+                  child: Text(
+                    "شروط الاستخدام",
+                    textScaleFactor: 1,
+                    overflow: TextOverflow.fade,
+                    textDirection: TextDirection.rtl,
+                    style: TextStyle(
+                      fontFamily: ArabicFonts.Cairo,
+                      package: 'google_fonts_arabic',
+                      fontSize: 17,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    softWrap: true,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                width: 200,
+                child: RaisedButton(
+                  color: Colors.grey,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  onPressed: () {
+                    _openUrl("");
+                  },
+                  child: Text(
+                    "سياسة الخصوصية",
+                    textScaleFactor: 1,
+                    overflow: TextOverflow.fade,
+                    textDirection: TextDirection.rtl,
+                    style: TextStyle(
+                      fontFamily: ArabicFonts.Cairo,
+                      package: 'google_fonts_arabic',
+                      fontSize: 17,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    softWrap: true,
+                  ),
+                ),
               ),
             ],
           ),

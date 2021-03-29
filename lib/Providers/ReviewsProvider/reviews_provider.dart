@@ -46,7 +46,7 @@ class ReviewsProvider with ChangeNotifier {
       print(productId);
 
       String url =
-          "https://050saa.com/wp-json/wc/v3/products/reviews?product_id=$productId";
+          "https://050saa.com//wp-json/wc/v3/products/reviews?product=$productId";
 
       final Map<String, String> headerCreate = {
         'Content-Type': 'application/json; charset=UTF-8',

@@ -242,6 +242,9 @@ class _AddOrderFormState extends State<AddOrderForm> {
                   type: "الملاحظات",
                   hintText: "اي ملاحظات للبائع",
                   initialText: "",
+                  onChange: (value) {
+                    note = value;
+                  },
                 ),
                 const Divider(
                   color: Colors.blueGrey,

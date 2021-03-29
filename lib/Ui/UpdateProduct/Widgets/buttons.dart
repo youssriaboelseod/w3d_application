@@ -3,7 +3,7 @@ import 'package:google_fonts_arabic/fonts.dart';
 
 class Button extends StatelessWidget {
   final String title;
-  final Function function;
+  final Future Function() function;
   final IconData iconData;
   final backgroundColor;
   final textColor;
@@ -29,10 +29,10 @@ class Button extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),
-        color: backgroundColor,
+        color: Colors.grey[700],
         icon: Icon(
           iconData,
-          color: Colors.black,
+          color: Colors.white,
         ),
         label: Text(
           title,
@@ -46,8 +46,8 @@ class Button extends StatelessWidget {
             color: Colors.white,
           ),
         ),
-        onPressed: () {
-          function();
+        onPressed: () async {
+          await function();
         },
       ),
     );

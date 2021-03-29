@@ -84,7 +84,7 @@ class OrdersProvider with ChangeNotifier {
         state: location,
         address2: phoneNumber,
         country: "المملكة العربية السعودية",
-        postcode: note,
+        //postcode: note,
       );
       WooOrderPayloadBilling billing = WooOrderPayloadBilling(
         firstName: firstName,
@@ -96,7 +96,7 @@ class OrdersProvider with ChangeNotifier {
         email: email,
         phone: phoneNumber,
         country: "المملكة العربية السعودية",
-        postcode: note,
+        //postcode: note,
       );
       double totalPrice = 0;
       List<LineItems> lineItems = [];

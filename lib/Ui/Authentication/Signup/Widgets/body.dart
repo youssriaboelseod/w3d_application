@@ -95,10 +95,9 @@ class _BodyState extends State<Body> {
     }
   }
 
-  _openPrivacy() async {
-    const url = 'https://tm-planners.flycricket.io/privacy.html';
+  _openUrl(String url) async {
     if (await canLaunch(url)) {
-      await launch(url);
+      await launch(url, forceSafariVC: false);
     } else {
       throw 'Could not launch $url';
     }
@@ -159,10 +158,31 @@ class _BodyState extends State<Body> {
               padding: const EdgeInsets.all(5.0),
               child: GestureDetector(
                 onTap: () {
-                  _openPrivacy();
+                  _openUrl("");
                 },
                 child: Text(
-                  "بالتسجيل فانت توافق على شروط الخصوصية وسياسة الاستخدام",
+                  "بالتسجيل فانت توافق على شروط الخصوصية",
+                  textAlign: TextAlign.center,
+                  textScaleFactor: 1,
+                  textDirection: TextDirection.rtl,
+                  style: TextStyle(
+                    fontFamily: ArabicFonts.Cairo,
+                    package: 'google_fonts_arabic',
+                    color: Colors.black,
+                    fontSize: 16,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: GestureDetector(
+                onTap: () {
+                  _openUrl("");
+                },
+                child: Text(
+                  "سياسة الاستخدام",
                   textAlign: TextAlign.center,
                   textScaleFactor: 1,
                   textDirection: TextDirection.rtl,

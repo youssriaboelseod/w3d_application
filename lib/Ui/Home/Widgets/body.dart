@@ -201,23 +201,26 @@ class FeaturedProductsFrame extends StatelessWidget {
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Container(
-                  height: 260,
+                  height: 220,
                   child: PlayStoreShimmer(),
                 );
               } else {
                 return Container(
                   height: 260,
                   width: size.width,
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: products.length,
-                    itemBuilder: (context, index) {
-                      return FeaturedProductCard(
-                        productMap: products[index],
-                        index: index,
-                      );
-                    },
+                  child: Directionality(
+                    textDirection: TextDirection.rtl,
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: products.length,
+                      itemBuilder: (context, index) {
+                        return FeaturedProductCard(
+                          productMap: products[index],
+                          index: index,
+                        );
+                      },
+                    ),
                   ),
                 );
               }

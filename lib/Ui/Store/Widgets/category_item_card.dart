@@ -30,62 +30,65 @@ class _CategoriesCardState extends State<CategoriesCard> {
           color: Colors.grey[400],
         ),
       ),
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        shrinkWrap: true,
-        children: [
-          CategoryItemCard(
-            isSelected: widget.selectedIndex == 0 ? true : false,
-            select: widget.select,
-            index: 0,
-          ),
-          Container(
-            width: 1,
-            color: Colors.grey[700],
-          ),
-          CategoryItemCard(
-            isSelected: widget.selectedIndex == 1 ? true : false,
-            select: widget.select,
-            index: 1,
-          ),
-          Container(
-            width: 1,
-            color: Colors.grey[700],
-          ),
-          CategoryItemCard(
-            isSelected: widget.selectedIndex == 2 ? true : false,
-            select: widget.select,
-            index: 2,
-          ),
-          Container(
-            width: 1,
-            height: 10,
-            color: Colors.grey[700],
-          ),
-          CategoryItemCard(
-            isSelected: widget.selectedIndex == 3 ? true : false,
-            select: widget.select,
-            index: 3,
-          ),
-          Container(
-            width: 1,
-            color: Colors.grey[700],
-          ),
-          CategoryItemCard(
-            isSelected: widget.selectedIndex == 4 ? true : false,
-            select: widget.select,
-            index: 4,
-          ),
-          Container(
-            width: 1,
-            color: Colors.grey[700],
-          ),
-          CategoryItemCard(
-            isSelected: widget.selectedIndex == 5 ? true : false,
-            select: widget.select,
-            index: 5,
-          ),
-        ],
+      child: Directionality(
+        textDirection: TextDirection.rtl,
+        child: ListView(
+          scrollDirection: Axis.horizontal,
+          shrinkWrap: true,
+          children: [
+            CategoryItemCard(
+              isSelected: widget.selectedIndex == 0 ? true : false,
+              select: widget.select,
+              index: 0,
+            ),
+            Container(
+              width: 1,
+              color: Colors.grey[700],
+            ),
+            CategoryItemCard(
+              isSelected: widget.selectedIndex == 1 ? true : false,
+              select: widget.select,
+              index: 1,
+            ),
+            Container(
+              width: 1,
+              color: Colors.grey[700],
+            ),
+            CategoryItemCard(
+              isSelected: widget.selectedIndex == 2 ? true : false,
+              select: widget.select,
+              index: 2,
+            ),
+            Container(
+              width: 1,
+              height: 10,
+              color: Colors.grey[700],
+            ),
+            CategoryItemCard(
+              isSelected: widget.selectedIndex == 3 ? true : false,
+              select: widget.select,
+              index: 3,
+            ),
+            Container(
+              width: 1,
+              color: Colors.grey[700],
+            ),
+            CategoryItemCard(
+              isSelected: widget.selectedIndex == 4 ? true : false,
+              select: widget.select,
+              index: 4,
+            ),
+            Container(
+              width: 1,
+              color: Colors.grey[700],
+            ),
+            CategoryItemCard(
+              isSelected: widget.selectedIndex == 5 ? true : false,
+              select: widget.select,
+              index: 5,
+            ),
+          ],
+        ),
       ),
     );
   }
