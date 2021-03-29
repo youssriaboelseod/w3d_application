@@ -260,11 +260,16 @@ class _OptionsIconsState extends State<OptionsIcons> {
   String action = "";
 
   bool _isProcessing = false;
-  String id;
+
   bool checkIfItIsYourProduct = false;
 
   @override
   void initState() {
+    String id =
+        Provider.of<AuthDataProvider>(context, listen: false).currentUser.id;
+    if (widget.productMap["vendorId"].toString() == id) {
+      checkIfItIsYourProduct = true;
+    }
     super.initState();
   }
 

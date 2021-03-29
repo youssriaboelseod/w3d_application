@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:w3d/Providers/ProductsProvider/products_provider.dart';
-import 'package:w3d/Ui/Product/Functions/add_review.dart';
-import 'package:w3d/Ui/Product/Widgets/rating_stars.dart';
-import 'package:w3d/Ui/Seller/Screen/seller_products_screen.dart';
-import 'package:woocommerce/woocommerce.dart';
 import 'package:google_fonts_arabic/fonts.dart';
+//
+import '../Functions/add_review.dart';
+import 'rating_stars.dart';
+import '../../Seller/Screen/seller_products_screen.dart';
 
 // ignore: must_be_immutable
 class TitleCard extends StatelessWidget {
@@ -26,8 +24,9 @@ class TitleCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    vendorId = productMap["vendorId"];
+    vendorId = productMap["vendorId"].toString();
     vendorName = productMap["vendorName"];
+
     try {
       purchaseQuantity = productMap["value"]
           .priceHtml

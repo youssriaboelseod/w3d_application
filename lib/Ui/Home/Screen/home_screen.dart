@@ -38,14 +38,12 @@ class HomeScreen extends StatelessWidget {
       key: _scaffoldKey,
       appBar: buildAppBar(context),
       drawer: DrawerApp(),
+      backgroundColor: Colors.grey[200],
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).requestFocus(new FocusNode());
         },
-        child: Container(
-          color: Colors.grey[200],
-          child: Body(),
-        ),
+        child: Body(),
       ),
       bottomNavigationBar: buildBottomNavigationBar(context),
     );

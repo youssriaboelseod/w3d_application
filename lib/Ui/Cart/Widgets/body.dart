@@ -26,7 +26,9 @@ class _BodyState extends State<Body> {
       return;
     }
     check = await Provider.of<CartProvider>(context, listen: false)
-        .fetchCartProducts();
+        .fetchCartProducts(
+      context: context,
+    );
     cartItems =
         Provider.of<CartProvider>(context, listen: false).getCartItems();
 

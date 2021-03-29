@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:w3d/Ui/Search/Screen/search_screen.dart';
+import '../../Search/Screen/search_screen.dart';
 
-import 'package:woocommerce/woocommerce.dart';
 //
 import '../../../Providers/ProductsProvider/products_provider.dart';
 import '../../AddProduct/Screen/add_product_screen.dart';
@@ -48,7 +47,7 @@ class StoreScreen extends StatelessWidget {
     await Provider.of<ProductsProvider>(context, listen: false)
         .fetchProductsByCategory(
       categoryId: "0",
-      resetCategoryPageNumber: false,
+      resetCategoryPageNumber: true,
     );
 
     return;

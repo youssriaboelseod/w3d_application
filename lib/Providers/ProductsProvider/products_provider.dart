@@ -38,27 +38,27 @@ class ProductsProvider with ChangeNotifier {
   List<Map<String, dynamic>> productsByCategory = [
     {
       "id": "0",
-      "value": <List<Map<String, dynamic>>>[],
+      "value": <Map>[],
     },
     {
       "id": "154",
-      "value": <List<Map<String, dynamic>>>[],
+      "value": <Map>[],
     },
     {
       "id": "198",
-      "value": <List<Map<String, dynamic>>>[],
+      "value": <Map>[],
     },
     {
       "id": "152",
-      "value": <List<Map<String, dynamic>>>[],
+      "value": <Map>[],
     },
     {
       "id": "151",
-      "value": <List<Map<String, dynamic>>>[],
+      "value": <Map>[],
     },
     {
       "id": "149",
-      "value": <List<Map<String, dynamic>>>[],
+      "value": <Map>[],
     },
   ];
 
@@ -194,13 +194,45 @@ class ProductsProvider with ChangeNotifier {
     }
   }
 
-  Future<List<WooProduct>> getProductByName(String searchValue) async {
+  Future<List<Map<String, dynamic>>> getProductsByName(
+      String searchValue) async {
     try {
-      List<WooProduct> fetchedProductsList = [];
-      fetchedProductsList = await woocommerce.getProducts(
-        search: searchValue,
-        perPage: 100,
+      List<Map<String, dynamic>> fetchedProductsList = [];
+
+      String basicAuth =
+          'Basic ' + base64Encode(utf8.encode('$username:$password'));
+
+      String url =
+          "https://050saa.com/wp-json/wc/v3/products?per_page=100&search=$searchValue";
+
+      final Map<String, String> headerCreate = {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'authorization': basicAuth,
+      };
+
+      response = await http.get(
+        url,
+        headers: headerCreate,
       );
+      print("Status Code: " + response.statusCode.toString());
+
+      if (response.statusCode == 200) {
+        final outputProducts = json.decode(response.body);
+        print("outputProducts.length = " + outputProducts.length.toString());
+
+        outputProducts.forEach(
+          (element) {
+            WooProduct wooProduct = WooProduct.fromJson(element);
+            fetchedProductsList.add(
+              {
+                "vendorId": element["store"]["vendor_id"],
+                "vendorName": element["store"]["vendor_shop_name"],
+                "value": wooProduct,
+              },
+            );
+          },
+        );
+      }
       return fetchedProductsList;
     } on SocketException catch (_) {
       return [];
@@ -211,20 +243,19 @@ class ProductsProvider with ChangeNotifier {
 
   void removeProductById({int productId}) {
     int index;
+
     index = vendorProducts
         .indexWhere((element) => element["value"].id == productId);
+
     if (index != -1) {
       vendorProducts.removeAt(index);
     }
-    productsByCategory.forEach((element) {
-      index = element["value"].indexWhere((element) => element.id == productId);
-      if (index != -1) {
-        element["value"].removeAt(index);
-      }
-    });
+
     notifyListeners();
   }
 
+  //
+  List<Map<String, dynamic>> tempListForProductsByCategory = [];
   Future<void> fetchProductsByCategory(
       {String categoryId, bool resetCategoryPageNumber}) async {
     // Check internet connection
@@ -235,30 +266,26 @@ class ProductsProvider with ChangeNotifier {
     }
 
     try {
-      // if category id = 0 --> this mean we want all products
-      if (categoryId == "0" && resetCategoryPageNumber) {
-        categoryPageNumber = 1;
-        return;
-      }
-      // if category id = 00 == this mean we want all products
-      else if (categoryId == "0" && !resetCategoryPageNumber) {
-        await fetchProductsByPage();
-        return;
-      }
-
+      String url = "";
       // reset category page number only when switching between categories
       if (resetCategoryPageNumber) {
         categoryPageNumber = 1;
         int index = productsByCategory
             .indexWhere((element) => element["id"] == categoryId);
+        tempListForProductsByCategory.clear();
         productsByCategory[index]["value"].clear();
       }
 
       String basicAuth =
           'Basic ' + base64Encode(utf8.encode('$username:$password'));
 
-      String url =
-          "https://050saa.com/wp-json/wc/v3/products?page=$categoryPageNumber&category=$categoryId";
+      if (categoryId == "0") {
+        url =
+            "https://050saa.com/wp-json/wc/v3/products?page=$categoryPageNumber";
+      } else {
+        url =
+            "https://050saa.com/wp-json/wc/v3/products?page=$categoryPageNumber&category=$categoryId";
+      }
 
       final Map<String, String> headerCreate = {
         'Content-Type': 'application/json; charset=UTF-8',
@@ -281,19 +308,20 @@ class ProductsProvider with ChangeNotifier {
         outputProducts.forEach(
           (element) {
             WooProduct wooProduct = WooProduct.fromJson(element);
-            productsByCategory[index]["value"].add(
+
+            tempListForProductsByCategory.add(
               {
                 "vendorId": element["store"]["vendor_id"],
                 "vendorName": element["store"]["vendor_shop_name"],
                 "value": wooProduct,
               },
             );
+            productsByCategory[index]["value"] = tempListForProductsByCategory;
           },
         );
+        // increament category page number
+        categoryPageNumber += 1;
       }
-
-      // increament category page number
-      categoryPageNumber += 1;
 
       return true;
     } on SocketException catch (_) {

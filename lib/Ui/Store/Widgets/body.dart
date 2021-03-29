@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../1MainHelper/Functions/main_functions.dart';
 
-import 'package:woocommerce/woocommerce.dart';
 import 'category_item_card.dart';
 import '../../1MainHelper/Widgets/product_item_grid.dart';
 
@@ -70,6 +69,7 @@ class _BodyState extends State<Body> {
       return;
     }
     _isFetchingMore = true;
+
     await Provider.of<ProductsProvider>(context, listen: false)
         .fetchProductsByCategory(
       categoryId: mainCategories[selectedIndex]["id"],
@@ -91,6 +91,8 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     double ratio = getRatio(size.width);
+    print("we are here");
+    print(products.length);
 
     return Column(
       children: [

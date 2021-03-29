@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:woocommerce/models/products.dart';
-import '../../../Models/Product/product_model.dart';
+//
 import '../../../Providers/ProductsProvider/products_provider.dart';
 import '../../1MainHelper/Functions/main_functions.dart';
 import 'search_card.dart';
@@ -13,7 +12,7 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  List<WooProduct> searchProducts = [];
+  List<Map<String, dynamic>> searchProducts = [];
   bool _isLoading = false;
   @override
   void initState() {
@@ -34,7 +33,7 @@ class _BodyState extends State<Body> {
     searchProducts = await Provider.of<ProductsProvider>(
       context,
       listen: false,
-    ).getProductByName(searchValue);
+    ).getProductsByName(searchValue);
     //
     setState(() {
       _isLoading = false;
@@ -79,9 +78,9 @@ class _BodyState extends State<Body> {
                   itemCount: searchProducts.length,
                   itemBuilder: (context, index) {
                     return ProductItemGrid(
-                      // product: searchProducts[index],
+                      productMap: searchProducts[index],
                       key: ValueKey(
-                        searchProducts[index].id,
+                        searchProducts[index]["value"].id,
                       ),
                     );
                   },

@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:woocommerce/models/cart_item.dart';
 import 'package:woocommerce/woocommerce.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:html/parser.dart' show parse;
 
 //
 import '../../../Providers/CartProvider/cart_provider.dart';
@@ -32,7 +31,6 @@ class CartItemCard extends StatelessWidget {
               child: Stack(
                 children: [
                   DetailsCard(
-                    //productModel: productModel,
                     cartItem: cartItem,
                   ),
                   Positioned(
@@ -125,10 +123,8 @@ class ImageBackground extends StatelessWidget {
 }
 
 class ImageAnimation extends StatelessWidget {
-  final ProductModel product;
   final WooCartItem cartItem;
-  const ImageAnimation({Key key, this.product, this.cartItem})
-      : super(key: key);
+  const ImageAnimation({Key key, this.cartItem}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Hero(
@@ -196,6 +192,7 @@ class ImageAnimation extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class DetailsCard extends StatelessWidget {
   final WooCartItem cartItem;
 
@@ -205,13 +202,6 @@ class DetailsCard extends StatelessWidget {
   }) : super(key: key);
 
   List<Map> variationsMap = [];
-  String _parseHtmlString(String htmlString) {
-    final document = parse(htmlString);
-    final String parsedString = parse(document.body.text).documentElement.text;
-
-    return parsedString;
-  }
-
   void prepareVariations() {
     int counter = 0;
     while (counter < cartItem.variation.length) {
@@ -239,8 +229,10 @@ class DetailsCard extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     prepareVariations();
 
-    WooProduct product = Provider.of<CartProvider>(context, listen: false)
-        .getProductById(id: cartItem.id);
+    Map<String, dynamic> productMap =
+        Provider.of<CartProvider>(context, listen: false).getProductById(
+      id: cartItem.id,
+    );
 
     return Container(
       width: (size.width / 1.5) + 10,
@@ -251,8 +243,8 @@ class DetailsCard extends StatelessWidget {
           Navigator.of(context).push(
             new MaterialPageRoute(
               builder: (BuildContext context) => new ProductScreen(
-                  //productModel: product,
-                  ),
+                productMap: productMap,
+              ),
             ),
           );
         },
@@ -278,7 +270,7 @@ class DetailsCard extends StatelessWidget {
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
-                      product.name ?? "",
+                      productMap["value"].name ?? "",
                       textAlign: TextAlign.center,
                       textScaleFactor: 1,
                       textDirection: TextDirection.rtl,

@@ -1,10 +1,12 @@
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:woocommerce/models/cart_item.dart';
 import 'package:woocommerce/woocommerce.dart';
+import 'package:provider/provider.dart';
+//
+import '../ProductsProvider/products_provider.dart';
 
 class CartProvider with ChangeNotifier {
   WooCommerce woocommerce = WooCommerce(
@@ -18,7 +20,7 @@ class CartProvider with ChangeNotifier {
   String uid = "";
 
   List<WooCartItem> cartItems = [];
-  List<WooProduct> cartItemsProducts = [];
+  List<Map<String, dynamic>> cartItemsProducts = [];
 
   Future<bool> checkInternetConnection() async {
     try {
@@ -61,7 +63,7 @@ class CartProvider with ChangeNotifier {
     );
   }
 
-  Future<bool> fetchCartProducts({int page, String vendroId}) async {
+  Future<bool> fetchCartProducts({BuildContext context}) async {
     // Check internet connection
     bool check = await checkInternetConnection();
 
@@ -76,6 +78,7 @@ class CartProvider with ChangeNotifier {
         "https://050saa.com/wp-json/cocart/v1/get-cart?cart_key=$uid",
         headers: headers,
       );
+      print("Status Code: " + response.statusCode.toString());
 
       if (response.statusCode == 200) {
         Map outMap = json.decode(response.body);
@@ -88,7 +91,7 @@ class CartProvider with ChangeNotifier {
         });
       }
 
-      await getCartItemsMissingData();
+      await getCartItemsMissingData(context);
 
       return true;
     } on SocketException catch (_) {
@@ -98,17 +101,20 @@ class CartProvider with ChangeNotifier {
     }
   }
 
-  Future<void> getCartItemsMissingData() async {
+  Future<void> getCartItemsMissingData(BuildContext context) async {
     int counter = 0;
 
     while (counter < cartItems.length) {
-      WooProduct product = await woocommerce.getProductById(
-        id: cartItems[counter].id,
+      Map<String, dynamic> product =
+          await Provider.of<ProductsProvider>(context, listen: false)
+              .getProductById(
+        cartItems[counter].id,
       );
       cartItemsProducts.add(product);
-      cartItems[counter].permalink = product.permalink;
-      cartItems[counter].images[0].src =
-          product.images.length == 0 ? "" : product.images[0].src ?? "";
+      cartItems[counter].permalink = product["value"].permalink;
+      cartItems[counter].images[0].src = product["value"].images.length == 0
+          ? ""
+          : product["value"].images[0].src ?? "";
 
       counter += 1;
     }
@@ -135,7 +141,7 @@ class CartProvider with ChangeNotifier {
           },
         }),
       );
-      print(response.statusCode);
+      print("Status Code: " + response.statusCode.toString());
 
       if (response.statusCode == 200) {
         return true;
@@ -158,7 +164,7 @@ class CartProvider with ChangeNotifier {
       final response = await http.delete(
           "https://050saa.com/wp-json/cocart/v1/item?cart_key=$uid&cart_item_key=$cartItemKey",
           headers: headers);
-      print(response.statusCode);
+      print("Status Code: " + response.statusCode.toString());
 
       if (response.statusCode == 200) {
         cartItems.removeWhere((element) => element.key == cartItemKey);
@@ -192,6 +198,7 @@ class CartProvider with ChangeNotifier {
         counter += 1;
       }
       cartItems.clear();
+      return true;
     } on SocketException catch (_) {
       return false;
     } catch (e) {
@@ -204,8 +211,8 @@ class CartProvider with ChangeNotifier {
     return [...cartItems];
   }
 
-  WooProduct getProductById({@required int id}) {
-    return cartItemsProducts.firstWhere((element) => element.id == id);
+  Map<String, dynamic> getProductById({@required int id}) {
+    return cartItemsProducts.firstWhere((element) => element["value"].id == id);
   }
 
   Future<void> clearCart() async {

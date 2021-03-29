@@ -1,14 +1,10 @@
 import 'dart:io';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:w3d/Providers/ProductsProvider/products_provider.dart';
-import 'package:woocommerce/models/products.dart';
 import 'package:woocommerce/woocommerce.dart';
-import '../../Models/Product/product_model.dart';
+//
 import '../../Database/app_database.dart';
+import '../ProductsProvider/products_provider.dart';
 
 class FavouritesProvider with ChangeNotifier {
   WooCommerce woocommerce = WooCommerce(
