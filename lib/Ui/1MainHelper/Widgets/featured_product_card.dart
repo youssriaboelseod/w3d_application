@@ -10,10 +10,10 @@ import '../../../Providers/FavouritesProvider/favourites_provider.dart';
 import '../Snacks/snackbar.dart';
 
 class FeaturedProductCard extends StatelessWidget {
-  final WooProduct product;
+  final Map<String, dynamic> productMap;
   final int index;
 
-  const FeaturedProductCard({Key key, this.product, this.index})
+  const FeaturedProductCard({Key key, this.productMap, this.index})
       : super(key: key);
 
   @override
@@ -31,11 +31,11 @@ class FeaturedProductCard extends StatelessWidget {
           child: Column(
             children: [
               ImageAnimation(
-                product: product,
+                productMap: productMap,
                 index: index,
               ),
               DetailsCard(
-                product: product,
+                productMap: productMap,
               ),
             ],
           ),
@@ -46,9 +46,9 @@ class FeaturedProductCard extends StatelessWidget {
 }
 
 class ImageCard extends StatelessWidget {
-  final WooProduct product;
+  final Map<String, dynamic> productMap;
 
-  const ImageCard({Key key, this.product}) : super(key: key);
+  const ImageCard({Key key, this.productMap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +63,9 @@ class ImageCard extends StatelessWidget {
               topRight: Radius.circular(15),
             ),
             child: CachedNetworkImage(
-              imageUrl: product.images.length != 0 ? product.images[0].src : "",
+              imageUrl: productMap["value"].images.length != 0
+                  ? productMap["value"].images[0].src
+                  : "",
               fit: BoxFit.cover,
               width: double.maxFinite,
               height: double.maxFinite,
@@ -89,24 +91,27 @@ class ImageCard extends StatelessWidget {
             right: 0,
             top: 0,
             child: FavoriteStar(
-              product: product,
+              product: productMap["value"],
             ),
           ),
-          (product.onSale && product.regularPrice.isNotEmpty)
+          (productMap["value"].onSale &&
+                  productMap["value"].regularPrice.isNotEmpty)
               ? Positioned(
                   left: 0,
                   top: 0,
                   child: PercentageCard(
-                    product: product,
+                    product: productMap["value"],
                   ),
                 )
               : Container(),
-          product.type == "external"
+          productMap["value"].type == "external"
               ? Container()
               : Positioned(
                   right: 0,
                   bottom: 0,
-                  child: ExpressCard(),
+                  child: ExpressCard(
+                    product: productMap["value"],
+                  ),
                 ),
         ],
       ),
@@ -173,15 +178,16 @@ class ExpressCard extends StatelessWidget {
 }
 
 class ImageAnimation extends StatelessWidget {
-  final WooProduct product;
+  final Map<String, dynamic> productMap;
   final int index;
-  const ImageAnimation({Key key, this.product, this.index}) : super(key: key);
+  const ImageAnimation({Key key, this.productMap, this.index})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     DateTime tempDate = DateTime.now();
 
     return Hero(
-      tag: (product.id + index).toString() + tempDate.toString(),
+      tag: (productMap["value"].id + index).toString() + tempDate.toString(),
       child: Material(
         child: InkWell(
           onTap: () {
@@ -195,11 +201,11 @@ class ImageAnimation extends StatelessWidget {
                       padding: EdgeInsets.all(30.0),
                       child: InkWell(
                         child: Hero(
-                          tag: (product.id + index).toString() +
+                          tag: (productMap["value"].id + index).toString() +
                               tempDate.toString(),
                           child: CachedNetworkImage(
-                            imageUrl: product.images.length != 0
-                                ? product.images[0].src
+                            imageUrl: productMap["value"].images.length != 0
+                                ? productMap["value"].images[0].src
                                 : "",
                             width: 300.0,
                             height: 320.0,
@@ -233,7 +239,7 @@ class ImageAnimation extends StatelessWidget {
             );
           },
           child: ImageCard(
-            product: product,
+            productMap: productMap,
           ),
         ),
         shape: RoundedRectangleBorder(
@@ -249,11 +255,10 @@ class ImageAnimation extends StatelessWidget {
 }
 
 class DetailsCard extends StatelessWidget {
-  final WooProduct product;
-
+  final Map<String, dynamic> productMap;
   const DetailsCard({
     Key key,
-    this.product,
+    this.productMap,
   }) : super(key: key);
 
   @override
@@ -268,7 +273,7 @@ class DetailsCard extends StatelessWidget {
           Navigator.of(context).push(
             new MaterialPageRoute(
               builder: (BuildContext context) => new ProductScreen(
-                productModel: product,
+                productMap: productMap,
               ),
             ),
           );
@@ -283,7 +288,7 @@ class DetailsCard extends StatelessWidget {
                   horizontal: 4,
                 ),
                 child: Text(
-                  product.name.trim(),
+                  productMap["value"].name.trim(),
                   textAlign: TextAlign.center,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -299,11 +304,12 @@ class DetailsCard extends StatelessWidget {
                 ),
               ),
             ),
-            (product.onSale && product.regularPrice.isNotEmpty)
+            (productMap["value"].onSale &&
+                    productMap["value"].regularPrice.isNotEmpty)
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      product.regularPrice.isNotEmpty
+                      productMap["value"].regularPrice.isNotEmpty
                           ? Padding(
                               padding: const EdgeInsets.only(
                                 left: 2,
@@ -313,7 +319,10 @@ class DetailsCard extends StatelessWidget {
                                 child: FittedBox(
                                   fit: BoxFit.scaleDown,
                                   child: Text(
-                                    product.regularPrice.toString() + "  ر.س",
+                                    productMap["value"]
+                                            .regularPrice
+                                            .toString() +
+                                        "  ر.س",
                                     textAlign: TextAlign.center,
                                     maxLines: 1,
                                     textDirection: TextDirection.rtl,
@@ -340,8 +349,9 @@ class DetailsCard extends StatelessWidget {
                           child: FittedBox(
                             fit: BoxFit.scaleDown,
                             child: Text(
-                              product.price.isNotEmpty
-                                  ? product.price.toString() + "  ر.س"
+                              productMap["value"].price.isNotEmpty
+                                  ? productMap["value"].price.toString() +
+                                      "  ر.س"
                                   : "",
                               textAlign: TextAlign.center,
                               maxLines: 1,
@@ -362,8 +372,8 @@ class DetailsCard extends StatelessWidget {
                     ],
                   )
                 : Text(
-                    product.price.isNotEmpty
-                        ? product.price.toString() + "  ر.س"
+                    productMap["value"].price.isNotEmpty
+                        ? productMap["value"].price.toString() + "  ر.س"
                         : "",
                     textAlign: TextAlign.center,
                     maxLines: 1,

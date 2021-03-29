@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:w3d/Providers/ProductsProvider/products_provider.dart';
 import 'package:woocommerce/models/products.dart';
 import 'package:woocommerce/woocommerce.dart';
 import '../../Models/Product/product_model.dart';
@@ -16,7 +18,7 @@ class FavouritesProvider with ChangeNotifier {
   );
   String uid = "";
   List<int> favouriteProductsIds = [];
-  List<WooProduct> favouriteProducts = [];
+  List<Map<String, dynamic>> favouriteProducts = [];
 
   Future<bool> checkInternetConnection() async {
     try {
@@ -78,8 +80,8 @@ class FavouritesProvider with ChangeNotifier {
       ],
     );
     favouriteProductsIds.removeWhere((element) => element == productId);
-    int index =
-        favouriteProducts.indexWhere((element) => element.id == productId);
+    int index = favouriteProducts
+        .indexWhere((element) => element["value"].id == productId);
     if (index != -1) {
       favouriteProducts.removeAt(index);
     }
@@ -108,8 +110,8 @@ class FavouritesProvider with ChangeNotifier {
     favouriteProductsIds.clear();
   }
 
-  Future<List<WooProduct>> fetchFavouritesProductsFromWooCommerce(
-      {int page, String vendroId}) async {
+  Future<List<Map<String, dynamic>>> fetchFavouritesProductsFromWooCommerce(
+      {BuildContext context}) async {
     // Check internet connection
     bool check = await checkInternetConnection();
 
@@ -122,12 +124,15 @@ class FavouritesProvider with ChangeNotifier {
       favouriteProducts.clear();
 
       while (counter < favouriteProductsIds.length) {
-        WooProduct fetchedProduct = await getProductById(
+        Map<String, dynamic> productMap =
+            await Provider.of<ProductsProvider>(context, listen: false)
+                .getProductById(
           favouriteProductsIds[counter],
         );
+
         counter += 1;
-        if (fetchedProduct != null) {
-          favouriteProducts.add(fetchedProduct);
+        if (productMap != null) {
+          favouriteProducts.add(productMap);
         }
       }
 
@@ -137,20 +142,6 @@ class FavouritesProvider with ChangeNotifier {
     } catch (e) {
       return [];
     }
-  }
-
-  Future<WooProduct> getProductById(int productId) async {
-    WooProduct fetchedProduct;
-    try {
-      fetchedProduct = await woocommerce.getProductById(
-        id: productId,
-      );
-    } on SocketException catch (_) {
-      return null;
-    } catch (e) {
-      return null;
-    }
-    return fetchedProduct;
   }
 
   void setUid({String uidInp}) {

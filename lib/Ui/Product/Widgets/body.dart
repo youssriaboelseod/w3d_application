@@ -21,9 +21,9 @@ import '../../1MainHelper/Alerts/alerts.dart';
 import 'contact_button.dart';
 
 class Body extends StatefulWidget {
-  final WooProduct productModel;
+  final Map<String, dynamic> productMap;
 
-  const Body({Key key, this.productModel}) : super(key: key);
+  const Body({Key key, this.productMap}) : super(key: key);
 
   @override
   _BodyState createState() => _BodyState();
@@ -40,9 +40,9 @@ class _BodyState extends State<Body> {
 
   @override
   void initState() {
-    newPrice = widget.productModel.price;
+    newPrice = widget.productMap["value"].price;
 
-    newRegularPrice = widget.productModel.regularPrice;
+    newRegularPrice = widget.productMap["value"].regularPrice;
 
     super.initState();
   }
@@ -61,11 +61,12 @@ class _BodyState extends State<Body> {
       );
       return;
     }
-    if (widget.productModel.stockQuantity != null) {
-      if (selectedQuantityValue > widget.productModel.stockQuantity) {
+    if (widget.productMap["value"].stockQuantity != null) {
+      if (selectedQuantityValue > widget.productMap["value"].stockQuantity) {
         showAlertNoAction(
           context: context,
-          message: "الكمية المتاحة فقط ${widget.productModel.stockQuantity}",
+          message:
+              "الكمية المتاحة فقط ${widget.productMap["value"].stockQuantity}",
         );
 
         return;
@@ -78,7 +79,7 @@ class _BodyState extends State<Body> {
 
     bool check = await Provider.of<CartProvider>(context, listen: false)
         .addProductToCart(
-      productId: widget.productModel.id.toString(),
+      productId: widget.productMap["value"].id.toString(),
       quantity: selectedQuantityValue.toString(),
       attributePaColor:
           attributePaColor.isNotEmpty ? getColorKey(attributePaColor) : "",
@@ -113,7 +114,7 @@ class _BodyState extends State<Body> {
               Stack(
                 children: [
                   ImageSwitcherCard(
-                    product: widget.productModel,
+                    productMap: widget.productMap,
                   ),
                   Positioned(
                     top: 15,
@@ -138,20 +139,20 @@ class _BodyState extends State<Body> {
               child: Column(
                 children: [
                   TitleCard(
-                    productModel: widget.productModel,
+                    productMap: widget.productMap,
                     newPrice: newPrice,
                     newRegularPrice: newRegularPrice,
                   ),
                   Divider(
                     color: Colors.grey,
                   ),
-                  ...widget.productModel.attributes.map((e) {
+                  ...widget.productMap["value"].attributes.map((e) {
                     return Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         OptionsButton(
                           options: e.options,
-                          productModel: widget.productModel,
+                          productModel: widget.productMap["value"],
                           onChangeValue: (value) {
                             if (e.name == "اللون") {
                               attributePaColor = value;
@@ -178,7 +179,7 @@ class _BodyState extends State<Body> {
                   }),
                   DescriptionCard(
                     title: "الوصف",
-                    productModel: widget.productModel,
+                    productModel: widget.productMap["value"],
                   ),
                   Divider(
                     color: Colors.grey,
@@ -201,9 +202,9 @@ class _BodyState extends State<Body> {
                     ),
                   ),
                 )
-              : widget.productModel.type == "external"
+              : widget.productMap["value"].type == "external"
                   ? ContactButton(
-                      product: widget.productModel,
+                      product: widget.productMap["value"],
                     )
                   : AddToCartButton(
                       function: addToCartFunction,
@@ -221,7 +222,7 @@ class _BodyState extends State<Body> {
 // //                   await Provider.of<ReviewsProvider>(context,
 //                       listen: false)
 //                 .getProductReviews(
-//             productId: widget.productModel.id,
+//             productId: widget.productMap["value"].id,
 //        );
 //    },
 //  child: Text("555"),

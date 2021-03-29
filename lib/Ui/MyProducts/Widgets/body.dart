@@ -18,7 +18,7 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   ScrollController _scrollController = new ScrollController();
-  List<WooProduct> products = [];
+  List<Map<String, dynamic>> products = [];
 
   @override
   void initState() {
@@ -83,9 +83,9 @@ class _BodyState extends State<Body> {
           children: List.generate(
             products.length,
             (index) => ProductItemGrid(
-              product: products[index],
+              productMap: products[index],
               key: ValueKey(
-                products[index].id,
+                products[index]["value"].id,
               ),
             ),
           ),

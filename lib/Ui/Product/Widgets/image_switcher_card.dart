@@ -14,15 +14,15 @@ import '../../../Providers/ProductsProvider/products_provider.dart';
 import '../../../Providers/FavouritesProvider/favourites_provider.dart';
 import '../../1MainHelper/carousel_pro/src/carousel_pro.dart';
 
+// ignore: must_be_immutable
 class ImageSwitcherCard extends StatelessWidget {
-  final WooProduct product;
-
-  ImageSwitcherCard({Key key, this.product}) : super(key: key);
+  final Map<String, dynamic> productMap;
+  ImageSwitcherCard({Key key, this.productMap}) : super(key: key);
   List<String> imagesUrls = [];
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    product.images.forEach((element) {
+    productMap["value"].images.forEach((element) {
       imagesUrls.add(element.src);
     });
     return Container(
@@ -32,7 +32,7 @@ class ImageSwitcherCard extends StatelessWidget {
         top: 10,
       ),
       child: Hero(
-        tag: product.id,
+        tag: productMap["value"].id,
         child: Material(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
@@ -71,7 +71,7 @@ class ImageSwitcherCard extends StatelessWidget {
                 top: 10,
                 right: 0,
                 child: OptionsIcons(
-                  product: product,
+                  productMap: productMap,
                 ),
               ),
             ],
@@ -246,9 +246,9 @@ void showImage({BuildContext context, List<String> imagesUrls, int index}) {
 }
 
 class OptionsIcons extends StatefulWidget {
-  final WooProduct product;
+  final Map<String, dynamic> productMap;
 
-  OptionsIcons({Key key, this.product}) : super(key: key);
+  OptionsIcons({Key key, this.productMap}) : super(key: key);
 
   @override
   _OptionsIconsState createState() => _OptionsIconsState();
@@ -268,26 +268,6 @@ class _OptionsIconsState extends State<OptionsIcons> {
     super.initState();
   }
 
-  Future<void> future() async {
-    id = Provider.of<AuthDataProvider>(
-      context,
-      listen: false,
-    ).currentUser.id;
-    String output = await Provider.of<ProductsProvider>(
-      context,
-      listen: false,
-    ).getVendorIdOfProduct(
-      context: context,
-      productId: widget.product.id,
-    );
-
-    if (output != null) {
-      if (output == id) {
-        checkIfItIsYourProduct = true;
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -296,7 +276,7 @@ class _OptionsIconsState extends State<OptionsIcons> {
         mainAxisSize: MainAxisSize.min,
         children: [
           FavoriteStar(
-            product: widget.product,
+            product: widget.productMap["value"],
           ),
           IconButton(
             icon: Icon(
@@ -306,102 +286,93 @@ class _OptionsIconsState extends State<OptionsIcons> {
             ),
             onPressed: () async {
               await Share.share(
-                widget.product.permalink ?? "",
+                widget.productMap["value"].permalink ?? "",
               );
             },
           ),
-          FutureBuilder(
-            future: future(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Container();
-              } else {
-                return checkIfItIsYourProduct
-                    ? Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          IconButton(
-                            icon: Icon(
-                              Icons.edit,
-                              color: Colors.grey[800],
-                              size: 35,
+          checkIfItIsYourProduct
+              ? Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      icon: Icon(
+                        Icons.edit,
+                        color: Colors.grey[800],
+                        size: 35,
+                      ),
+                      onPressed: () async {
+                        Navigator.of(context).push(
+                          new MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                new UpdateProductScreen(
+                              product: widget.productMap["value"],
                             ),
-                            onPressed: () async {
-                              Navigator.of(context).push(
-                                new MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      new UpdateProductScreen(
-                                    product: widget.product,
-                                  ),
-                                ),
-                              );
-                            },
                           ),
-                          IconButton(
-                            icon: Icon(
-                              Icons.delete,
-                              color: Colors.grey[800],
-                              size: 35,
-                            ),
-                            onPressed: () async {
-                              if (_isProcessing) {
-                                return;
-                              }
+                        );
+                      },
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        Icons.delete,
+                        color: Colors.grey[800],
+                        size: 35,
+                      ),
+                      onPressed: () async {
+                        if (_isProcessing) {
+                          return;
+                        }
 
-                              String choice = await showAlertYesOrNo(
-                                context: context,
-                                title: "هل تريد حذف المنتج ؟",
-                              );
+                        String choice = await showAlertYesOrNo(
+                          context: context,
+                          title: "هل تريد حذف المنتج ؟",
+                        );
 
-                              if (choice == "no") {
-                                // Nothing to do
-                              } else if (choice == "yes") {
-                                showTopSnackBar(
-                                  context: context,
-                                  title: "انتظر لحظات",
-                                  body: "جاري حذف المنتج",
-                                );
+                        if (choice == "no") {
+                          // Nothing to do
+                        } else if (choice == "yes") {
+                          showTopSnackBar(
+                            context: context,
+                            title: "انتظر لحظات",
+                            body: "جاري حذف المنتج",
+                          );
 
-                                _isProcessing = true;
+                          _isProcessing = true;
 
-                                String output =
-                                    await Provider.of<ManageProductsProvider>(
-                                  context,
-                                  listen: false,
-                                ).deleteProduct(
-                                  productId: widget.product.id.toString(),
-                                );
+                          String output =
+                              await Provider.of<ManageProductsProvider>(
+                            context,
+                            listen: false,
+                          ).deleteProduct(
+                            productId: widget.productMap["value"].id.toString(),
+                          );
 
-                                if (output == null) {
-                                  Navigator.of(context).pop();
-                                  showTopSnackBar(
-                                    context: context,
-                                    title: "رائع",
-                                    body: "تم حذف المنتج بنجاح",
-                                  );
-                                  Provider.of<ProductsProvider>(context,
-                                          listen: false)
-                                      .removeProductById(
-                                    productId: widget.product.id,
-                                  );
-                                } else {
-                                  showTopSnackBar(
-                                    context: context,
-                                    title: "تنبيه",
-                                    body: "لقد حدث خطأ من فضلك حاول مرة اخرى",
-                                  );
-                                }
-                              }
+                          if (output == null) {
+                            Navigator.of(context).pop();
+                            showTopSnackBar(
+                              context: context,
+                              title: "رائع",
+                              body: "تم حذف المنتج بنجاح",
+                            );
+                            Provider.of<ProductsProvider>(context,
+                                    listen: false)
+                                .removeProductById(
+                              productId: widget.productMap["value"].id,
+                            );
+                          } else {
+                            showTopSnackBar(
+                              context: context,
+                              title: "تنبيه",
+                              body: "لقد حدث خطأ من فضلك حاول مرة اخرى",
+                            );
+                          }
+                        }
 
-                              _isProcessing = false;
-                            },
-                          ),
-                        ],
-                      )
-                    : Container();
-              }
-            },
-          ),
+                        _isProcessing = false;
+                      },
+                    ),
+                  ],
+                )
+              : Container(),
         ],
       ),
     );

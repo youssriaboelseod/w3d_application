@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -11,36 +12,81 @@ import '../../1MainHelper/Widgets/featured_product_card.dart';
 class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    List<WooProduct> homePageSouqProducts =
-        Provider.of<ProductsProvider>(context, listen: false)
-            .homePageSouqProducts;
-    List<WooProduct> homePageMostViewedProducts =
-        Provider.of<ProductsProvider>(context, listen: false)
-            .homePageMostViewedProducts;
-    List<WooProduct> homePagePopularProducts =
-        Provider.of<ProductsProvider>(context, listen: false)
-            .homePagePopularProducts;
-    List<WooProduct> featuredProdcuts =
-        Provider.of<ProductsProvider>(context, listen: false).onSaleProducts;
-
+    final random = new Random();
     return SingleChildScrollView(
       child: Column(
         children: [
           FeaturedProductsFrame(
             title: "العروض",
-            products: featuredProdcuts,
+            type: "onSale",
+            function: () async {
+              int randomNumber = random.nextInt(5);
+              if (randomNumber == 0) {
+                randomNumber += 1;
+              }
+              print("My random number is = " + randomNumber.toString());
+              await Provider.of<ProductsProvider>(context, listen: false)
+                  .fetchAndSetProducts(
+                pageNumber: randomNumber.toString(),
+                perPage: "8",
+                onSale: "true",
+                type: "onSale",
+              );
+            },
           ),
           FeaturedProductsFrame(
             title: "أحدث الزيارات",
-            products: homePageMostViewedProducts,
+            type: "mostViewd",
+            function: () async {
+              int randomNumber = random.nextInt(10);
+              if (randomNumber == 0) {
+                randomNumber += 1;
+              }
+              print("My random number is = " + randomNumber.toString());
+              await Provider.of<ProductsProvider>(context, listen: false)
+                  .fetchAndSetProducts(
+                pageNumber: randomNumber.toString(),
+                perPage: "8",
+                onSale: "false",
+                type: "mostViewd",
+              );
+            },
           ),
           FeaturedProductsFrame(
             title: "الأكثر رواجا",
-            products: homePagePopularProducts,
+            type: "popular",
+            function: () async {
+              int randomNumber = random.nextInt(10);
+              if (randomNumber == 0) {
+                randomNumber += 1;
+              }
+              print("My random number is = " + randomNumber.toString());
+              await Provider.of<ProductsProvider>(context, listen: false)
+                  .fetchAndSetProducts(
+                pageNumber: randomNumber.toString(),
+                perPage: "8",
+                onSale: "false",
+                type: "popular",
+              );
+            },
           ),
           FeaturedProductsFrame(
             title: "السوق",
-            products: homePageSouqProducts,
+            type: "souq",
+            function: () async {
+              int randomNumber = random.nextInt(10);
+              if (randomNumber == 0) {
+                randomNumber += 1;
+              }
+              print("My random number is = " + randomNumber.toString());
+              await Provider.of<ProductsProvider>(context, listen: false)
+                  .fetchAndSetProducts(
+                pageNumber: randomNumber.toString(),
+                perPage: "8",
+                onSale: "false",
+                type: "souq",
+              );
+            },
           ),
         ],
       ),
@@ -50,11 +96,43 @@ class Body extends StatelessWidget {
 
 // ignore: must_be_immutable
 class FeaturedProductsFrame extends StatelessWidget {
-  final List<WooProduct> products;
   final String title;
+  final String type;
+  final Future<dynamic> Function() function;
 
-  const FeaturedProductsFrame({Key key, this.products, this.title})
+  FeaturedProductsFrame({Key key, this.title, this.function, this.type})
       : super(key: key);
+
+  List<Map<String, dynamic>> products = [];
+
+  Future<void> future(BuildContext context) async {
+    // Check if there is already products
+    getProducts(context);
+
+    if (products.length != 0) {
+      return;
+    } else {
+      await function();
+      getProducts(context);
+    }
+  }
+
+  void getProducts(BuildContext context) {
+    if (type == "onSale") {
+      products =
+          Provider.of<ProductsProvider>(context, listen: false).onSaleProducts;
+    } else if (type == "mostViewd") {
+      products = Provider.of<ProductsProvider>(context, listen: false)
+          .homePageMostViewedProducts;
+    } else if (type == "popular") {
+      products = Provider.of<ProductsProvider>(context, listen: false)
+          .homePagePopularProducts;
+    } else if (type == "souq") {
+      products = Provider.of<ProductsProvider>(context, listen: false)
+          .homePageSouqProducts;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -86,20 +164,29 @@ class FeaturedProductsFrame extends StatelessWidget {
               ),
             ],
           ),
-          Container(
-            height: 260,
-            width: size.width,
-            child: ListView.builder(
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              itemCount: products.length,
-              itemBuilder: (context, index) {
-                return FeaturedProductCard(
-                  product: products[index],
-                  index: index,
+          FutureBuilder(
+            future: future(context),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Container();
+              } else {
+                return Container(
+                  height: 260,
+                  width: size.width,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: products.length,
+                    itemBuilder: (context, index) {
+                      return FeaturedProductCard(
+                        productMap: products[index],
+                        index: index,
+                      );
+                    },
+                  ),
                 );
-              },
-            ),
+              }
+            },
           ),
         ],
       ),

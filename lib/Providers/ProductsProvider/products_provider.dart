@@ -7,6 +7,9 @@ import 'dart:math';
 
 class ProductsProvider with ChangeNotifier {
   Random random = new Random();
+  http.Response response;
+  String username = "auth@gmail.com";
+  String password = "ASD123456zxc#";
 
   WooCommerce woocommerce = WooCommerce(
     baseUrl: "https://050saa.com",
@@ -14,11 +17,20 @@ class ProductsProvider with ChangeNotifier {
     consumerSecret: "cs_aa9486fe01e314e72b5b2d50ae109c84a682f749",
   );
 
-  List<WooProduct> onSaleProducts = [];
-  List<WooProduct> homePageSouqProducts = [];
-  List<WooProduct> homePageMostViewedProducts = [];
-  List<WooProduct> homePagePopularProducts = [];
-  List<WooProduct> vendorProducts = [];
+  List<Map<String, dynamic>> onSaleProducts = [];
+  List<Map<String, dynamic>> homePageSouqProducts = [];
+  List<Map<String, dynamic>> homePageMostViewedProducts = [];
+  List<Map<String, dynamic>> homePagePopularProducts = [];
+  List<Map<String, dynamic>> vendorProducts = [];
+  //
+  List<Map<String, dynamic>> exampleForProductsList = [
+    {
+      //"vendorId":  element["store"]["vendor_id"],
+      //"vendorName":  element["store"]["vendor_shop_name"],
+      "value": "WooProduct()",
+    },
+  ];
+
   int categoryPageNumber = 1;
   int vendorPageNumber = 1;
   int pageNumber = 1;
@@ -26,27 +38,27 @@ class ProductsProvider with ChangeNotifier {
   List<Map<String, dynamic>> productsByCategory = [
     {
       "id": "0",
-      "value": <WooProduct>[],
+      "value": <List<Map<String, dynamic>>>[],
     },
     {
       "id": "154",
-      "value": <WooProduct>[],
+      "value": <List<Map<String, dynamic>>>[],
     },
     {
       "id": "198",
-      "value": <WooProduct>[],
+      "value": <List<Map<String, dynamic>>>[],
     },
     {
       "id": "152",
-      "value": <WooProduct>[],
+      "value": <List<Map<String, dynamic>>>[],
     },
     {
       "id": "151",
-      "value": <WooProduct>[],
+      "value": <List<Map<String, dynamic>>>[],
     },
     {
       "id": "149",
-      "value": <WooProduct>[],
+      "value": <List<Map<String, dynamic>>>[],
     },
   ];
 
@@ -58,194 +70,6 @@ class ProductsProvider with ChangeNotifier {
       return false;
     }
     return true;
-  }
-
-  Future<WooCustomer> getSellerName(
-      {int productId, BuildContext context}) async {
-    // Check internet connection
-    bool check = await checkInternetConnection();
-
-    if (!check) {
-      return null;
-    }
-    try {
-      String sellerId = await getVendorIdOfProduct(
-        context: context,
-        productId: productId,
-      );
-      WooCustomer vendorOfProduct = await woocommerce.getCustomerById(
-        id: int.parse(sellerId),
-      );
-
-      return vendorOfProduct;
-    } on SocketException catch (_) {
-      return null;
-    } catch (e) {
-      return null;
-    }
-  }
-
-  Future<String> fetchAndSetProductsForHomePage() async {
-    // Check internet connection
-    bool check = await checkInternetConnection();
-
-    if (!check) {
-      return "No internet connection!";
-    }
-
-    try {
-      print("........ fetching products .......");
-      List<WooProduct> fetchedProducts = [];
-      int randomNumber = 1;
-      // reset everything on starting app , to make sure everything is going as i want
-      onSaleProducts.clear();
-      homePageSouqProducts.clear();
-      homePagePopularProducts.clear();
-      homePageMostViewedProducts.clear();
-
-      //---------------------------------------------------------
-      // Home page --> most viewd
-      randomNumber = random.nextInt(5);
-      if (randomNumber == 0) {
-        randomNumber += 1;
-      }
-      print("My random number = " + randomNumber.toString());
-      fetchedProducts = await woocommerce.getProducts(
-        page: randomNumber,
-        perPage: 6,
-        onSale: false,
-        category: "152",
-      );
-      homePageMostViewedProducts.addAll(
-        fetchedProducts.getRange(0, (fetchedProducts.length / 2).round()),
-      );
-
-      //---------------------------------------------------------
-      // Home page --> Souq
-      homePageSouqProducts.addAll(
-        fetchedProducts.getRange(
-            (fetchedProducts.length / 2).round(), fetchedProducts.length),
-      );
-
-      //---------------------------------------------------------
-      randomNumber = random.nextInt(5);
-      if (randomNumber == 0) {
-        randomNumber += 1;
-      }
-      print("My random number = " + randomNumber.toString());
-      fetchedProducts = await woocommerce.getProducts(
-        page: randomNumber,
-        perPage: 6,
-        onSale: false,
-        category: "149",
-      );
-      homePageMostViewedProducts.addAll(
-        fetchedProducts.getRange(0, (fetchedProducts.length / 2).round()),
-      );
-      //---------------------------------------------------------
-      // Home page --> Souq
-      homePageSouqProducts.addAll(
-        fetchedProducts.getRange(
-            (fetchedProducts.length / 2).round(), fetchedProducts.length),
-      );
-
-      //---------------------------------------------------------
-      //---------------------------------------------------------
-      // Home page --> popular
-      randomNumber = random.nextInt(5);
-      if (randomNumber == 0) {
-        randomNumber += 1;
-      }
-      print("My random number = " + randomNumber.toString());
-      fetchedProducts = await woocommerce.getProducts(
-        page: randomNumber,
-        perPage: 4,
-        onSale: false,
-        category: "151",
-      );
-      homePagePopularProducts.addAll(
-        fetchedProducts.getRange(0, (fetchedProducts.length / 2).round()),
-      );
-      //---------------------------------------------------------
-      // Home page --> Souq
-      homePageSouqProducts.addAll(
-        fetchedProducts.getRange(
-            (fetchedProducts.length / 2).round(), fetchedProducts.length),
-      );
-      //---------------------------------------------------------
-      randomNumber = random.nextInt(5);
-      if (randomNumber == 0) {
-        randomNumber += 1;
-      }
-      print("My random number = " + randomNumber.toString());
-      fetchedProducts = await woocommerce.getProducts(
-        page: randomNumber,
-        perPage: 4,
-        onSale: false,
-        category: "198",
-      );
-      homePagePopularProducts.addAll(
-        fetchedProducts.getRange(0, (fetchedProducts.length / 2).round()),
-      );
-      //---------------------------------------------------------
-      // Home page --> Souq
-      homePageSouqProducts.addAll(
-        fetchedProducts.getRange(
-            (fetchedProducts.length / 2).round(), fetchedProducts.length),
-      );
-      //---------------------------------------------------------
-      randomNumber = random.nextInt(5);
-      if (randomNumber == 0) {
-        randomNumber += 1;
-      }
-      print("My random number = " + randomNumber.toString());
-      fetchedProducts = await woocommerce.getProducts(
-        page: randomNumber,
-        perPage: 4,
-        onSale: false,
-        category: "154",
-      );
-      homePagePopularProducts.addAll(
-        fetchedProducts.getRange(0, (fetchedProducts.length / 2).round()),
-      );
-      //---------------------------------------------------------
-      // Home page --> Souq
-      homePageSouqProducts.addAll(
-        fetchedProducts.getRange(
-            (fetchedProducts.length / 2).round(), fetchedProducts.length),
-      );
-      //---------------------------------------------------------
-
-      //---------------------------------------------------------
-      // Home page --> on sale products
-      randomNumber = random.nextInt(5);
-      if (randomNumber == 0) {
-        randomNumber += 1;
-      }
-      print("My random number = " + randomNumber.toString());
-      fetchedProducts = await woocommerce.getProducts(
-        onSale: true,
-        perPage: 10,
-        page: randomNumber,
-      );
-      onSaleProducts.addAll(fetchedProducts);
-
-      // removeRepeatedProductsFromOnSaleProducts();
-      return null;
-    } on SocketException catch (_) {
-      return "No internet connection!";
-    } catch (e) {
-      return "Database problem";
-    }
-  }
-
-  void removeRepeatedProductsFromOnSaleProducts() {
-    homePageSouqProducts.forEach((e) {
-      int index = onSaleProducts.indexWhere((element) => element.id == e.id);
-      if (index != -1) {
-        onSaleProducts.removeAt(index);
-      }
-    });
   }
 
   Future<void> fetchProductsByPage() async {
@@ -278,15 +102,10 @@ class ProductsProvider with ChangeNotifier {
   Future<bool> fetchVendorProducts({@required String vendroId}) async {
     // Check internet connection
     bool check = await checkInternetConnection();
-
     if (!check) {
       return false;
     }
-
     try {
-      List<String> productIds = [];
-      productIds.clear();
-
       //var test = await
       final response = await http.get(
         "https://050saa.com/wp-json/wcfmmp/v1/store-vendors/$vendroId/products?page=$vendorPageNumber",
@@ -294,24 +113,21 @@ class ProductsProvider with ChangeNotifier {
 
       if (response.statusCode == 200) {
         vendorPageNumber += 1;
-        var ouputData = json.decode(response.body);
+        final outputProducts = json.decode(response.body);
+        print("outputProducts.length = " + outputProducts.length.toString());
 
-        ouputData.forEach((element) {
-          productIds.add(element["id"].toString());
-        });
-
-        int counter = 0;
-        while (counter < productIds.length) {
-          WooProduct fetchedProduct = await getProductById(
-            int.parse(
-              productIds[counter],
-            ),
-          );
-          counter += 1;
-          if (fetchedProduct != null) {
-            vendorProducts.add(fetchedProduct);
-          }
-        }
+        outputProducts.forEach(
+          (element) {
+            WooProduct wooProduct = WooProduct.fromJson(element);
+            vendorProducts.add(
+              {
+                "vendorId": element["store"]["vendor_id"],
+                "vendorName": element["store"]["vendor_shop_name"],
+                "value": wooProduct,
+              },
+            );
+          },
+        );
       } else {
         return false;
       }
@@ -323,18 +139,59 @@ class ProductsProvider with ChangeNotifier {
     }
   }
 
-  Future<WooProduct> getProductById(int productId) async {
-    WooProduct fetchedProduct;
+  void resetVendorProducts() {
+    vendorPageNumber = 1;
+    vendorProducts.clear();
+  }
+
+  Future<Map<String, dynamic>> getProductById(int productId) async {
+    // Check internet connection
+    bool check = await checkInternetConnection();
+
+    if (!check) {
+      return null;
+    }
     try {
-      fetchedProduct = await woocommerce.getProductById(
-        id: productId,
+      String basicAuth =
+          'Basic ' + base64Encode(utf8.encode('$username:$password'));
+      print(basicAuth);
+
+      //https: //050saa.com/wp-json/wcfmmp/v1/products/?
+      String url = "https://050saa.com/wp-json/wcfmmp/v1/products/$productId";
+
+      final Map<String, String> headerCreate = {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'authorization': basicAuth,
+      };
+
+      response = await http.get(
+        url,
+        headers: headerCreate,
       );
+      print("Status Code: " + response.statusCode.toString());
+
+      if (response.statusCode == 200) {
+        final outputProduct = json.decode(response.body);
+        if (outputProduct == null) {
+          return null;
+        }
+        WooProduct wooProduct = WooProduct.fromJson(outputProduct);
+
+        Map<String, dynamic> productMap = {
+          "vendorId": outputProduct["store"]["vendor_id"],
+          "vendorName": outputProduct["store"]["vendor_shop_name"],
+          "value": wooProduct,
+        };
+
+        return productMap;
+      } else {
+        return null;
+      }
     } on SocketException catch (_) {
       return null;
     } catch (e) {
       return null;
     }
-    return fetchedProduct;
   }
 
   Future<List<WooProduct>> getProductByName(String searchValue) async {
@@ -352,14 +209,10 @@ class ProductsProvider with ChangeNotifier {
     }
   }
 
-  void resetVendorProducts() {
-    vendorPageNumber = 1;
-    vendorProducts.clear();
-  }
-
   void removeProductById({int productId}) {
     int index;
-    index = vendorProducts.indexWhere((element) => element.id == productId);
+    index = vendorProducts
+        .indexWhere((element) => element["value"].id == productId);
     if (index != -1) {
       vendorProducts.removeAt(index);
     }
@@ -401,56 +254,11 @@ class ProductsProvider with ChangeNotifier {
         productsByCategory[index]["value"].clear();
       }
 
-      List<WooProduct> fetchedProducts = [];
-      fetchedProducts = await woocommerce.getProducts(
-        category: categoryId,
-        page: categoryPageNumber,
-      );
-
-      // increament category page number
-      categoryPageNumber += 1;
-
-      int index = productsByCategory
-          .indexWhere((element) => element["id"] == categoryId);
-
-      productsByCategory[index]["value"].addAll(fetchedProducts);
-
-      return true;
-    } on SocketException catch (_) {
-      return false;
-    } catch (e) {
-      return false;
-    }
-  }
-
-  List<WooProduct> getProductsByCategory({String categoryId}) {
-    int index =
-        productsByCategory.indexWhere((element) => element["id"] == categoryId);
-
-    return [...productsByCategory[index]["value"]];
-  }
-
-  Future<String> getVendorIdOfProduct(
-      {int productId, BuildContext context}) async {
-    // Check internet connection
-    bool check = await checkInternetConnection();
-
-    if (!check) {
-      return null;
-    }
-
-    try {
-      http.Response response;
-
-      String username = "auth@gmail.com";
-      String password = "ASD123456zxc#";
-
       String basicAuth =
           'Basic ' + base64Encode(utf8.encode('$username:$password'));
-      print(basicAuth);
 
-      //https: //050saa.com/wp-json/wcfmmp/v1/products/?
-      String url = "https://050saa.com/wp-json/wcfmmp/v1/products/$productId";
+      String url =
+          "https://050saa.com/wp-json/wc/v3/products?page=$categoryPageNumber&category=$categoryId";
 
       final Map<String, String> headerCreate = {
         'Content-Type': 'application/json; charset=UTF-8',
@@ -464,9 +272,122 @@ class ProductsProvider with ChangeNotifier {
       print("Status Code: " + response.statusCode.toString());
 
       if (response.statusCode == 200) {
-        final outputProduct = json.decode(response.body);
+        final outputProducts = json.decode(response.body);
+        print("outputProducts.length = " + outputProducts.length.toString());
 
-        return outputProduct["post_author"];
+        int index = productsByCategory
+            .indexWhere((element) => element["id"] == categoryId);
+
+        outputProducts.forEach(
+          (element) {
+            WooProduct wooProduct = WooProduct.fromJson(element);
+            productsByCategory[index]["value"].add(
+              {
+                "vendorId": element["store"]["vendor_id"],
+                "vendorName": element["store"]["vendor_shop_name"],
+                "value": wooProduct,
+              },
+            );
+          },
+        );
+      }
+
+      // increament category page number
+      categoryPageNumber += 1;
+
+      return true;
+    } on SocketException catch (_) {
+      return false;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  List<Map<String, dynamic>> getProductsByCategory({String categoryId}) {
+    int index =
+        productsByCategory.indexWhere((element) => element["id"] == categoryId);
+
+    return [...productsByCategory[index]["value"]];
+  }
+
+  Future<String> fetchAndSetProducts({
+    @required String pageNumber,
+    @required String perPage,
+    @required String onSale,
+    @required String type,
+  }) async {
+    // Check internet connection
+    bool check = await checkInternetConnection();
+
+    if (!check) {
+      return null;
+    }
+
+    try {
+      String basicAuth =
+          'Basic ' + base64Encode(utf8.encode('$username:$password'));
+
+      String url =
+          "https://050saa.com/wp-json/wc/v3/products?page=$pageNumber&per_page=$perPage&on_sale=$onSale";
+
+      final Map<String, String> headerCreate = {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'authorization': basicAuth,
+      };
+
+      response = await http.get(
+        url,
+        headers: headerCreate,
+      );
+      print("Status Code: " + response.statusCode.toString());
+
+      if (response.statusCode == 200) {
+        final outputProducts = json.decode(response.body);
+        print("outputProducts.length = " + outputProducts.length.toString());
+
+        outputProducts.forEach(
+          (element) {
+            WooProduct wooProduct = WooProduct.fromJson(element);
+            // vendor_shop_name
+            // vendor_display_name
+
+            if (type == "onSale") {
+              onSaleProducts.add(
+                {
+                  "vendorId": element["store"]["vendor_id"],
+                  "vendorName": element["store"]["vendor_shop_name"],
+                  "value": wooProduct,
+                },
+              );
+            } else if (type == "mostViewd") {
+              homePageMostViewedProducts.add(
+                {
+                  "vendorId": element["store"]["vendor_id"],
+                  "vendorName": element["store"]["vendor_shop_name"],
+                  "value": wooProduct,
+                },
+              );
+            } else if (type == "popular") {
+              homePagePopularProducts.add(
+                {
+                  "vendorId": element["store"]["vendor_id"],
+                  "vendorName": element["store"]["vendor_shop_name"],
+                  "value": wooProduct,
+                },
+              );
+            } else if (type == "souq") {
+              homePageSouqProducts.add(
+                {
+                  "vendorId": element["store"]["vendor_id"],
+                  "vendorName": element["store"]["vendor_shop_name"],
+                  "value": wooProduct,
+                },
+              );
+            }
+          },
+        );
+
+        return null;
       } else {
         return null;
       }

@@ -12,8 +12,13 @@ import '../Widgets/body.dart';
 
 // ignore: must_be_immutable
 class SellerProductsScreen extends StatelessWidget {
-  final WooCustomer vendorOfProduct;
-  SellerProductsScreen({Key key, this.vendorOfProduct}) : super(key: key);
+  final String vendorName;
+  final String vendorId;
+  SellerProductsScreen({
+    Key key,
+    this.vendorId,
+    this.vendorName,
+  }) : super(key: key);
 
   static const routeName = "/seller_products_screen";
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -23,7 +28,7 @@ class SellerProductsScreen extends StatelessWidget {
 
     await Provider.of<ProductsProvider>(context, listen: false)
         .fetchVendorProducts(
-      vendroId: vendorOfProduct.id.toString(),
+      vendroId: vendorId,
     );
 
     return;
@@ -48,7 +53,8 @@ class SellerProductsScreen extends StatelessWidget {
             );
           } else {
             return Body(
-              vendorOfProduct: vendorOfProduct,
+              vendorId: vendorId,
+              vendorName: vendorName,
             );
           }
         },
@@ -64,7 +70,7 @@ class SellerProductsScreen extends StatelessWidget {
       ),
       centerTitle: true,
       title: Text(
-        vendorOfProduct.username,
+        vendorName,
         textScaleFactor: 1,
         textDirection: TextDirection.rtl,
         style: TextStyle(

@@ -35,9 +35,12 @@ class StoreScreen extends StatelessWidget {
   }
 
   Future<void> fetchProductsForFirstTime(BuildContext context) async {
-    List<WooProduct> products =
+    List<Map<String, dynamic>> products =
         Provider.of<ProductsProvider>(context, listen: false)
-            .getProductsByCategory(categoryId: "0");
+            .getProductsByCategory(
+      categoryId: "0",
+    );
+
     if (products.length > 0) {
       return;
     }

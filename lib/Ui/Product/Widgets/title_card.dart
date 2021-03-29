@@ -7,40 +7,31 @@ import 'package:w3d/Ui/Seller/Screen/seller_products_screen.dart';
 import 'package:woocommerce/woocommerce.dart';
 import 'package:google_fonts_arabic/fonts.dart';
 
+// ignore: must_be_immutable
 class TitleCard extends StatelessWidget {
-  final WooProduct productModel;
+  final Map<String, dynamic> productMap;
   final String newPrice;
   final String newRegularPrice;
 
   TitleCard({
     Key key,
-    this.productModel,
+    this.productMap,
     this.newPrice,
     this.newRegularPrice,
   }) : super(key: key);
   String purchaseQuantity = "";
   bool showPurchaseQuantity = true;
-  String sellerName = "";
-  WooCustomer vendorOfProduct;
-
-  Future<void> getSellerName(BuildContext context) async {
-    vendorOfProduct = await Provider.of<ProductsProvider>(
-      context,
-      listen: false,
-    ).getSellerName(
-      productId: productModel.id,
-      context: context,
-    );
-    if (vendorOfProduct != null) {
-      sellerName = vendorOfProduct.username;
-    }
-  }
+  String vendorName = "";
+  String vendorId = "";
 
   @override
   Widget build(BuildContext context) {
+    vendorId = productMap["vendorId"];
+    vendorName = productMap["vendorName"];
     try {
-      purchaseQuantity =
-          productModel.priceHtml.split("class=\"items-sold-texts\" >")[1];
+      purchaseQuantity = productMap["value"]
+          .priceHtml
+          .split("class=\"items-sold-texts\" >")[1];
 
       if (purchaseQuantity.contains("قطع تم شرائها")) {
         purchaseQuantity = purchaseQuantity.split("قطع تم شرائها")[0].trim();
@@ -61,7 +52,7 @@ class TitleCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Text(
-            productModel.name ?? "",
+            productMap["value"].name ?? "",
             textScaleFactor: 1,
             overflow: TextOverflow.fade,
             textDirection: TextDirection.rtl,
@@ -93,7 +84,7 @@ class TitleCard extends StatelessWidget {
                 SizedBox(
                   width: 15,
                 ),
-                (productModel.onSale && newRegularPrice.isNotEmpty)
+                (productMap["value"].onSale && newRegularPrice.isNotEmpty)
                     ? Text(
                         newRegularPrice.toString() + "  ر.س",
                         textAlign: TextAlign.center,
@@ -116,10 +107,10 @@ class TitleCard extends StatelessWidget {
             textDirection: TextDirection.rtl,
             child: Row(
               children: [
-                productModel.ratingCount == null
+                productMap["value"].ratingCount == null
                     ? Container()
                     : RatingStars(
-                        number: productModel.ratingCount,
+                        number: productMap["value"].ratingCount,
                       ),
                 Padding(
                   padding: const EdgeInsets.only(
@@ -132,7 +123,7 @@ class TitleCard extends StatelessWidget {
                     onTap: () {
                       showAddReviewForm(
                         context: context,
-                        productId: productModel.id,
+                        productId: productMap["value"].id,
                       );
                     },
                     child: Text(
@@ -192,7 +183,7 @@ class TitleCard extends StatelessWidget {
                     ],
                   ),
                 ),
-          productModel.stockQuantity == null
+          productMap["value"].stockQuantity == null
               ? Container()
               : Directionality(
                   textDirection: TextDirection.rtl,
@@ -214,7 +205,7 @@ class TitleCard extends StatelessWidget {
                         width: 8,
                       ),
                       Text(
-                        productModel.stockQuantity.toString(),
+                        productMap["value"].stockQuantity.toString(),
                         textScaleFactor: 1,
                         textDirection: TextDirection.rtl,
                         style: TextStyle(
@@ -227,63 +218,55 @@ class TitleCard extends StatelessWidget {
                     ],
                   ),
                 ),
-          FutureBuilder(
-            future: getSellerName(context),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Container();
-              } else {
-                return sellerName.isEmpty
-                    ? Container()
-                    : Directionality(
+          vendorName.isEmpty
+              ? Container()
+              : Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: Row(
+                    children: [
+                      const Text(
+                        "بواسطة : ",
+                        maxLines: 1,
                         textDirection: TextDirection.rtl,
-                        child: Row(
-                          children: [
-                            const Text(
-                              "بواسطة : ",
-                              maxLines: 1,
-                              textDirection: TextDirection.rtl,
-                              textScaleFactor: 1,
-                              style: TextStyle(
-                                fontFamily: ArabicFonts.Cairo,
-                                package: 'google_fonts_arabic',
-                                fontSize: 17,
-                                color: Colors.black,
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 8,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).push(
-                                  new MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        new SellerProductsScreen(
-                                      vendorOfProduct: vendorOfProduct,
-                                    ),
-                                  ),
-                                );
-                              },
-                              child: Text(
-                                sellerName,
-                                textScaleFactor: 1,
-                                textDirection: TextDirection.rtl,
-                                style: TextStyle(
-                                  fontFamily: ArabicFonts.Cairo,
-                                  package: 'google_fonts_arabic',
-                                  fontSize: 17,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ],
+                        textScaleFactor: 1,
+                        style: TextStyle(
+                          fontFamily: ArabicFonts.Cairo,
+                          package: 'google_fonts_arabic',
+                          fontSize: 17,
+                          color: Colors.black,
                         ),
-                      );
-              }
-            },
-          ),
+                      ),
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            new MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  new SellerProductsScreen(
+                                vendorId: vendorId,
+                                vendorName: vendorName,
+                              ),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          vendorName,
+                          textScaleFactor: 1,
+                          textDirection: TextDirection.rtl,
+                          style: TextStyle(
+                            fontFamily: ArabicFonts.Cairo,
+                            package: 'google_fonts_arabic',
+                            fontSize: 17,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
         ],
       ),
     );

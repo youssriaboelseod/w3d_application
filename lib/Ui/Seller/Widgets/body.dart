@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import '../../1MainHelper/Functions/main_functions.dart';
 import 'package:woocommerce/woocommerce.dart';
+//
+import '../../1MainHelper/Functions/main_functions.dart';
 import '../../1MainHelper/Widgets/product_item_grid.dart';
-
 import '../../../Providers/ProductsProvider/products_provider.dart';
-import '../../../Providers/AuthDataProvider/auth_data_provider.dart';
 
 class Body extends StatefulWidget {
-  final WooCustomer vendorOfProduct;
+  final String vendorName;
+  final String vendorId;
   const Body({
     Key key,
-    this.vendorOfProduct,
+    this.vendorId,
+    this.vendorName,
   }) : super(key: key);
   @override
   _BodyState createState() => _BodyState();
@@ -20,7 +20,7 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   ScrollController _scrollController = new ScrollController();
-  List<WooProduct> products = [];
+  List<Map<String, dynamic>> products = [];
 
   @override
   void initState() {
@@ -50,7 +50,7 @@ class _BodyState extends State<Body> {
 
     await Provider.of<ProductsProvider>(context, listen: false)
         .fetchVendorProducts(
-      vendroId: widget.vendorOfProduct.id.toString(),
+      vendroId: widget.vendorId.toString(),
     );
 
     setState(() {
@@ -83,9 +83,9 @@ class _BodyState extends State<Body> {
           children: List.generate(
             products.length,
             (index) => ProductItemGrid(
-              product: products[index],
+              productMap: products[index],
               key: ValueKey(
-                products[index].id,
+                products[index]["value"].id,
               ),
             ),
           ),

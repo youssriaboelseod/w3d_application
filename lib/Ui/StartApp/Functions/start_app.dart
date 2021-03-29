@@ -30,10 +30,6 @@ Future<bool> startApp(BuildContext context) async {
   await Provider.of<FavouritesProvider>(context, listen: false)
       .fetchAndSetFavouriteProductsFromAppDatabase();
 
-  // Fetch products
-  String output = await Provider.of<ProductsProvider>(context, listen: false)
-      .fetchAndSetProductsForHomePage();
-
   bool check = false;
   check =
       Provider.of<AuthDataProvider>(context, listen: false).checkIfSignedIn();

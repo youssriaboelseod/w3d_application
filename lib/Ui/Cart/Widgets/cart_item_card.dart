@@ -251,8 +251,8 @@ class DetailsCard extends StatelessWidget {
           Navigator.of(context).push(
             new MaterialPageRoute(
               builder: (BuildContext context) => new ProductScreen(
-                productModel: product,
-              ),
+                  //productModel: product,
+                  ),
             ),
           );
         },

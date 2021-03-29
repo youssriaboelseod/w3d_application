@@ -79,7 +79,7 @@ class _BodyState extends State<Body> {
                   itemCount: searchProducts.length,
                   itemBuilder: (context, index) {
                     return ProductItemGrid(
-                      product: searchProducts[index],
+                      // product: searchProducts[index],
                       key: ValueKey(
                         searchProducts[index].id,
                       ),

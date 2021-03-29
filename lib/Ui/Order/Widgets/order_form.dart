@@ -5,11 +5,9 @@ import 'package:w3d/Providers/ProductsProvider/products_provider.dart';
 import 'package:w3d/Ui/1MainHelper/Alerts/alerts.dart';
 import 'package:w3d/Ui/1MainHelper/Snacks/snackbar.dart';
 import 'package:w3d/Ui/Product/Screen/product_screen.dart';
-import 'package:woocommerce/models/cart_item.dart';
 import 'package:woocommerce/models/order.dart';
 import 'package:woocommerce/models/products.dart';
 //
-import '../../../Providers/CartProvider/cart_provider.dart';
 import 'price_card.dart';
 
 // ignore: must_be_immutable
@@ -86,6 +84,7 @@ class OrderForm extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class OrderItemDetails extends StatelessWidget {
   final LineItems orderItem;
   final int index;
@@ -127,12 +126,12 @@ class OrderItemDetails extends StatelessWidget {
                 body: "جاري تحميل صفحة المنتج",
               );
               int productId = orderItem.productId;
-              WooProduct product =
+              Map<String, dynamic> productMap =
                   await Provider.of<ProductsProvider>(context, listen: false)
                       .getProductById(productId);
               _isLoading = false;
 
-              if (product == null) {
+              if (productMap == null) {
                 showAlertNoAction(
                   context: context,
                   message: "لايوجد لديك انترنت",
@@ -142,7 +141,7 @@ class OrderItemDetails extends StatelessWidget {
                 Navigator.of(context).push(
                   new MaterialPageRoute(
                     builder: (BuildContext context) => new ProductScreen(
-                      productModel: product,
+                      productMap: productMap,
                     ),
                   ),
                 );

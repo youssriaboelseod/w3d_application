@@ -13,7 +13,7 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  List<WooProduct> favouritesProductsList = [];
+  List<Map<String, dynamic>> favouritesProductsList = [];
 
   bool _isInit = false;
 
@@ -23,7 +23,9 @@ class _BodyState extends State<Body> {
     }
     favouritesProductsList =
         await Provider.of<FavouritesProvider>(context, listen: false)
-            .fetchFavouritesProductsFromWooCommerce();
+            .fetchFavouritesProductsFromWooCommerce(
+      context: context,
+    );
     _isInit = true;
   }
 
@@ -98,9 +100,9 @@ class _BodyState extends State<Body> {
                 children: List.generate(
                   favouritesProductsList.length,
                   (index) => ProductItemGrid(
-                    product: favouritesProductsList[index],
+                    productMap: favouritesProductsList[index],
                     key: ValueKey(
-                      favouritesProductsList[index].id,
+                      favouritesProductsList[index]["value"].id,
                     ),
                   ),
                 ),
