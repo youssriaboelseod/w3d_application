@@ -10,7 +10,6 @@ import 'package:flutter/cupertino.dart';
 import '../../../Providers/CartProvider/cart_provider.dart';
 import '../../1MainHelper/Snacks/snackbar.dart';
 import '../../1MainHelper/Helpers/helper.dart';
-import '../../../Models/Product/product_model.dart';
 import '../../Product/Screen/product_screen.dart';
 
 class CartItemCard extends StatelessWidget {

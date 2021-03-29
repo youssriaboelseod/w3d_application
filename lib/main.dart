@@ -11,7 +11,6 @@ import 'Ui/AddOrder/Screen/add_order_screen.dart';
 import 'Ui/AddProduct/Screen/add_product_screen.dart';
 import 'Ui/MyOrders/Screen/my_orders_screen.dart';
 import 'Ui/MyProducts/Screen/my_products_screen.dart';
-import 'Providers/SlidersProvider/slider_provider.dart';
 import 'Providers/FavouritesProvider/favourites_provider.dart';
 import 'Ui/Favourites/Screen/favourites_screen.dart';
 import 'Ui/Seller/Screen/seller_products_screen.dart';
@@ -55,9 +54,7 @@ class MyApp extends StatelessWidget {
           create: (_) => AuthDataProvider(),
         ),
         //
-        ChangeNotifierProvider(
-          create: (_) => SlidersProvider(),
-        ),
+
         ChangeNotifierProvider(
           create: (_) => ProductsProvider(),
         ),

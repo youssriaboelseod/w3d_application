@@ -2,10 +2,8 @@ import 'dart:math';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:woocommerce/woocommerce.dart';
 import 'package:google_fonts_arabic/fonts.dart';
 //
-import '../Widgets/image_switcher_card.dart';
 import '../../../Providers/ProductsProvider/products_provider.dart';
 import '../../1MainHelper/Widgets/featured_product_card.dart';
 

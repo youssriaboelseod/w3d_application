@@ -3,8 +3,6 @@ import 'package:woocommerce/woocommerce.dart';
 import 'package:html/parser.dart' show parse;
 import 'package:google_fonts_arabic/fonts.dart';
 
-import '../../../Models/Product/product_model.dart';
-
 class DescriptionCard extends StatelessWidget {
   final String title;
   final WooProduct productModel;

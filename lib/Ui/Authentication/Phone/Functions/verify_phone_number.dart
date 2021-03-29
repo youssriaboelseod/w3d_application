@@ -3,7 +3,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import '../../../1MainHelper/Alerts/alerts.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../../Providers/AuthDataProvider/auth_data_provider.dart';
 import 'package:provider/provider.dart';
 

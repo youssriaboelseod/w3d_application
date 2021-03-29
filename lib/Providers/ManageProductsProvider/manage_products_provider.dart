@@ -4,22 +4,17 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:woocommerce/woocommerce.dart';
-import 'dart:math';
 import 'package:woocommerce_api/woocommerce_api.dart';
-
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:provider/provider.dart';
-import '../../Models/Product/product_model.dart';
+//
 import '../AuthDataProvider/auth_data_provider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter/cupertino.dart';
 
 class ManageProductsProvider with ChangeNotifier {
   String userUid;
-  List<QueryDocumentSnapshot> downloadedProducts = [];
+
   String keys =
       "consumer_key=ck_da5c9ea679814a228bcd5cda0c3c1b932c98ff1d&consumer_secret=cs_aa9486fe01e314e72b5b2d50ae109c84a682f749";
 
@@ -105,9 +100,6 @@ class ManageProductsProvider with ChangeNotifier {
       } else {
         return "لقد حدث خطأ";
       }
-    } on FirebaseException catch (e) {
-      print(e.message);
-      return e.message;
     } on SocketException catch (_) {
       return "لايوجد لديك انترنت";
     } catch (e) {
@@ -175,9 +167,6 @@ class ManageProductsProvider with ChangeNotifier {
       } else {
         return "لقد حدث خطأ";
       }
-    } on FirebaseException catch (e) {
-      print(e.message);
-      return e.message;
     } on SocketException catch (_) {
       return "No internet connection!";
     } catch (e) {
@@ -236,55 +225,11 @@ class ManageProductsProvider with ChangeNotifier {
       } else {
         return "لقد حدث خطأ";
       }
-    } on FirebaseException catch (e) {
-      print(e.message);
-      return e.message;
     } on SocketException catch (_) {
       return "لايوجد لديك انترنت";
     } catch (e) {
       print(e);
       return "لقد حدث خطأ";
     }
-  }
-
-  Future<String> fetchProductsFromFirebase(
-      {@required BuildContext context}) async {
-    // Check internet connection
-    bool check = await checkInternetConnection();
-
-    if (!check) {
-      return "No internet connection!";
-    }
-
-    FirebaseFirestore fCF;
-
-    try {
-      return null;
-    } on FirebaseException catch (e) {
-      print(e.message);
-      return e.message;
-    } on SocketException catch (_) {
-      return "No internet connection!";
-    } catch (e) {
-      return "Database problem";
-    }
-  }
-
-  Future<void> updateAppDatabase({
-    @required BuildContext context,
-  }) async {
-    // convert firebase data to type ProductModel
-    List<ProductModel> products = [];
-    ProductModel product;
-    downloadedProducts.forEach((element) {
-      product = ProductModel.fromFirebase(
-        map: element.data(),
-      );
-      products.add(product);
-    });
-
-    // remove the previous data in app database and update it with the new data
-    // await Provider.of<ProductsProvider>(context, listen: false)
-    //   .updateAllTable(products);
   }
 }

@@ -1,10 +1,8 @@
 import 'dart:io';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 //
-import '../../../Providers/CartProvider/cart_provider.dart';
 import '../../../Providers/AuthDataProvider/auth_data_provider.dart';
 import '../../../Models/Cart/cart_model.dart';
 
