@@ -1,16 +1,30 @@
 import 'dart:math';
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_shimmer/flutter_shimmer.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts_arabic/fonts.dart';
 //
 import '../../../Providers/ProductsProvider/products_provider.dart';
 import '../../1MainHelper/Widgets/featured_product_card.dart';
 
+// ignore: must_be_immutable
 class Body extends StatelessWidget {
+  List<int> numbers = [];
+  int randomNumber;
+  bool checkIfExist(int numberInp) {
+    int index = numbers.indexOf(numberInp);
+    if (index == -1) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final random = new Random();
+
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -18,10 +32,15 @@ class Body extends StatelessWidget {
             title: "العروض",
             type: "onSale",
             function: () async {
-              int randomNumber = random.nextInt(5);
-              if (randomNumber == 0) {
-                randomNumber += 1;
+              randomNumber = random.nextInt(5);
+              while (checkIfExist(randomNumber)) {
+                randomNumber = random.nextInt(5);
+                if (randomNumber == 0) {
+                  randomNumber += 1;
+                }
               }
+
+              numbers.add(randomNumber);
               print("My random number is = " + randomNumber.toString());
               await Provider.of<ProductsProvider>(context, listen: false)
                   .fetchAndSetProducts(
@@ -36,10 +55,15 @@ class Body extends StatelessWidget {
             title: "أحدث الزيارات",
             type: "mostViewd",
             function: () async {
-              int randomNumber = random.nextInt(10);
-              if (randomNumber == 0) {
-                randomNumber += 1;
+              randomNumber = random.nextInt(12);
+              while (checkIfExist(randomNumber)) {
+                randomNumber = random.nextInt(5);
+                if (randomNumber == 0) {
+                  randomNumber += 1;
+                }
               }
+
+              numbers.add(randomNumber);
               print("My random number is = " + randomNumber.toString());
               await Provider.of<ProductsProvider>(context, listen: false)
                   .fetchAndSetProducts(
@@ -54,10 +78,15 @@ class Body extends StatelessWidget {
             title: "الأكثر رواجا",
             type: "popular",
             function: () async {
-              int randomNumber = random.nextInt(10);
-              if (randomNumber == 0) {
-                randomNumber += 1;
+              randomNumber = random.nextInt(12);
+              while (checkIfExist(randomNumber)) {
+                randomNumber = random.nextInt(5);
+                if (randomNumber == 0) {
+                  randomNumber += 1;
+                }
               }
+
+              numbers.add(randomNumber);
               print("My random number is = " + randomNumber.toString());
               await Provider.of<ProductsProvider>(context, listen: false)
                   .fetchAndSetProducts(
@@ -72,10 +101,15 @@ class Body extends StatelessWidget {
             title: "السوق",
             type: "souq",
             function: () async {
-              int randomNumber = random.nextInt(10);
-              if (randomNumber == 0) {
-                randomNumber += 1;
+              randomNumber = random.nextInt(12);
+              while (checkIfExist(randomNumber)) {
+                randomNumber = random.nextInt(5);
+                if (randomNumber == 0) {
+                  randomNumber += 1;
+                }
               }
+
+              numbers.add(randomNumber);
               print("My random number is = " + randomNumber.toString());
               await Provider.of<ProductsProvider>(context, listen: false)
                   .fetchAndSetProducts(
@@ -166,7 +200,10 @@ class FeaturedProductsFrame extends StatelessWidget {
             future: future(context),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Container();
+                return Container(
+                  height: 260,
+                  child: PlayStoreShimmer(),
+                );
               } else {
                 return Container(
                   height: 260,
