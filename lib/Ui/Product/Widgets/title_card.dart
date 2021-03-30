@@ -33,7 +33,7 @@ class TitleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     vendorId = productMap["vendorId"].toString();
-    vendorName = productMap["vendorName"];
+    vendorName = productMap["vendorName"] ?? "";
 
     try {
       purchaseQuantity = productMap["value"]
@@ -71,29 +71,16 @@ class TitleCard extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          Directionality(
-            textDirection: TextDirection.rtl,
-            child: Row(
-              children: [
-                Text(
-                  newPrice.isNotEmpty ? newPrice.toString() + "  ر.س" : "",
-                  textAlign: TextAlign.center,
-                  maxLines: 1,
+          (newPrice.isEmpty && newRegularPrice.isEmpty)
+              ? Container()
+              : Directionality(
                   textDirection: TextDirection.rtl,
-                  textScaleFactor: 1,
-                  style: TextStyle(
-                    fontFamily: ArabicFonts.Cairo,
-                    package: 'google_fonts_arabic',
-                    fontSize: 20,
-                    color: Colors.black,
-                  ),
-                ),
-                SizedBox(
-                  width: 15,
-                ),
-                (productMap["value"].onSale && newRegularPrice.isNotEmpty)
-                    ? Text(
-                        newRegularPrice.toString() + "  ر.س",
+                  child: Row(
+                    children: [
+                      Text(
+                        newPrice.isNotEmpty
+                            ? newPrice.toString() + "  ر.س"
+                            : "",
                         textAlign: TextAlign.center,
                         maxLines: 1,
                         textDirection: TextDirection.rtl,
@@ -101,15 +88,32 @@ class TitleCard extends StatelessWidget {
                         style: TextStyle(
                           fontFamily: ArabicFonts.Cairo,
                           package: 'google_fonts_arabic',
-                          fontSize: 18,
+                          fontSize: 20,
                           color: Colors.black,
-                          decoration: TextDecoration.lineThrough,
                         ),
-                      )
-                    : Container(),
-              ],
-            ),
-          ),
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      (productMap["value"].onSale && newRegularPrice.isNotEmpty)
+                          ? Text(
+                              newRegularPrice.toString() + "  ر.س",
+                              textAlign: TextAlign.center,
+                              maxLines: 1,
+                              textDirection: TextDirection.rtl,
+                              textScaleFactor: 1,
+                              style: TextStyle(
+                                fontFamily: ArabicFonts.Cairo,
+                                package: 'google_fonts_arabic',
+                                fontSize: 18,
+                                color: Colors.black,
+                                decoration: TextDecoration.lineThrough,
+                              ),
+                            )
+                          : Container(),
+                    ],
+                  ),
+                ),
           Directionality(
             textDirection: TextDirection.rtl,
             child: Row(

@@ -40,9 +40,9 @@ class _BodyState extends State<Body> {
 
   @override
   void initState() {
-    newPrice = widget.productMap["value"].price;
+    newPrice = widget.productMap["value"].price ?? "";
 
-    newRegularPrice = widget.productMap["value"].regularPrice;
+    newRegularPrice = widget.productMap["value"].regularPrice ?? "";
 
     super.initState();
   }

@@ -142,4 +142,8 @@ class ReviewsProvider with ChangeNotifier {
       return "لقد حدث خطأ من فضلك حاول مرة اخرى";
     }
   }
+
+  void resetReviews() {
+    reviews.clear();
+  }
 }
