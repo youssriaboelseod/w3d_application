@@ -58,17 +58,19 @@ class ProfileItemCard extends StatelessWidget {
               margin: EdgeInsets.only(
                 right: 2,
               ),
-              width: size.width / 2.5,
-              child: Text(
-                initialText,
-                textScaleFactor: 1,
-                textDirection: TextDirection.rtl,
-                overflow: TextOverflow.fade,
-                style: TextStyle(
-                  fontFamily: ArabicFonts.Cairo,
-                  package: 'google_fonts_arabic',
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
+              width: function == null ? (size.width / 2) : (size.width / 2.5),
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  initialText,
+                  textScaleFactor: 1,
+                  textDirection: TextDirection.rtl,
+                  style: TextStyle(
+                    fontFamily: ArabicFonts.Cairo,
+                    package: 'google_fonts_arabic',
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
                 ),
               ),
             ),

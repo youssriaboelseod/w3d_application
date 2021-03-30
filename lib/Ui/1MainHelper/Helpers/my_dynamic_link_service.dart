@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 
 class MyDynamicLinkService {
-  DynamicLinkParameters createDynamicLinkFunction(String id) {
+  DynamicLinkParameters createDynamicLinkFunction(
+      {String productId, String productName, String productImageUrl}) {
     final DynamicLinkParameters parameters = DynamicLinkParameters(
       uriPrefix: 'https://w3dapp.page.link',
-      link: Uri.parse('https://050saa.com/?id=$id'),
+      link: Uri.parse('https://050saa.com/?id=$productId'),
       androidParameters: AndroidParameters(
         packageName: 'com.moadawy.W3d',
         minimumVersion: 2,
@@ -26,7 +27,8 @@ class MyDynamicLinkService {
       ),
       socialMetaTagParameters: SocialMetaTagParameters(
         title: 'تطبيق الواعد',
-        description: 'الواعد سوق للجميع',
+        description: productName,
+        imageUrl: Uri.parse(productImageUrl),
       ),
     );
     return parameters;

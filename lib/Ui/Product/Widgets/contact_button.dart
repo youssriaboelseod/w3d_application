@@ -28,9 +28,14 @@ class ContactButton extends StatelessWidget {
     } else {
       myUrl = _parseHtmlString(product.description);
     }
+
     final DynamicLinkParameters parameters =
         MyDynamicLinkService().createDynamicLinkFunction(
-      product.id.toString(),
+      productId: product.id.toString(),
+      productName: product.name,
+      productImageUrl: product.images.length == 0
+          ? "https://firebasestorage.googleapis.com/v0/b/w3d-app.appspot.com/o/login.png?alt=media&token=f9a3d494-6502-4065-8b69-a80f716eef6f"
+          : product.images[0].src,
     );
     print("Product ID To Share == ");
     print(product.id.toString());
