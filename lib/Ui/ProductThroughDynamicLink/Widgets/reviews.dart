@@ -117,7 +117,6 @@ class ReviewItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Row(
@@ -137,56 +136,53 @@ class ReviewItem extends StatelessWidget {
           SizedBox(
             width: 15,
           ),
-          Container(
-            width: size.width - 84,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  wooProductReview.reviewer != null
-                      ? wooProductReview.reviewer
-                      : "",
-                  textScaleFactor: 1,
-                  overflow: TextOverflow.fade,
-                  textDirection: TextDirection.rtl,
-                  style: TextStyle(
-                    fontFamily: ArabicFonts.Cairo,
-                    package: 'google_fonts_arabic',
-                    fontSize: 17,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  softWrap: true,
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                wooProductReview.reviewer != null
+                    ? wooProductReview.reviewer
+                    : "",
+                textScaleFactor: 1,
+                overflow: TextOverflow.fade,
+                textDirection: TextDirection.rtl,
+                style: TextStyle(
+                  fontFamily: ArabicFonts.Cairo,
+                  package: 'google_fonts_arabic',
+                  fontSize: 17,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
                 ),
-                Text(
-                  wooProductReview.review != null
-                      ? _parseHtmlString(wooProductReview.review.trim())
-                      : "",
-                  textScaleFactor: 1,
-                  overflow: TextOverflow.fade,
-                  textDirection: TextDirection.rtl,
-                  style: TextStyle(
-                    fontFamily: ArabicFonts.Cairo,
-                    package: 'google_fonts_arabic',
-                    fontSize: 17,
-                    color: Colors.black,
-                  ),
-                  softWrap: true,
+                softWrap: true,
+              ),
+              Text(
+                wooProductReview.review != null
+                    ? _parseHtmlString(wooProductReview.review.trim())
+                    : "",
+                textScaleFactor: 1,
+                overflow: TextOverflow.fade,
+                textDirection: TextDirection.rtl,
+                style: TextStyle(
+                  fontFamily: ArabicFonts.Cairo,
+                  package: 'google_fonts_arabic',
+                  fontSize: 17,
+                  color: Colors.black,
                 ),
-                wooProductReview.rating == null
-                    ? Container()
-                    : Row(
-                        children: List.generate(
-                          wooProductReview.rating,
-                          (index) => Icon(
-                            Icons.star,
-                            color: Colors.yellow,
-                          ),
+                softWrap: true,
+              ),
+              wooProductReview.rating == null
+                  ? Container()
+                  : Row(
+                      children: List.generate(
+                        wooProductReview.rating,
+                        (index) => Icon(
+                          Icons.star,
+                          color: Colors.yellow,
                         ),
                       ),
-              ],
-            ),
+                    ),
+            ],
           ),
         ],
       ),

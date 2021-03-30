@@ -1,19 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts_arabic/fonts.dart';
 import 'package:provider/provider.dart';
+//
 import '../../Cart/Screen/cart_screen.dart';
 import '../../Home/Screen/home_screen.dart';
 import '../../Search/Screen/search_screen.dart';
 import '../../Store/Screen/store_screen.dart';
 import '../../Drawer/Screen/drawer_screen.dart';
-
-import 'package:woocommerce/woocommerce.dart';
-
 import '../../AddProduct/Screen/add_product_screen.dart';
-
 import '../../../Providers/ProductsProvider/products_provider.dart';
 import '../../../Providers/AuthDataProvider/auth_data_provider.dart';
-//
+import '../../Authentication/Login/Screen/login_screen.dart';
+
 import '../Widgets/body.dart';
 
 // ignore: must_be_immutable
@@ -21,6 +20,8 @@ class MyProductsScreen extends StatelessWidget {
   static const routeName = "/my_products_screen";
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   int _currentIndex = 0;
+  String userId;
+  List<Map<String, dynamic>> products = [];
 
   void onTabTapped(int index, BuildContext context) {
     if (index == 0) {
@@ -39,13 +40,18 @@ class MyProductsScreen extends StatelessWidget {
   Future<void> fetchProductsForFirstTime(BuildContext context) async {
     Provider.of<ProductsProvider>(context, listen: false).resetVendorProducts();
 
-    String userId =
+    userId =
         Provider.of<AuthDataProvider>(context, listen: false).currentUser.id;
+    if (userId == null) {
+      return;
+    }
 
     await Provider.of<ProductsProvider>(context, listen: false)
         .fetchVendorProducts(
       vendroId: userId,
     );
+    products =
+        Provider.of<ProductsProvider>(context, listen: false).vendorProducts;
 
     return;
   }
@@ -69,7 +75,52 @@ class MyProductsScreen extends StatelessWidget {
               ),
             );
           } else {
-            return Body();
+            if (userId == null) {
+              return Center(
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushNamed(LoginScreen.routeName);
+                  },
+                  child: Text(
+                    "من فضلك قم بالتسجيل اولا",
+                    textScaleFactor: 1,
+                    textDirection: TextDirection.rtl,
+                    style: TextStyle(
+                      fontFamily: ArabicFonts.Cairo,
+                      package: 'google_fonts_arabic',
+                      fontSize: 18,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              );
+            } else {
+              if (products.length == 0) {
+                return Center(
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context)
+                          .pushNamed(AddProductScreen.routeName);
+                    },
+                    child: Text(
+                      "لايوجد لديك اي منتجات \n قم بأضافة منتجاتك",
+                      textScaleFactor: 1,
+                      textDirection: TextDirection.rtl,
+                      style: TextStyle(
+                        fontFamily: ArabicFonts.Cairo,
+                        package: 'google_fonts_arabic',
+                        fontSize: 18,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                );
+              } else {
+                return Body();
+              }
+            }
           }
         },
       ),

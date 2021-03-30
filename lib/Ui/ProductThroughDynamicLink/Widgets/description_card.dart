@@ -49,7 +49,7 @@ class DescriptionCard extends StatelessWidget {
             child: Text(
               productModel.shortDescription.isEmpty
                   ? ""
-                  : _parseHtmlString(productModel.shortDescription.trim()),
+                  : _parseHtmlString(productModel.shortDescription),
               textScaleFactor: 1,
               textAlign: TextAlign.right,
               textDirection: TextDirection.rtl,

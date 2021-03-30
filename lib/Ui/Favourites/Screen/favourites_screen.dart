@@ -1,13 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts_arabic/fonts.dart';
-import '../../../Models/Category/category.dart';
+
 //
 import '../Widgets/body.dart';
-import '../../Store/Screen/store_screen.dart';
-import '../../Home/Screen/home_screen.dart';
-import '../../Drawer/Screen/drawer_screen.dart';
-import '../../Cart/Screen/cart_screen.dart';
 
 // ignore: must_be_immutable
 class FavouritesScreen extends StatelessWidget {

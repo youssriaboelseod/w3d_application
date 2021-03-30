@@ -1,9 +1,8 @@
-import 'dart:io';
 import 'package:provider/provider.dart';
-
 import 'package:google_fonts_arabic/fonts.dart';
+import 'package:flutter/material.dart';
+import '../../Profile/Screen/profile_screen.dart';
 //
-
 import '../../../Providers/AuthDataProvider/auth_data_provider.dart';
 import '../../../Providers/OrdersProvider/order_provider.dart';
 import '../../1MainHelper/Helpers/helper.dart';
@@ -11,14 +10,10 @@ import '../../Cart/Screen/cart_screen.dart';
 import 'bill_form.dart';
 import 'radio_buttons.dart';
 import '../../PaymentMethods/Screen/payment_methods_screen.dart';
-
 import '../../1MainHelper/Alerts/alerts.dart';
 import '../../1MainHelper/Snacks/snackbar.dart';
 
-import 'package:flutter/material.dart';
-
 import '../Widgets/input_text_card.dart';
-
 import 'buttons.dart';
 
 class AddOrderForm extends StatefulWidget {
@@ -27,6 +22,7 @@ class AddOrderForm extends StatefulWidget {
 }
 
 class _AddOrderFormState extends State<AddOrderForm> {
+  bool checkIfSignedIn = false;
   String firstName;
 
   String city;
@@ -40,6 +36,14 @@ class _AddOrderFormState extends State<AddOrderForm> {
   bool _isLoading = false;
 
   Future<void> addOrder() async {
+    if (!checkIfSignedIn) {
+      showTopSnackBar(
+        context: context,
+        body: "من فضلك قم بالتسجيل اولا",
+        title: "تنبيه",
+      );
+      return;
+    }
     if (firstName.isEmpty ||
         city.isEmpty ||
         location.isEmpty ||
@@ -52,10 +56,14 @@ class _AddOrderFormState extends State<AddOrderForm> {
     }
 
     if (phoneNumber.isEmpty) {
-      showAlertNoAction(
+      final String result = await showAlertNoAction(
         context: context,
         message: "من فضلك قم باضافة رقم هاتفك اولا",
+        outputAction: "Go to phone page",
       );
+      if (result == "Go to phone page") {
+        Navigator.of(context).pushNamed(ProfileScreen.routeName);
+      }
       return;
     }
 
@@ -127,6 +135,8 @@ class _AddOrderFormState extends State<AddOrderForm> {
     phoneNumber = Provider.of<AuthDataProvider>(context, listen: false)
         .currentUser
         .phoneNumber;
+    checkIfSignedIn =
+        Provider.of<AuthDataProvider>(context, listen: false).checkIfSignedIn();
     //
     firstName = Provider.of<AuthDataProvider>(context, listen: false)
         .currentUser

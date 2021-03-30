@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
-import 'options_button.dart';
-import 'reviews.dart';
+import 'package:w3d/Ui/Product/Widgets/options_button.dart';
+import 'package:w3d/Ui/Product/Widgets/reviews.dart';
+
 import 'description_card.dart';
 import 'package:provider/provider.dart';
 import '../../../Providers/CartProvider/cart_provider.dart';
+
 import '../../1MainHelper/Snacks/snackbar.dart';
+
 import '../../1MainHelper/Helpers/helper.dart';
 import 'image_switcher_card.dart';
+
 import 'add_to_cart_button.dart';
 import '../Widgets/quantity_card.dart';
 import '../../../Providers/AuthDataProvider/auth_data_provider.dart';
+
 import '../Widgets/title_card.dart';
+
 import '../../1MainHelper/Alerts/alerts.dart';
 import 'contact_button.dart';
 

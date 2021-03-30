@@ -5,9 +5,9 @@ import '../Functions/start_app.dart';
 import 'background.dart';
 
 class Body extends StatelessWidget {
-  final bool state;
-
-  const Body({Key key, this.state}) : super(key: key);
+  const Body({
+    Key key,
+  }) : super(key: key);
 
   Future<void> futureFn(BuildContext context) async {
     // state = null --> we will fetch data

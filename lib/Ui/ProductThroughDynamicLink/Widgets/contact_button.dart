@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:google_fonts_arabic/fonts.dart';
 import 'package:woocommerce/models/products.dart';
-import 'package:html/parser.dart' show parse;
 
 //
 
@@ -10,12 +9,6 @@ class ContactButton extends StatelessWidget {
   final WooProduct product;
 
   const ContactButton({Key key, @required this.product}) : super(key: key);
-  String _parseHtmlString(String htmlString) {
-    final document = parse(htmlString);
-    final String parsedString = parse(document.body.text).documentElement.text;
-
-    return parsedString;
-  }
 
   whatsAppOpen() async {
     String myUrl = "";
@@ -24,11 +17,10 @@ class ContactButton extends StatelessWidget {
       myUrl = product.externalUrl
           .replaceAll("https://wsend.co/", "whatsapp://send?phone=");
     } else {
-      myUrl = _parseHtmlString(product.description);
+      myUrl = product.sku;
     }
 
     myUrl = myUrl + "&text=P: ${product.permalink}";
-    print(myUrl);
     if (await canLaunch(myUrl)) {
       await launch(myUrl, forceSafariVC: false);
     } else {

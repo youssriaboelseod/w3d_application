@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:w3d/Providers/AuthDataProvider/auth_data_provider.dart';
 import 'package:w3d/Providers/ManageProductsProvider/manage_products_provider.dart';
-import 'package:woocommerce/models/products.dart';
 
 Future<String> addProductFn({
   BuildContext context,
@@ -36,7 +35,7 @@ Future<String> addProductFn({
     "external_url": "https://wsend.co/" + phoneNumber, // phoneNumber,
 
     "button_text": "للتواصل",
-    "sku": "whatsapp://send?phone=" + phoneNumber,
+    "description": "whatsapp://send?phone=" + phoneNumber,
   };
   int counter = 0;
   List<String> imagesUrl = [];

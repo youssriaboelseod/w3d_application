@@ -1,17 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../Search/Screen/search_screen.dart';
 
 //
 import '../../../Providers/ProductsProvider/products_provider.dart';
 import '../../AddProduct/Screen/add_product_screen.dart';
 import '../../MyProducts/Screen/my_products_screen.dart';
-
 import '../Widgets/body.dart';
 import '../../Drawer/Screen/drawer_screen.dart';
 import '../../Home/Screen/home_screen.dart';
 import '../../Cart/Screen/cart_screen.dart';
+import '../../Search/Screen/search_screen.dart';
 
 // ignore: must_be_immutable
 class StoreScreen extends StatelessWidget {

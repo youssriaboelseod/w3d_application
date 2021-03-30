@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+//
 import '../../1MainHelper/Functions/main_functions.dart';
-import 'package:woocommerce/woocommerce.dart';
 import '../../1MainHelper/Widgets/product_item_grid.dart';
-
 import '../../../Providers/ProductsProvider/products_provider.dart';
 import '../../../Providers/AuthDataProvider/auth_data_provider.dart';
 

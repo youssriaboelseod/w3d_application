@@ -1,7 +1,9 @@
 import 'dart:io';
+import 'package:provider/provider.dart';
 //
-import 'package:w3d/Ui/MyProducts/Screen/my_products_screen.dart';
-
+import '../../MyProducts/Screen/my_products_screen.dart';
+import '../../../Providers/AuthDataProvider/auth_data_provider.dart';
+import '../../Profile/Screen/profile_screen.dart';
 import 'multi_select_images_card.dart';
 import '../../1MainHelper/Helpers/helper.dart';
 import 'package:flutter/material.dart';
@@ -23,10 +25,21 @@ class _AddProductFormState extends State<AddProductForm> {
   String name = "";
   String description = "";
   String categoryId = "";
+  String phoneNumber;
 
   String price = "";
 
   bool _isLoading = false;
+  bool checkIfSignedIn = false;
+  @override
+  void initState() {
+    super.initState();
+    checkIfSignedIn =
+        Provider.of<AuthDataProvider>(context, listen: false).checkIfSignedIn();
+    phoneNumber = Provider.of<AuthDataProvider>(context, listen: false)
+        .currentUser
+        .phoneNumber;
+  }
 
   void addImagesFiles(List<File> imagesFilesInp) {
     imagesFiles.clear();
@@ -34,6 +47,25 @@ class _AddProductFormState extends State<AddProductForm> {
   }
 
   Future<void> addProduct() async {
+    if (!checkIfSignedIn) {
+      showTopSnackBar(
+        context: context,
+        body: "من فضلك قم بالتسجيل اولا",
+        title: "تنبيه",
+      );
+      return;
+    }
+    if (phoneNumber.isEmpty) {
+      final String result = await showAlertNoAction(
+        context: context,
+        message: "من فضلك قم باضافة رقم هاتفك اولا",
+        outputAction: "Go to phone page",
+      );
+      if (result == "Go to phone page") {
+        Navigator.of(context).pushNamed(ProfileScreen.routeName);
+      }
+      return;
+    }
     if (name.isEmpty) {
       showAlertNoAction(
         context: context,

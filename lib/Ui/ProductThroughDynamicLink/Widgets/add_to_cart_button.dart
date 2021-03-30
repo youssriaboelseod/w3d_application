@@ -1,47 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:google_fonts_arabic/fonts.dart';
-import 'package:woocommerce/models/products.dart';
-import 'package:html/parser.dart' show parse;
 
-//
-
-class ContactButton extends StatelessWidget {
-  final WooProduct product;
-
-  const ContactButton({Key key, @required this.product}) : super(key: key);
-  String _parseHtmlString(String htmlString) {
-    final document = parse(htmlString);
-    final String parsedString = parse(document.body.text).documentElement.text;
-
-    return parsedString;
-  }
-
-  whatsAppOpen() async {
-    String myUrl = "";
-    print(product.externalUrl);
-    if (product.externalUrl.isNotEmpty) {
-      myUrl = product.externalUrl
-          .replaceAll("https://wsend.co/", "whatsapp://send?phone=");
-    } else {
-      myUrl = _parseHtmlString(product.description);
-    }
-
-    myUrl = myUrl + "&text=P: ${product.permalink}";
-    print(myUrl);
-    if (await canLaunch(myUrl)) {
-      await launch(myUrl, forceSafariVC: false);
-    } else {
-      throw 'Could not launch $myUrl';
-    }
-  }
+class AddToCartButton extends StatelessWidget {
+  final Future Function() function;
+  AddToCartButton({this.function});
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () async {
-        await whatsAppOpen();
+        await function();
       },
       child: Card(
         shape: RoundedRectangleBorder(
@@ -56,7 +25,7 @@ class ContactButton extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "للتواصل",
+                "اضف إلى السلة",
                 textScaleFactor: 1,
                 textDirection: TextDirection.rtl,
                 style: TextStyle(
@@ -71,7 +40,7 @@ class ContactButton extends StatelessWidget {
                 width: 25,
               ),
               Icon(
-                Icons.call,
+                Icons.shopping_cart,
                 color: Colors.white,
               ),
             ],

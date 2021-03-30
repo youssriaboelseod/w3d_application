@@ -91,7 +91,7 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     double ratio = getRatio(size.width);
-    print("we are here");
+    print("----- Store products length --------");
     print(products.length);
 
     return Column(

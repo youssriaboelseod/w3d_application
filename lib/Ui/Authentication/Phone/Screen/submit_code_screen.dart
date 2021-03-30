@@ -13,6 +13,7 @@ class VerifyCodeScreen extends StatelessWidget {
           "تأكيد رقم الهاتف",
           textScaleFactor: 1,
         ),
+        centerTitle: true,
       ),
       body: Container(
         color: Color(0xffecf0f0),

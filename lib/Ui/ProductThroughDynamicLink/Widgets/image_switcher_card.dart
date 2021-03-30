@@ -1,8 +1,6 @@
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:share/share.dart';
-import 'package:w3d/Ui/1MainHelper/Helpers/my_dynamic_link_service.dart';
 import '../../1MainHelper/Alerts/alerts.dart';
 import '../../UpdateProduct/Screen/update_product_screen.dart';
 import 'package:woocommerce/woocommerce.dart';
@@ -292,27 +290,9 @@ class _OptionsIconsState extends State<OptionsIcons> {
               size: 35,
             ),
             onPressed: () async {
-              final String productPermalink =
-                  widget.productMap["value"].permalink;
-
-              if (productPermalink == null) {
-                return;
-              } else {
-                final DynamicLinkParameters parameters =
-                    MyDynamicLinkService().createDynamicLinkFunction(
-                  widget.productMap["value"].id.toString(),
-                );
-                print("Product ID To Share == ");
-                print(widget.productMap["value"].id.toString());
-                final ShortDynamicLink shortDynamicLink =
-                    await parameters.buildShortLink();
-
-                final Uri shortUrl = shortDynamicLink.shortUrl;
-
-                await Share.share(
-                  shortUrl.toString(),
-                );
-              }
+              await Share.share(
+                widget.productMap["value"].permalink ?? "",
+              );
             },
           ),
           checkIfItIsYourProduct

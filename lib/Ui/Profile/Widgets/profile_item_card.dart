@@ -32,7 +32,7 @@ class ProfileItemCard extends StatelessWidget {
               prefixIcon,
             ),
             SizedBox(
-              width: 10,
+              width: 6,
             ),
             Container(
               margin: EdgeInsets.only(
@@ -52,13 +52,13 @@ class ProfileItemCard extends StatelessWidget {
               ),
             ),
             SizedBox(
-              width: 10,
+              width: 4,
             ),
             Container(
               margin: EdgeInsets.only(
                 right: 2,
               ),
-              width: size.width / 2.4,
+              width: size.width / 2.5,
               child: Text(
                 initialText,
                 textScaleFactor: 1,

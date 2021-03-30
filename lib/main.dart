@@ -13,6 +13,7 @@ import 'Ui/MyOrders/Screen/my_orders_screen.dart';
 import 'Ui/MyProducts/Screen/my_products_screen.dart';
 import 'Providers/FavouritesProvider/favourites_provider.dart';
 import 'Ui/Favourites/Screen/favourites_screen.dart';
+import 'Ui/ProductThroughDynamicLink/Screen/product_via_dl_screen.dart';
 import 'Ui/Seller/Screen/seller_products_screen.dart';
 import 'Ui/Store/Screen/store_screen.dart';
 import 'Ui/Product/Screen/product_screen.dart';
@@ -80,7 +81,7 @@ class MyApp extends StatelessWidget {
         color: Colors.black,
         theme: ThemeData(
           // backgroundColor: Colors.white,
-          scaffoldBackgroundColor: Colors.white,
+          scaffoldBackgroundColor: Colors.grey[200],
           // We apply this to our appBarTheme because most of our appBar have this style
           appBarTheme: AppBarTheme(
             color: Colors.white,
@@ -116,10 +117,10 @@ class MyApp extends StatelessWidget {
           DesignScreen.routeName: (ctx) => DesignScreen(),
           OrderDesignScreen.routeName: (ctx) => OrderDesignScreen(),
           SellerProductsScreen.routeName: (ctx) => SellerProductsScreen(),
+          ProductViaDynamicLinkScreen.routeName: (ctx) =>
+              ProductViaDynamicLinkScreen(),
         },
-        home: StartAppScreen(
-          state: null,
-        ),
+        home: StartAppScreen(),
       ),
     );
   }

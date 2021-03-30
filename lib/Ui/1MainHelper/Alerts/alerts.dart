@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts_arabic/fonts.dart';
 
-void showAlertNoAction({BuildContext context, String message}) {
-  showDialog(
+Future<dynamic> showAlertNoAction(
+    {BuildContext context, String message, String outputAction}) {
+  return showDialog(
     context: context,
     builder: (_) {
       return AlertDialog(
@@ -46,7 +47,7 @@ void showAlertNoAction({BuildContext context, String message}) {
                       padding: const EdgeInsets.all(4.0),
                       child: FlatButton(
                         onPressed: () {
-                          Navigator.of(context).pop();
+                          Navigator.of(context).pop(outputAction);
                         },
                         child: Text(
                           "حسنا",

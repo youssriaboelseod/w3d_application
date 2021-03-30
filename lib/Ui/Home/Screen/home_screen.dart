@@ -1,21 +1,27 @@
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:w3d/Ui/AddProduct/Screen/add_product_screen.dart';
-import 'package:w3d/Ui/MyProducts/Screen/my_products_screen.dart';
-import 'package:w3d/Ui/Profile/Screen/profile_screen.dart';
-import 'package:w3d/Ui/Search/Screen/search_screen.dart';
+
 //
 import '../../Store/Screen/store_screen.dart';
+import '../../AddProduct/Screen/add_product_screen.dart';
+import '../../MyProducts/Screen/my_products_screen.dart';
+import '../../Search/Screen/search_screen.dart';
 import '../../Drawer/Screen/drawer_screen.dart';
 import '../Widgets/body.dart';
-import '../../Favourites/Screen/favourites_screen.dart';
+import '../../ProductThroughDynamicLink/Screen/product_via_dl_screen.dart';
 import '../../Cart/Screen/cart_screen.dart';
 
-// ignore: must_be_immutable
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   static const routeName = "/home_screen";
 
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   int _currentIndex = 4;
 
   void onTabTapped(int index, BuildContext context) {
@@ -29,6 +35,64 @@ class HomeScreen extends StatelessWidget {
       Navigator.of(context).pushReplacementNamed(SearchScreen.routeName);
     } else if (index == 4) {
       Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    this.initDynamicLinks(context);
+  }
+
+  void initDynamicLinks(BuildContext context) async {
+    FirebaseDynamicLinks.instance.onLink(
+        onSuccess: (PendingDynamicLinkData dynamicLink) async {
+      final Uri deepLink = dynamicLink?.link;
+
+      if (deepLink != null) {
+        if (deepLink.queryParameters.containsKey('id')) {
+          String id = deepLink.queryParameters['id'];
+
+          print("Product ID that has been received == ");
+          print(id);
+
+          Navigator.of(context).push(
+            new MaterialPageRoute(
+              builder: (BuildContext context) =>
+                  new ProductViaDynamicLinkScreen(
+                productId: id,
+              ),
+            ),
+          );
+        } else {
+          // nothing to do
+        }
+        //Navigator.pushNamed(context, deepLink.path);
+      }
+    }, onError: (OnLinkErrorException e) async {
+      print('onLinkError');
+      print(e.message);
+    });
+
+    final PendingDynamicLinkData data =
+        await FirebaseDynamicLinks.instance.getInitialLink();
+    final Uri deepLink = data?.link;
+
+    if (deepLink != null) {
+      if (deepLink.queryParameters.containsKey('id')) {
+        String id = deepLink.queryParameters['id'];
+        print("Product ID that has been received == ");
+        print(id);
+        Navigator.of(context).push(
+          new MaterialPageRoute(
+            builder: (BuildContext context) => new ProductViaDynamicLinkScreen(
+              productId: id,
+            ),
+          ),
+        );
+      } else {
+        // nothing to do
+      }
     }
   }
 

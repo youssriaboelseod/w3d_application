@@ -7,7 +7,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:woocommerce/woocommerce.dart';
-import 'dart:math';
 
 class ReviewsProvider with ChangeNotifier {
   String username = "auth@gmail.com";
