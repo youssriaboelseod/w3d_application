@@ -15,15 +15,20 @@ void whatsAppOpen() async {
   }
 }
 
-shareApp() {
-  Share.share(
-      "https://play.google.com/store/apps/details?id=com.moadawy.T_Planners");
+shareAppAndroid() async {
+  await Share.share(
+      "https://play.google.com/store/apps/details?id=com.moadawy.W3d");
+}
+
+shareAppIos() async {
+  await Share.share(
+      "https://play.google.com/store/apps/details?id=com.moadawy.W3d");
 }
 
 updateAppUrl() async {
   final InAppReview inAppReview = InAppReview.instance;
 
-  inAppReview.openStoreListing(appStoreId: 'com.moadawy.T_Planners');
+  inAppReview.openStoreListing(appStoreId: 'com.moadawy.W3d');
 }
 
 _openUrl(String url) async {
@@ -63,6 +68,87 @@ double getFontSize(double width) {
     factor = .04;
   }
   return (width * factor);
+}
+
+void shareAppDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        backgroundColor: Colors.black,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(
+            25,
+          ),
+        ),
+        content: Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CircleAvatar(
+                    backgroundColor: Colors.white,
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.phone_android,
+                        color: Colors.black,
+                      ),
+                      onPressed: () {
+                        shareAppAndroid();
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: 5,
+                    ),
+                    child: Text(
+                      "Android",
+                      textScaleFactor: 1,
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CircleAvatar(
+                    backgroundColor: Colors.white,
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.phone_iphone,
+                        color: Colors.black,
+                      ),
+                      onPressed: () {
+                        shareAppIos();
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: 5,
+                    ),
+                    child: Text(
+                      "iOS",
+                      textScaleFactor: 1,
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      );
+    },
+  );
 }
 
 void showContact(BuildContext context) {
@@ -168,7 +254,8 @@ void showAboutW3d(BuildContext context) {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   onPressed: () {
-                    _openUrl("");
+                    _openUrl(
+                        "https://050saa.com/%D9%85%D9%86-%D9%86%D8%AD%D9%86/");
                   },
                   child: Text(
                     "من نحن",
@@ -197,7 +284,8 @@ void showAboutW3d(BuildContext context) {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   onPressed: () {
-                    _openUrl("");
+                    _openUrl(
+                        "https://050saa.com/%D8%B4%D8%B1%D9%88%D8%B7-%D8%A7%D9%84%D8%A5%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85/");
                   },
                   child: Text(
                     "شروط الاستخدام",
@@ -226,7 +314,8 @@ void showAboutW3d(BuildContext context) {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   onPressed: () {
-                    _openUrl("");
+                    _openUrl(
+                        "https://050saa.com/%D8%B3%D9%8A%D8%A7%D8%B3%D8%A9-%D8%A7%D9%84%D8%AE%D8%B5%D9%88%D8%B5%D9%8A%D8%A9/");
                   },
                   child: Text(
                     "سياسة الخصوصية",

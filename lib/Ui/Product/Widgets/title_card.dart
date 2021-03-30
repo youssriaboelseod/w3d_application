@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts_arabic/fonts.dart';
+import 'package:provider/provider.dart';
+
+//
+import '../../1MainHelper/Alerts/alerts.dart';
+import '../../1MainHelper/Snacks/snackbar.dart';
+
 //
 import '../Functions/add_review.dart';
 import 'rating_stars.dart';
 import '../../Seller/Screen/seller_products_screen.dart';
+
+import '../../../Providers/AuthDataProvider/auth_data_provider.dart';
 
 // ignore: must_be_immutable
 class TitleCard extends StatelessWidget {
@@ -119,11 +127,30 @@ class TitleCard extends StatelessWidget {
                     bottom: 8,
                   ),
                   child: GestureDetector(
-                    onTap: () {
-                      showAddReviewForm(
+                    onTap: () async {
+                      bool checkIfSignedIn =
+                          Provider.of<AuthDataProvider>(context, listen: false)
+                              .checkIfSignedIn();
+                      if (!checkIfSignedIn) {
+                        showTopSnackBar(
+                          context: context,
+                          body: "من فضلك قم بالتسجيل اولا",
+                          title: "تنبيه",
+                        );
+                        return;
+                      }
+                      final result = await showAddReviewForm(
                         context: context,
                         productId: productMap["value"].id,
                       );
+                      print(result);
+                      if (result == "Success") {
+                        showTopSnackBar(
+                          context: context,
+                          title: "رائع",
+                          body: "تمت اضافة تقيمك بنجاح",
+                        );
+                      }
                     },
                     child: Text(
                       "اضف تقيمك",

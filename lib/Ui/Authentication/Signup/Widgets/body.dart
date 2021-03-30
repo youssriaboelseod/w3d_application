@@ -158,10 +158,11 @@ class _BodyState extends State<Body> {
               padding: const EdgeInsets.all(5.0),
               child: GestureDetector(
                 onTap: () {
-                  _openUrl("");
+                  _openUrl(
+                      "https://050saa.com/%D8%B3%D9%8A%D8%A7%D8%B3%D8%A9-%D8%A7%D9%84%D8%AE%D8%B5%D9%88%D8%B5%D9%8A%D8%A9/");
                 },
                 child: Text(
-                  "بالتسجيل فانت توافق على شروط الخصوصية",
+                  "بالتسجيل فانت توافق على سياسة الخصوصية",
                   textAlign: TextAlign.center,
                   textScaleFactor: 1,
                   textDirection: TextDirection.rtl,
@@ -179,10 +180,11 @@ class _BodyState extends State<Body> {
               padding: const EdgeInsets.all(5.0),
               child: GestureDetector(
                 onTap: () {
-                  _openUrl("");
+                  _openUrl(
+                      "https://050saa.com/%D8%B4%D8%B1%D9%88%D8%B7-%D8%A7%D9%84%D8%A5%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85/");
                 },
                 child: Text(
-                  "سياسة الاستخدام",
+                  "شروط الاستخدام",
                   textAlign: TextAlign.center,
                   textScaleFactor: 1,
                   textDirection: TextDirection.rtl,

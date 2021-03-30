@@ -238,7 +238,7 @@ class DrawerItems extends StatelessWidget {
                           textScaleFactor: 1,
                         ),
                         onPressed: () {
-                          shareApp();
+                          shareAppDialog(context);
                         },
                       ),
                     ],

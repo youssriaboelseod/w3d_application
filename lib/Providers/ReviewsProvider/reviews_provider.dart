@@ -19,6 +19,8 @@ class ReviewsProvider with ChangeNotifier {
     consumerSecret: "cs_aa9486fe01e314e72b5b2d50ae109c84a682f749",
   );
 
+  List<WooProductReview> reviews = [];
+
   Future<bool> checkInternetConnection() async {
     try {
       await InternetAddress.lookup('google.com');
@@ -38,7 +40,9 @@ class ReviewsProvider with ChangeNotifier {
       return null;
     }
     try {
-      List<WooProductReview> reviews = [];
+      // Clear reviews
+      reviews.clear();
+
       http.Response response;
 
       String basicAuth =
@@ -67,7 +71,7 @@ class ReviewsProvider with ChangeNotifier {
           WooProductReview review = WooProductReview.fromJson(element);
           reviews.add(review);
         });
-
+        notifyListeners();
         return reviews;
       } else {
         return [];
@@ -122,6 +126,12 @@ class ReviewsProvider with ChangeNotifier {
       print("Status Code: " + response.statusCode.toString());
 
       if (response.statusCode == 200 || response.statusCode == 201) {
+        final outputData = json.decode(response.body);
+        print(outputData);
+        WooProductReview review = WooProductReview.fromJson(outputData);
+        reviews.add(review);
+
+        notifyListeners();
         return null;
       } else {
         return "لقد حدث خطأ من فضلك حاول مرة اخرى";

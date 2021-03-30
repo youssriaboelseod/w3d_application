@@ -63,10 +63,12 @@ class _BodyState extends State<Body> {
     }
     if (widget.productMap["value"].stockQuantity != null) {
       if (selectedQuantityValue > widget.productMap["value"].stockQuantity) {
+        int availableQuantity = widget.productMap["value"].stockQuantity;
         showAlertNoAction(
           context: context,
-          message:
-              "الكمية المتاحة فقط ${widget.productMap["value"].stockQuantity}",
+          message: availableQuantity == 0
+              ? "لقد نفذت الكمية"
+              : "الكمية المتاحة فقط $availableQuantity",
         );
 
         return;

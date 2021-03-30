@@ -3,8 +3,9 @@ import 'package:flutter_shimmer/flutter_shimmer.dart';
 import 'package:google_fonts_arabic/fonts.dart';
 import 'package:html/parser.dart' show parse;
 import 'package:provider/provider.dart';
-import 'package:w3d/Providers/ReviewsProvider/reviews_provider.dart';
 import 'package:woocommerce/models/product_review.dart';
+//
+import '../../../Providers/ReviewsProvider/reviews_provider.dart';
 
 // ignore: must_be_immutable
 class Reviews extends StatelessWidget {
@@ -63,28 +64,34 @@ class Reviews extends StatelessWidget {
                   ),
                 );
               } else {
-                return ListView.builder(
-                  physics: ScrollPhysics(),
-                  padding: EdgeInsets.symmetric(
-                    vertical: 0,
-                  ),
-                  shrinkWrap: true,
-                  itemCount: reviews.length,
-                  itemBuilder: (context, index) => Column(
-                    children: [
-                      ReviewItem(
-                        index: index + 1,
-                        review: reviews[index].review,
-                        userName: reviews[index].reviewer,
+                return Consumer<ReviewsProvider>(
+                  builder: (context, value, child) {
+                    reviews = value.reviews;
+                    return ListView.builder(
+                      physics: ScrollPhysics(),
+                      padding: EdgeInsets.symmetric(
+                        vertical: 0,
                       ),
-                      Divider(
-                        endIndent: 50,
-                        indent: 50,
-                        thickness: 1,
-                        color: Colors.grey,
+                      shrinkWrap: true,
+                      itemCount: reviews.length,
+                      itemBuilder: (context, index) => Column(
+                        children: [
+                          ReviewItem(
+                            index: index + 1,
+                            wooProductReview: reviews[index],
+                          ),
+                          index + 1 == reviews.length
+                              ? Container()
+                              : Divider(
+                                  endIndent: 50,
+                                  indent: 50,
+                                  thickness: 1,
+                                  color: Colors.grey,
+                                ),
+                        ],
                       ),
-                    ],
-                  ),
+                    );
+                  },
                 );
               }
             },
@@ -96,11 +103,10 @@ class Reviews extends StatelessWidget {
 }
 
 class ReviewItem extends StatelessWidget {
-  final String review;
-  final String userName;
+  final WooProductReview wooProductReview;
   final int index;
 
-  const ReviewItem({Key key, this.review, this.userName, this.index})
+  const ReviewItem({Key key, this.wooProductReview, this.index})
       : super(key: key);
   String _parseHtmlString(String htmlString) {
     final document = parse(htmlString);
@@ -135,7 +141,9 @@ class ReviewItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                userName ?? "",
+                wooProductReview.reviewer != null
+                    ? wooProductReview.reviewer
+                    : "",
                 textScaleFactor: 1,
                 overflow: TextOverflow.fade,
                 textDirection: TextDirection.rtl,
@@ -149,7 +157,9 @@ class ReviewItem extends StatelessWidget {
                 softWrap: true,
               ),
               Text(
-                review != null ? _parseHtmlString(review.trim()) : "",
+                wooProductReview.review != null
+                    ? _parseHtmlString(wooProductReview.review.trim())
+                    : "",
                 textScaleFactor: 1,
                 overflow: TextOverflow.fade,
                 textDirection: TextDirection.rtl,
@@ -161,6 +171,17 @@ class ReviewItem extends StatelessWidget {
                 ),
                 softWrap: true,
               ),
+              wooProductReview.rating == null
+                  ? Container()
+                  : Row(
+                      children: List.generate(
+                        wooProductReview.rating,
+                        (index) => Icon(
+                          Icons.star,
+                          color: Colors.yellow,
+                        ),
+                      ),
+                    ),
             ],
           ),
         ],

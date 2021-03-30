@@ -11,6 +11,7 @@ import '../../1MainHelper/Widgets/featured_product_card.dart';
 // ignore: must_be_immutable
 class Body extends StatelessWidget {
   List<int> numbers = [];
+  final random = new Random();
   int randomNumber;
   bool checkIfExist(int numberInp) {
     int index = numbers.indexOf(numberInp);
@@ -21,10 +22,22 @@ class Body extends StatelessWidget {
     }
   }
 
+  int getRandomNumber(int range) {
+    randomNumber = random.nextInt(range);
+    if (randomNumber == 0) {
+      randomNumber += 1;
+    }
+    while (checkIfExist(randomNumber)) {
+      randomNumber = random.nextInt(range);
+      if (randomNumber == 0) {
+        randomNumber += 1;
+      }
+    }
+    return randomNumber;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final random = new Random();
-
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -32,14 +45,7 @@ class Body extends StatelessWidget {
             title: "العروض",
             type: "onSale",
             function: () async {
-              randomNumber = random.nextInt(5);
-              while (checkIfExist(randomNumber)) {
-                randomNumber = random.nextInt(5);
-                if (randomNumber == 0) {
-                  randomNumber += 1;
-                }
-              }
-
+              randomNumber = getRandomNumber(5);
               numbers.add(randomNumber);
               print("My random number is = " + randomNumber.toString());
               await Provider.of<ProductsProvider>(context, listen: false)
@@ -55,13 +61,7 @@ class Body extends StatelessWidget {
             title: "أحدث الزيارات",
             type: "mostViewd",
             function: () async {
-              randomNumber = random.nextInt(12);
-              while (checkIfExist(randomNumber)) {
-                randomNumber = random.nextInt(5);
-                if (randomNumber == 0) {
-                  randomNumber += 1;
-                }
-              }
+              randomNumber = getRandomNumber(14);
 
               numbers.add(randomNumber);
               print("My random number is = " + randomNumber.toString());
@@ -78,13 +78,7 @@ class Body extends StatelessWidget {
             title: "الأكثر رواجا",
             type: "popular",
             function: () async {
-              randomNumber = random.nextInt(12);
-              while (checkIfExist(randomNumber)) {
-                randomNumber = random.nextInt(5);
-                if (randomNumber == 0) {
-                  randomNumber += 1;
-                }
-              }
+              randomNumber = getRandomNumber(14);
 
               numbers.add(randomNumber);
               print("My random number is = " + randomNumber.toString());
@@ -101,14 +95,7 @@ class Body extends StatelessWidget {
             title: "السوق",
             type: "souq",
             function: () async {
-              randomNumber = random.nextInt(12);
-              while (checkIfExist(randomNumber)) {
-                randomNumber = random.nextInt(5);
-                if (randomNumber == 0) {
-                  randomNumber += 1;
-                }
-              }
-
+              randomNumber = getRandomNumber(14);
               numbers.add(randomNumber);
               print("My random number is = " + randomNumber.toString());
               await Provider.of<ProductsProvider>(context, listen: false)

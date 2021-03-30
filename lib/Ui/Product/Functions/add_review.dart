@@ -9,20 +9,11 @@ import '../../1MainHelper/Snacks/snackbar.dart';
 import '../../../Providers/ReviewsProvider/reviews_provider.dart';
 import '../../../Providers/AuthDataProvider/auth_data_provider.dart';
 
-void showAddReviewForm({BuildContext context, int productId}) {
+Future<dynamic> showAddReviewForm({BuildContext context, int productId}) {
   final _titleController = TextEditingController(text: "");
   double rating = 5;
-  bool checkIfSignedIn =
-      Provider.of<AuthDataProvider>(context, listen: false).checkIfSignedIn();
-  if (!checkIfSignedIn) {
-    showTopSnackBar(
-      context: context,
-      body: "من فضلك قم بالتسجيل اولا",
-      title: "تنبيه",
-    );
-    return;
-  }
-  showModalBottomSheet(
+
+  return showModalBottomSheet(
     backgroundColor: Colors.grey[300],
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(
@@ -132,12 +123,8 @@ void showAddReviewForm({BuildContext context, int productId}) {
 
                     return;
                   } else {
-                    showTopSnackBar(
-                      context: context,
-                      title: "رائع",
-                      body: "تمت اضافة تقيمك بنجاح",
-                    );
-                    Navigator.of(context).pop();
+                    Navigator.of(context).pop("Success");
+
                     return;
                   }
                 },
