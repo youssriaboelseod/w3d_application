@@ -308,9 +308,10 @@ class _OptionsIconsState extends State<OptionsIcons> {
                     await parameters.buildShortLink();
 
                 final Uri shortUrl = shortDynamicLink.shortUrl;
+                final productDynamicLink = shortUrl.toString();
 
                 await Share.share(
-                  shortUrl.toString(),
+                  productDynamicLink,
                 );
               }
             },
