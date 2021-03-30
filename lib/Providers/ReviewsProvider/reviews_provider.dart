@@ -38,6 +38,7 @@ class ReviewsProvider with ChangeNotifier {
       return null;
     }
     try {
+      List<WooProductReview> reviews = [];
       http.Response response;
 
       String basicAuth =
@@ -61,12 +62,15 @@ class ReviewsProvider with ChangeNotifier {
 
       if (response.statusCode == 200) {
         final outputProduct = json.decode(response.body);
-        print(outputProduct);
-        print(outputProduct.length);
 
-        return [];
+        outputProduct.forEach((element) {
+          WooProductReview review = WooProductReview.fromJson(element);
+          reviews.add(review);
+        });
+
+        return reviews;
       } else {
-        return null;
+        return [];
       }
     } on SocketException catch (_) {
       return [];

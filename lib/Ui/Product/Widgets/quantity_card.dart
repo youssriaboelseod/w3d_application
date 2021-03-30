@@ -58,6 +58,9 @@ class _QuantityCardState extends State<QuantityCard> {
               ),
               Card(
                 elevation: 3,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
                 child: Container(
                   width: 60,
                   padding: const EdgeInsets.all(10.0),
