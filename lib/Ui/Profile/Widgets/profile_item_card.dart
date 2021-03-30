@@ -5,17 +5,16 @@ class ProfileItemCard extends StatelessWidget {
   final String title;
   final String initialText;
   final IconData prefixIcon;
-  final bool readOnly;
+
   final Function function;
 
-  ProfileItemCard(
-      {Key key,
-      this.title,
-      this.initialText,
-      this.readOnly,
-      this.prefixIcon,
-      this.function})
-      : super(key: key);
+  ProfileItemCard({
+    Key key,
+    this.title,
+    this.initialText,
+    this.prefixIcon,
+    this.function,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
