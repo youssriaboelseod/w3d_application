@@ -290,7 +290,8 @@ class TitleWithCopy extends StatelessWidget {
               }
             },
             child: Container(
-              width: size.width / 1.6,
+              width:
+                  (size.width < 340) ? (size.width / 1.8) : (size.width / 1.6),
               child: FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Text(

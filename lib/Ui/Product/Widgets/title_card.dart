@@ -120,14 +120,12 @@ class TitleCard extends StatelessWidget {
               children: [
                 productMap["value"].ratingCount == null
                     ? Container()
-                    : RatingStars(
-                        number: productMap["value"].ratingCount,
-                      ),
+                    : RatingStars(),
                 Padding(
                   padding: const EdgeInsets.only(
                     top: 8,
-                    left: 8,
-                    right: 15,
+                    left: 4,
+                    right: 12,
                     bottom: 8,
                   ),
                   child: GestureDetector(

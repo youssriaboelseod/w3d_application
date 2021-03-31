@@ -140,7 +140,7 @@ class CartItemDetails extends StatelessWidget {
             width: 15,
           ),
           Container(
-            width: size.width > 320 ? 160 : 120,
+            width: size.width >= 340 ? 160 : 120,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,

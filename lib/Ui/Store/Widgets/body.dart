@@ -93,6 +93,7 @@ class _BodyState extends State<Body> {
     double ratio = getRatio(size.width);
     print("----- Store products length --------");
     print(products.length);
+    print(size.height);
 
     return Column(
       children: [
@@ -122,8 +123,8 @@ class _BodyState extends State<Body> {
         ),
         _isLoading
             ? Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 100,
+                padding: const EdgeInsets.only(
+                  top: 100,
                 ),
                 child: CircularProgressIndicator(
                   valueColor: AlwaysStoppedAnimation<Color>(

@@ -314,10 +314,10 @@ class ProductsProvider with ChangeNotifier {
         outputProducts.forEach(
           (element) {
             print("---- let us see ---- ");
-            element.forEach((k, v) {
-              print(k);
-              print(v);
-            });
+            // element.forEach((k, v) {
+            //print(k);
+            //print(v);
+            //});
             WooProduct wooProduct = WooProduct.fromJson(element);
 
             tempListForProductsByCategory.add(

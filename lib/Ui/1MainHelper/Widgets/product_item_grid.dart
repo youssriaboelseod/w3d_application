@@ -173,7 +173,7 @@ class ExpressCard extends StatelessWidget {
 }
 
 class ImageAnimation extends StatelessWidget {
-   final Map<String, dynamic> productMap;
+  final Map<String, dynamic> productMap;
 
   const ImageAnimation({Key key, this.productMap}) : super(key: key);
   @override
@@ -296,7 +296,8 @@ class DetailsCard extends StatelessWidget {
                 ),
               ),
             ),
-            (productMap["value"].onSale && productMap["value"].regularPrice.isNotEmpty)
+            (productMap["value"].onSale &&
+                    productMap["value"].regularPrice.isNotEmpty)
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
@@ -306,11 +307,14 @@ class DetailsCard extends StatelessWidget {
                                 left: 2,
                               ),
                               child: Container(
-                                width: 70,
+                                width: (size.width < 340) ? 58 : 70,
                                 child: FittedBox(
                                   fit: BoxFit.scaleDown,
                                   child: Text(
-                                    productMap["value"].regularPrice.toString() + "  ر.س",
+                                    productMap["value"]
+                                            .regularPrice
+                                            .toString() +
+                                        "  ر.س",
                                     textAlign: TextAlign.center,
                                     maxLines: 1,
                                     textDirection: TextDirection.rtl,
@@ -338,7 +342,8 @@ class DetailsCard extends StatelessWidget {
                             fit: BoxFit.scaleDown,
                             child: Text(
                               productMap["value"].price.isNotEmpty
-                                  ? productMap["value"].price.toString() + "  ر.س"
+                                  ? productMap["value"].price.toString() +
+                                      "  ر.س"
                                   : "",
                               textAlign: TextAlign.center,
                               maxLines: 1,

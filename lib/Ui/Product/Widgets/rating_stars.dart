@@ -6,12 +6,13 @@ import '../../../Providers/ReviewsProvider/reviews_provider.dart';
 
 // ignore: must_be_immutable
 class RatingStars extends StatelessWidget {
-  int number;
+  RatingStars({Key key}) : super(key: key);
+  int number = 0;
   int averageRate = 0;
-
-  RatingStars({Key key, this.number}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    print(size.width);
     return Consumer<ReviewsProvider>(builder: (context, value, child) {
       int length = value.reviews.length;
       if (length != 0) {
@@ -33,6 +34,7 @@ class RatingStars extends StatelessWidget {
               (index) => Icon(
                 Icons.star,
                 color: Colors.yellow,
+                size: (size.width < 340) ? 20 : 28,
               ),
             ),
             SizedBox(
