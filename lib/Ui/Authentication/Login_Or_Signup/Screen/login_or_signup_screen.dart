@@ -18,7 +18,17 @@ class _LoginOrSignupScreenState extends State<LoginOrSignupScreen> {
     this.initDynamicLinks(context);
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  bool _isOpenedDynamicLink = false;
+
   void initDynamicLinks(BuildContext context) async {
+    if (_isOpenedDynamicLink) {
+      return;
+    }
     FirebaseDynamicLinks.instance.onLink(
         onSuccess: (PendingDynamicLinkData dynamicLink) async {
       Uri deepLink = dynamicLink?.link;
@@ -30,6 +40,7 @@ class _LoginOrSignupScreenState extends State<LoginOrSignupScreen> {
           print("Product ID that has been received == ");
           print(id);
           deepLink = null;
+          _isOpenedDynamicLink = true;
           Navigator.of(context).push(
             new MaterialPageRoute(
               builder: (BuildContext context) =>
@@ -58,6 +69,7 @@ class _LoginOrSignupScreenState extends State<LoginOrSignupScreen> {
         print("Product ID that has been received == ");
         print(id);
         deepLink = null;
+        _isOpenedDynamicLink = true;
         Navigator.of(context).push(
           new MaterialPageRoute(
             builder: (BuildContext context) => new ProductViaDynamicLinkScreen(

@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:w3d/Providers/ProductsProvider/products_provider.dart';
 //
 import '../../../Providers/ReviewsProvider/reviews_provider.dart';
-import '../Widgets/body.dart';
+import '../../Product/Widgets/body.dart';
 
 class ProductViaDynamicLinkScreen extends StatefulWidget {
   static const routeName = "/product_through_dynamic_link";
@@ -20,8 +20,6 @@ class _ProductViaDynamicLinkScreenState
     extends State<ProductViaDynamicLinkScreen> {
   @override
   void initState() {
-    print("niceeeeeee");
-    print(widget.productId);
     super.initState();
   }
 

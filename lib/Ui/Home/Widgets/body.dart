@@ -44,10 +44,6 @@ class _BodyState extends State<Body> {
     return randomNumber;
   }
 
-  void resetRefresh() {
-    refresh = false;
-  }
-
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
@@ -66,7 +62,6 @@ class _BodyState extends State<Body> {
               title: "العروض",
               type: "onSale",
               refresh: refresh,
-              resetRefresh: resetRefresh,
               function: () async {
                 randomNumber = getRandomNumber(5);
                 numbers.add(randomNumber);
@@ -84,7 +79,6 @@ class _BodyState extends State<Body> {
               title: "أحدث الزيارات",
               type: "mostViewd",
               refresh: refresh,
-              resetRefresh: resetRefresh,
               function: () async {
                 randomNumber = getRandomNumber(14);
 
@@ -103,7 +97,6 @@ class _BodyState extends State<Body> {
               title: "الأكثر رواجا",
               type: "popular",
               refresh: refresh,
-              resetRefresh: resetRefresh,
               function: () async {
                 randomNumber = getRandomNumber(14);
 
@@ -122,7 +115,6 @@ class _BodyState extends State<Body> {
               title: "السوق",
               type: "souq",
               refresh: refresh,
-              resetRefresh: resetRefresh,
               function: () async {
                 randomNumber = getRandomNumber(14);
                 numbers.add(randomNumber);
@@ -148,7 +140,7 @@ class FeaturedProductsFrame extends StatelessWidget {
   final String title;
   final String type;
   final bool refresh;
-  final Function resetRefresh;
+
   final Future<dynamic> Function() function;
 
   FeaturedProductsFrame({
@@ -157,7 +149,6 @@ class FeaturedProductsFrame extends StatelessWidget {
     this.function,
     this.type,
     this.refresh,
-    this.resetRefresh,
   }) : super(key: key);
 
   List<Map<String, dynamic>> products = [];
@@ -171,7 +162,6 @@ class FeaturedProductsFrame extends StatelessWidget {
     } else {
       await function();
       getProducts(context);
-      //resetRefresh();
     }
   }
 
