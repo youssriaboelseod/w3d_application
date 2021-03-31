@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts_arabic/fonts.dart';
-import 'package:woocommerce/woocommerce.dart';
 import 'package:provider/provider.dart';
 //
 import '../../../Providers/FavouritesProvider/favourites_provider.dart';

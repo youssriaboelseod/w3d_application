@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts_arabic/fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:w3d/Providers/ProductsProvider/products_provider.dart';
-import 'package:w3d/Ui/1MainHelper/Alerts/alerts.dart';
-import 'package:w3d/Ui/1MainHelper/Snacks/snackbar.dart';
-import 'package:w3d/Ui/Product/Screen/product_screen.dart';
 import 'package:woocommerce/models/order.dart';
-import 'package:woocommerce/models/products.dart';
 //
 import 'price_card.dart';
+import '../../../Providers/ProductsProvider/products_provider.dart';
+import '../../1MainHelper/Alerts/alerts.dart';
+import '../../1MainHelper/Snacks/snackbar.dart';
+import '../../Product/Screen/product_screen.dart';
 
 // ignore: must_be_immutable
 class OrderForm extends StatelessWidget {

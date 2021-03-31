@@ -1,7 +1,6 @@
 import 'package:provider/provider.dart';
 import 'package:google_fonts_arabic/fonts.dart';
 import 'package:flutter/material.dart';
-import '../../Profile/Screen/profile_screen.dart';
 //
 import '../../../Providers/AuthDataProvider/auth_data_provider.dart';
 import '../../../Providers/OrdersProvider/order_provider.dart';
@@ -12,7 +11,7 @@ import 'radio_buttons.dart';
 import '../../PaymentMethods/Screen/payment_methods_screen.dart';
 import '../../1MainHelper/Alerts/alerts.dart';
 import '../../1MainHelper/Snacks/snackbar.dart';
-
+import '../../Profile/Screen/profile_screen.dart';
 import '../Widgets/input_text_card.dart';
 import 'buttons.dart';
 

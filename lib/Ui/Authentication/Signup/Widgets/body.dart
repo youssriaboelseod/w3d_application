@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts_arabic/fonts.dart';
-
 import 'package:url_launcher/url_launcher.dart';
-import '../../../../Models/UserAuthModel/user_auth_model.dart';
 //
-
 import '../../../1MainHelper/Snacks/snackbar.dart';
 import '../Functions/Signup_Function.dart';
 import '../Functions/validate_inputs.dart';
@@ -16,6 +13,7 @@ import '../../Widgets/rounded_input_field.dart';
 import '../../Widgets/rounded_password_field.dart';
 import '../../../Home/Screen/home_screen.dart';
 import '../../../1MainHelper/Alerts/alerts.dart';
+import '../../../../Models/UserAuthModel/user_auth_model.dart';
 
 class Body extends StatefulWidget {
   @override

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-
 import 'package:provider/provider.dart';
+//
 import '../../1MainHelper/Functions/main_functions.dart';
-
 import 'category_item_card.dart';
 import '../../1MainHelper/Widgets/product_item_grid.dart';
-
 import '../../../Providers/ProductsProvider/products_provider.dart';
 import '../../1MainHelper/Helpers/helper.dart';
 

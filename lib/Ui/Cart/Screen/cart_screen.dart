@@ -1,11 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 //
-import '../../Store/Screen/store_screen.dart';
-import '../../Drawer/Screen/drawer_screen.dart';
 import '../Widgets/body.dart';
-import '../../Favourites/Screen/favourites_screen.dart';
-import '../../Home/Screen/home_screen.dart';
 
 // ignore: must_be_immutable
 class CartScreen extends StatelessWidget {

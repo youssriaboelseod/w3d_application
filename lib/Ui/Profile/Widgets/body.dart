@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts_arabic/fonts.dart';
-
+import 'package:provider/provider.dart';
+//
 import '../../../Providers/AuthDataProvider/auth_data_provider.dart';
 import '../../Authentication/Phone/Screen/add_phone_number_screen.dart';
-
 import 'profile_item_card.dart';
-import 'package:provider/provider.dart';
 
 class Body extends StatelessWidget {
   @override

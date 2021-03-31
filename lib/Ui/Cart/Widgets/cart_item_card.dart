@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:woocommerce/models/cart_item.dart';
 import 'package:woocommerce/woocommerce.dart';
 import 'package:flutter/cupertino.dart';
-
 //
 import '../../../Providers/CartProvider/cart_provider.dart';
 import '../../1MainHelper/Snacks/snackbar.dart';

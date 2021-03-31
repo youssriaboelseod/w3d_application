@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:provider/provider.dart';
+//
 import '../../../../Models/UserAuthModel/user_auth_model.dart';
 import '../../../../Providers/AuthDataProvider/auth_data_provider.dart';
 import '../../../../Providers/CartProvider/cart_provider.dart';
 import '../../../../Providers/FavouritesProvider/favourites_provider.dart';
 import '../../../../Providers/OrdersProvider/order_provider.dart';
-import 'package:provider/provider.dart';
 
 // Note:
 // Here we will write the login fucntion

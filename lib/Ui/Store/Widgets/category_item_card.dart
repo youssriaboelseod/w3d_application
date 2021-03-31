@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../Providers/ProductsProvider/products_provider.dart';
 import 'package:woocommerce/woocommerce.dart';
-import 'package:provider/provider.dart';
-
+//
 import '../../1MainHelper/Helpers/helper.dart';
 
 class CategoriesCard extends StatefulWidget {

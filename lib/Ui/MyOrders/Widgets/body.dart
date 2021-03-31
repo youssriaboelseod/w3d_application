@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:w3d/Providers/OrdersProvider/order_provider.dart';
-import 'package:w3d/Ui/MyOrders/Widgets/order_item_card.dart';
-import 'package:woocommerce/models/order_payload.dart';
 import 'package:woocommerce/woocommerce.dart';
 import 'package:provider/provider.dart';
+//
+import '../../../Providers/OrdersProvider/order_provider.dart';
+import 'order_item_card.dart';
 
 // ignore: must_be_immutable
 class Body extends StatelessWidget {

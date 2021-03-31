@@ -1,12 +1,11 @@
 import 'dart:io';
-import 'dart:io';
 import 'package:provider/provider.dart';
-import '../AuthDataProvider/auth_data_provider.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:woocommerce/woocommerce.dart';
+//
+import '../AuthDataProvider/auth_data_provider.dart';
 
 class ReviewsProvider with ChangeNotifier {
   String username = "auth@gmail.com";

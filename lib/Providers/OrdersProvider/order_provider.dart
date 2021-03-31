@@ -1,13 +1,13 @@
 import 'dart:io';
 import 'package:http/http.dart' as http;
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:w3d/Providers/CartProvider/cart_provider.dart';
-import 'package:w3d/Ui/1MainHelper/Helpers/helper.dart';
 import 'package:woocommerce/models/cart_item.dart';
 import 'package:woocommerce/models/order_payload.dart';
 import 'package:woocommerce/woocommerce.dart';
+//
+import '../CartProvider/cart_provider.dart';
+import '../../Ui/1MainHelper/Helpers/helper.dart';
 
 class OrdersProvider with ChangeNotifier {
   WooCommerce woocommerce = WooCommerce(

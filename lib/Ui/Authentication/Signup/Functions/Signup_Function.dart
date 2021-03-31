@@ -1,11 +1,13 @@
 import 'dart:io';
 import 'package:provider/provider.dart';
 import 'package:woocommerce_api/woocommerce_api.dart';
-import '../../../../Providers/AuthDataProvider/auth_data_provider.dart';
-import '../../../../Models/UserAuthModel/user_auth_model.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+//
+import '../../../../Providers/AuthDataProvider/auth_data_provider.dart';
+import '../../../../Models/UserAuthModel/user_auth_model.dart';
 
 Future<String> signUpWithEmailAndPassword({
   BuildContext context,

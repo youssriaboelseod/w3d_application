@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:w3d/Providers/ProductsProvider/products_provider.dart';
 //
+import '../../../Providers/ProductsProvider/products_provider.dart';
 import '../../../Providers/ReviewsProvider/reviews_provider.dart';
 import '../../Product/Widgets/body.dart';
 

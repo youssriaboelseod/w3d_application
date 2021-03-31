@@ -6,6 +6,7 @@ import 'package:woocommerce/models/cart_item.dart';
 import '../../../Providers/CartProvider/cart_provider.dart';
 import 'price_card.dart';
 
+// ignore: must_be_immutable
 class BillForm extends StatelessWidget {
   List<WooCartItem> cartItems = [];
   double totalPrice = 0;

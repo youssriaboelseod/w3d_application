@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts_arabic/fonts.dart';
-import '../../Cart/Screen/cart_screen.dart';
-
+//
 import '../Widgets/add_order_form.dart';
-import '../../Drawer/Screen/drawer_screen.dart';
 
 // ignore: must_be_immutable
 class AddOrderScreen extends StatelessWidget {

@@ -7,7 +7,6 @@ import 'package:flutter/services.dart';
 import '../../1MainHelper/Alerts/alerts.dart';
 import '../../1MainHelper/Snacks/snackbar.dart';
 import '../../../Providers/ReviewsProvider/reviews_provider.dart';
-import '../../../Providers/AuthDataProvider/auth_data_provider.dart';
 
 Future<dynamic> showAddReviewForm({BuildContext context, int productId}) {
   final _titleController = TextEditingController(text: "");

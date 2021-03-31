@@ -2,12 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts_arabic/fonts.dart';
 import 'package:provider/provider.dart';
-
-import 'package:woocommerce/woocommerce.dart';
-
-import '../../../Providers/ProductsProvider/products_provider.dart';
-
 //
+import '../../../Providers/ProductsProvider/products_provider.dart';
 import '../Widgets/body.dart';
 
 // ignore: must_be_immutable

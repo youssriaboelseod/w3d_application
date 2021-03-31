@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts_arabic/fonts.dart';
-import 'package:w3d/Ui/Product/Functions/get_variation_price.dart';
+import '../Functions/get_variation_price.dart';
 import 'package:woocommerce/models/products.dart';
 
 class OptionsButton extends StatefulWidget {

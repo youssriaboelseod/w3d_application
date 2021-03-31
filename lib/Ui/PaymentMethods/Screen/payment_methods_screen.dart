@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts_arabic/fonts.dart';
-import 'package:woocommerce/models/order.dart';
 //
 import '../Widgets/body.dart';
 

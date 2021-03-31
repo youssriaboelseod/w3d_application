@@ -1,5 +1,3 @@
-//
-
 String validateInputs({String phoneNumber}) {
   if (phoneNumber == null || phoneNumber.trim().isEmpty) {
     return "Please provide your phone number";

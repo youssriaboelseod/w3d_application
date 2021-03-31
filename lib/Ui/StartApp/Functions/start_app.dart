@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
+//
 import '../../../Providers/FavouritesProvider/favourites_provider.dart';
-import '../../../Providers/ProductsProvider/products_provider.dart';
 import '../../../Providers/AppConfigurationsProvider/app_configurations_provider.dart';
 import '../../../Providers/AuthDataProvider/auth_data_provider.dart';
 import '../../../Providers/OrdersProvider/order_provider.dart';
 import '../../../Providers/CartProvider/cart_provider.dart';
-import 'package:provider/provider.dart';
 
 Future<bool> startApp(BuildContext context) async {
   await Provider.of<AppConfigurationsProvider>(context, listen: false)

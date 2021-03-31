@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'dart:io';
 import '../../../1MainHelper/Alerts/alerts.dart';
 import '../../../../Providers/AuthDataProvider/auth_data_provider.dart';
-import 'package:provider/provider.dart';
-
 import '../../../1MainHelper/Snacks/snackbar.dart';
 import '../../../Profile/Screen/profile_screen.dart';
 import '../Screen/submit_code_screen.dart';

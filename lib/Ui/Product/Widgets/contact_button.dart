@@ -2,7 +2,7 @@ import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:google_fonts_arabic/fonts.dart';
-import 'package:w3d/Ui/1MainHelper/Helpers/my_dynamic_link_service.dart';
+import '../../1MainHelper/Helpers/my_dynamic_link_service.dart';
 import 'package:woocommerce/models/products.dart';
 import 'package:html/parser.dart' show parse;
 
