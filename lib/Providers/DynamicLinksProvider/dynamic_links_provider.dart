@@ -1,11 +1,18 @@
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
-class MyDynamicLinkService {
-  DynamicLinkParameters createDynamicLinkFunction(
-      {String productId, String productName, Uri productImageUrl}) {
+class DynamicLinksProvider with ChangeNotifier {
+  bool isOpenedDynamicLink = false;
+
+  Future<String> createAndGetDynamicLink({
+    String itemId,
+    String itemName,
+    Uri itemUrl,
+  }) async {
     final DynamicLinkParameters parameters = DynamicLinkParameters(
       uriPrefix: 'https://w3dapp.page.link',
-      link: Uri.parse('https://050saa.com/?id=$productId'),
+      link: Uri.parse('https://050saa.com/?id=$itemId'),
       androidParameters: AndroidParameters(
         packageName: 'com.moadawy.W3d',
         minimumVersion: 2,
@@ -26,12 +33,19 @@ class MyDynamicLinkService {
       ),
       socialMetaTagParameters: SocialMetaTagParameters(
         title: 'تطبيق الواعد',
-        description: productName,
-        imageUrl: productImageUrl,
+        description: itemName,
+        imageUrl: itemUrl,
       ),
     );
-    return parameters;
+
+    final ShortDynamicLink shortDynamicLink = await parameters.buildShortLink();
+
+    final Uri shortUrl = shortDynamicLink.shortUrl;
+    final String productDynamicLink = shortUrl.toString();
+    return productDynamicLink;
+  }
+
+  void setIsOpenedDynamicLink() {
+    isOpenedDynamicLink = true;
   }
 }
-
-//final Uri dynamicUrl = await parameters.buildUrl();

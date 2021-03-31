@@ -2,7 +2,7 @@ import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:share/share.dart';
-import '../../1MainHelper/Helpers/my_dynamic_link_service.dart';
+import '../../../Providers/DynamicLinksProvider/dynamic_links_provider.dart';
 import '../../1MainHelper/Alerts/alerts.dart';
 import '../../UpdateProduct/Screen/update_product_screen.dart';
 import 'package:woocommerce/woocommerce.dart';
@@ -299,22 +299,19 @@ class _OptionsIconsState extends State<OptionsIcons> {
               if (productPermalink == null) {
                 return;
               } else {
-                final DynamicLinkParameters parameters =
-                    MyDynamicLinkService().createDynamicLinkFunction(
-                  productId: widget.productMap["value"].id.toString(),
-                  productName: widget.productMap["value"].name,
-                  productImageUrl: widget.productMap["value"].images.length == 0
+                print("Product ID To Share == ");
+                print(widget.productMap["value"].id.toString());
+                final productDynamicLink =
+                    await Provider.of<DynamicLinksProvider>(context,
+                            listen: false)
+                        .createAndGetDynamicLink(
+                  itemId: widget.productMap["value"].id.toString(),
+                  itemName: widget.productMap["value"].name,
+                  itemUrl: widget.productMap["value"].images.length == 0
                       ? Uri.parse(
                           "https://firebasestorage.googleapis.com/v0/b/w3d-app.appspot.com/o/login.png?alt=media&token=f9a3d494-6502-4065-8b69-a80f716eef6f")
                       : Uri.parse(widget.productMap["value"].images[0].src),
                 );
-                print("Product ID To Share == ");
-                print(widget.productMap["value"].id.toString());
-                final ShortDynamicLink shortDynamicLink =
-                    await parameters.buildShortLink();
-
-                final Uri shortUrl = shortDynamicLink.shortUrl;
-                final productDynamicLink = shortUrl.toString();
 
                 await Share.share(
                   productDynamicLink,

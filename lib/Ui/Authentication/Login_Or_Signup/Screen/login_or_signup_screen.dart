@@ -1,8 +1,10 @@
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 //
+import '../../../../Providers/DynamicLinksProvider/dynamic_links_provider.dart';
 import '../Widgets/body.dart';
-import '../../../ProductThroughDynamicLink/Screen/product_via_dl_screen.dart';
+import '../../../ProductViaDynamicLink/Screen/product_via_dl_screen.dart';
 
 class LoginOrSignupScreen extends StatefulWidget {
   static const routeName = "login_or_signup_screen";
@@ -18,14 +20,11 @@ class _LoginOrSignupScreenState extends State<LoginOrSignupScreen> {
     this.initDynamicLinks(context);
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  bool _isOpenedDynamicLink = false;
-
   void initDynamicLinks(BuildContext context) async {
+    bool _isOpenedDynamicLink =
+        Provider.of<DynamicLinksProvider>(context, listen: false)
+            .isOpenedDynamicLink;
+
     if (_isOpenedDynamicLink) {
       return;
     }
@@ -36,15 +35,16 @@ class _LoginOrSignupScreenState extends State<LoginOrSignupScreen> {
       if (deepLink != null) {
         if (deepLink.queryParameters.containsKey('id')) {
           String id = deepLink.queryParameters['id'];
-
           print("Product ID that has been received == ");
           print(id);
-          deepLink = null;
-          _isOpenedDynamicLink = true;
+
+          // set is opended dynamic link true, To avoid open the page again
+          Provider.of<DynamicLinksProvider>(context, listen: false)
+              .setIsOpenedDynamicLink();
+
           Navigator.of(context).push(
-            new MaterialPageRoute(
-              builder: (BuildContext context) =>
-                  new ProductViaDynamicLinkScreen(
+            MaterialPageRoute(
+              builder: (BuildContext context) => ProductViaDynamicLinkScreen(
                 productId: id,
               ),
             ),
@@ -68,11 +68,14 @@ class _LoginOrSignupScreenState extends State<LoginOrSignupScreen> {
         String id = deepLink.queryParameters['id'];
         print("Product ID that has been received == ");
         print(id);
-        deepLink = null;
-        _isOpenedDynamicLink = true;
+
+        // set is opended dynamic link true, To avoid open the page again
+        Provider.of<DynamicLinksProvider>(context, listen: false)
+            .setIsOpenedDynamicLink();
+
         Navigator.of(context).push(
-          new MaterialPageRoute(
-            builder: (BuildContext context) => new ProductViaDynamicLinkScreen(
+          MaterialPageRoute(
+            builder: (BuildContext context) => ProductViaDynamicLinkScreen(
               productId: id,
             ),
           ),

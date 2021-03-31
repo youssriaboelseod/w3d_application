@@ -34,7 +34,7 @@ class RatingStars extends StatelessWidget {
               (index) => Icon(
                 Icons.star,
                 color: Colors.yellow,
-                size: (size.width < 340) ? 20 : 28,
+                size: (size.width < 340) ? 20 : 25,
               ),
             ),
             SizedBox(

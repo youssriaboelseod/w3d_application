@@ -6,7 +6,7 @@ import '../../../Providers/ReviewsProvider/reviews_provider.dart';
 import '../../Product/Widgets/body.dart';
 
 class ProductViaDynamicLinkScreen extends StatefulWidget {
-  static const routeName = "/product_through_dynamic_link";
+  static const routeName = "/product_via_dynamic_link";
   final String productId;
 
   ProductViaDynamicLinkScreen({Key key, this.productId}) : super(key: key);
@@ -38,19 +38,24 @@ class _ProductViaDynamicLinkScreenState
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     Provider.of<ReviewsProvider>(context, listen: false).resetReviews();
+
     return Scaffold(
       backgroundColor: Colors.grey[200],
       body: FutureBuilder(
           future: _future(context),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    Colors.black,
+              return Column(
+                children: [
+                  Image.asset(
+                    "assets/images/loading_product.jpeg",
+                    fit: BoxFit.fill,
+                    height: size.height,
+                    width: size.width,
                   ),
-                ),
+                ],
               );
             } else {
               if (productMap == null) {
