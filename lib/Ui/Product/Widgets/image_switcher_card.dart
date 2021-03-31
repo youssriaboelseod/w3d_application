@@ -304,8 +304,9 @@ class _OptionsIconsState extends State<OptionsIcons> {
                   productId: widget.productMap["value"].id.toString(),
                   productName: widget.productMap["value"].name,
                   productImageUrl: widget.productMap["value"].images.length == 0
-                      ? "https://firebasestorage.googleapis.com/v0/b/w3d-app.appspot.com/o/login.png?alt=media&token=f9a3d494-6502-4065-8b69-a80f716eef6f"
-                      : widget.productMap["value"].images[0].src,
+                      ? Uri.parse(
+                          "https://firebasestorage.googleapis.com/v0/b/w3d-app.appspot.com/o/login.png?alt=media&token=f9a3d494-6502-4065-8b69-a80f716eef6f")
+                      : Uri.parse(widget.productMap["value"].images[0].src),
                 );
                 print("Product ID To Share == ");
                 print(widget.productMap["value"].id.toString());

@@ -62,7 +62,10 @@ class _AddProductFormState extends State<AddProductForm> {
         outputAction: "Go to phone page",
       );
       if (result == "Go to phone page") {
-        Navigator.of(context).pushNamed(ProfileScreen.routeName);
+        await Navigator.of(context).pushNamed(ProfileScreen.routeName);
+        phoneNumber = Provider.of<AuthDataProvider>(context, listen: false)
+            .currentUser
+            .phoneNumber;
       }
       return;
     }

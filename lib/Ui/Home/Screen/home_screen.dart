@@ -47,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initDynamicLinks(BuildContext context) async {
     FirebaseDynamicLinks.instance.onLink(
         onSuccess: (PendingDynamicLinkData dynamicLink) async {
-      final Uri deepLink = dynamicLink?.link;
+      Uri deepLink = dynamicLink?.link;
 
       if (deepLink != null) {
         if (deepLink.queryParameters.containsKey('id')) {
@@ -55,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
           print("Product ID that has been received == ");
           print(id);
-
+          deepLink = null;
           Navigator.of(context).push(
             new MaterialPageRoute(
               builder: (BuildContext context) =>
@@ -76,13 +76,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
     final PendingDynamicLinkData data =
         await FirebaseDynamicLinks.instance.getInitialLink();
-    final Uri deepLink = data?.link;
+    Uri deepLink = data?.link;
 
     if (deepLink != null) {
       if (deepLink.queryParameters.containsKey('id')) {
         String id = deepLink.queryParameters['id'];
         print("Product ID that has been received == ");
         print(id);
+        deepLink = null;
         Navigator.of(context).push(
           new MaterialPageRoute(
             builder: (BuildContext context) => new ProductViaDynamicLinkScreen(

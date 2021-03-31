@@ -61,6 +61,12 @@ class ProductsProvider with ChangeNotifier {
       "value": <Map>[],
     },
   ];
+  void resetHomePageProducts() {
+    onSaleProducts.clear();
+    homePageMostViewedProducts.clear();
+    homePageSouqProducts.clear();
+    homePagePopularProducts.clear();
+  }
 
   Future<bool> checkInternetConnection() async {
     try {

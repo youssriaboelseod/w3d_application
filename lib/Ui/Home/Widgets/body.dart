@@ -8,11 +8,19 @@ import 'package:google_fonts_arabic/fonts.dart';
 import '../../../Providers/ProductsProvider/products_provider.dart';
 import '../../1MainHelper/Widgets/featured_product_card.dart';
 
-// ignore: must_be_immutable
-class Body extends StatelessWidget {
+class Body extends StatefulWidget {
+  @override
+  _BodyState createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
   List<int> numbers = [];
+  bool refresh = false;
+
   final random = new Random();
+
   int randomNumber;
+
   bool checkIfExist(int numberInp) {
     int index = numbers.indexOf(numberInp);
     if (index == -1) {
@@ -36,78 +44,100 @@ class Body extends StatelessWidget {
     return randomNumber;
   }
 
+  void resetRefresh() {
+    refresh = false;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          FeaturedProductsFrame(
-            title: "العروض",
-            type: "onSale",
-            function: () async {
-              randomNumber = getRandomNumber(5);
-              numbers.add(randomNumber);
-              print("My random number is = " + randomNumber.toString());
-              await Provider.of<ProductsProvider>(context, listen: false)
-                  .fetchAndSetProducts(
-                pageNumber: randomNumber.toString(),
-                perPage: "8",
-                onSale: "true",
-                type: "onSale",
-              );
-            },
-          ),
-          FeaturedProductsFrame(
-            title: "أحدث الزيارات",
-            type: "mostViewd",
-            function: () async {
-              randomNumber = getRandomNumber(14);
+    return RefreshIndicator(
+      color: Colors.black,
+      onRefresh: () async {
+        Provider.of<ProductsProvider>(context, listen: false)
+            .resetHomePageProducts();
+        setState(() {
+          refresh = true;
+        });
+      },
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            FeaturedProductsFrame(
+              title: "العروض",
+              type: "onSale",
+              refresh: refresh,
+              resetRefresh: resetRefresh,
+              function: () async {
+                randomNumber = getRandomNumber(5);
+                numbers.add(randomNumber);
+                print("My random number is = " + randomNumber.toString());
+                await Provider.of<ProductsProvider>(context, listen: false)
+                    .fetchAndSetProducts(
+                  pageNumber: randomNumber.toString(),
+                  perPage: "8",
+                  onSale: "true",
+                  type: "onSale",
+                );
+              },
+            ),
+            FeaturedProductsFrame(
+              title: "أحدث الزيارات",
+              type: "mostViewd",
+              refresh: refresh,
+              resetRefresh: resetRefresh,
+              function: () async {
+                randomNumber = getRandomNumber(14);
 
-              numbers.add(randomNumber);
-              print("My random number is = " + randomNumber.toString());
-              await Provider.of<ProductsProvider>(context, listen: false)
-                  .fetchAndSetProducts(
-                pageNumber: randomNumber.toString(),
-                perPage: "8",
-                onSale: "false",
-                type: "mostViewd",
-              );
-            },
-          ),
-          FeaturedProductsFrame(
-            title: "الأكثر رواجا",
-            type: "popular",
-            function: () async {
-              randomNumber = getRandomNumber(14);
+                numbers.add(randomNumber);
+                print("My random number is = " + randomNumber.toString());
+                await Provider.of<ProductsProvider>(context, listen: false)
+                    .fetchAndSetProducts(
+                  pageNumber: randomNumber.toString(),
+                  perPage: "8",
+                  onSale: "false",
+                  type: "mostViewd",
+                );
+              },
+            ),
+            FeaturedProductsFrame(
+              title: "الأكثر رواجا",
+              type: "popular",
+              refresh: refresh,
+              resetRefresh: resetRefresh,
+              function: () async {
+                randomNumber = getRandomNumber(14);
 
-              numbers.add(randomNumber);
-              print("My random number is = " + randomNumber.toString());
-              await Provider.of<ProductsProvider>(context, listen: false)
-                  .fetchAndSetProducts(
-                pageNumber: randomNumber.toString(),
-                perPage: "8",
-                onSale: "false",
-                type: "popular",
-              );
-            },
-          ),
-          FeaturedProductsFrame(
-            title: "السوق",
-            type: "souq",
-            function: () async {
-              randomNumber = getRandomNumber(14);
-              numbers.add(randomNumber);
-              print("My random number is = " + randomNumber.toString());
-              await Provider.of<ProductsProvider>(context, listen: false)
-                  .fetchAndSetProducts(
-                pageNumber: randomNumber.toString(),
-                perPage: "8",
-                onSale: "false",
-                type: "souq",
-              );
-            },
-          ),
-        ],
+                numbers.add(randomNumber);
+                print("My random number is = " + randomNumber.toString());
+                await Provider.of<ProductsProvider>(context, listen: false)
+                    .fetchAndSetProducts(
+                  pageNumber: randomNumber.toString(),
+                  perPage: "8",
+                  onSale: "false",
+                  type: "popular",
+                );
+              },
+            ),
+            FeaturedProductsFrame(
+              title: "السوق",
+              type: "souq",
+              refresh: refresh,
+              resetRefresh: resetRefresh,
+              function: () async {
+                randomNumber = getRandomNumber(14);
+                numbers.add(randomNumber);
+                print("My random number is = " + randomNumber.toString());
+                await Provider.of<ProductsProvider>(context, listen: false)
+                    .fetchAndSetProducts(
+                  pageNumber: randomNumber.toString(),
+                  perPage: "8",
+                  onSale: "false",
+                  type: "souq",
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -117,10 +147,18 @@ class Body extends StatelessWidget {
 class FeaturedProductsFrame extends StatelessWidget {
   final String title;
   final String type;
+  final bool refresh;
+  final Function resetRefresh;
   final Future<dynamic> Function() function;
 
-  FeaturedProductsFrame({Key key, this.title, this.function, this.type})
-      : super(key: key);
+  FeaturedProductsFrame({
+    Key key,
+    this.title,
+    this.function,
+    this.type,
+    this.refresh,
+    this.resetRefresh,
+  }) : super(key: key);
 
   List<Map<String, dynamic>> products = [];
 
@@ -128,11 +166,12 @@ class FeaturedProductsFrame extends StatelessWidget {
     // Check if there is already products
     getProducts(context);
 
-    if (products.length != 0) {
+    if (products.length != 0 && !refresh) {
       return;
     } else {
       await function();
       getProducts(context);
+      //resetRefresh();
     }
   }
 
