@@ -47,15 +47,18 @@ class _ProductViaDynamicLinkScreenState
           future: _future(context),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Column(
-                children: [
-                  Image.asset(
-                    "assets/images/loading_product.jpeg",
-                    fit: BoxFit.fill,
-                    height: size.height,
-                    width: size.width,
-                  ),
-                ],
+              return Container(
+                color: Colors.white,
+                child: Column(
+                  children: [
+                    Image.asset(
+                      "assets/images/loading_product.png",
+                      fit: BoxFit.contain,
+                      height: size.height,
+                      width: size.width,
+                    ),
+                  ],
+                ),
               );
             } else {
               if (productMap == null) {

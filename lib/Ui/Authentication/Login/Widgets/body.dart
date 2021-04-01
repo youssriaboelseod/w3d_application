@@ -160,15 +160,13 @@ class _BodyState extends State<Body> {
               focusNode: emailNode,
               nextFocusNode: passwordNode,
             ),
-            _enableResetPassword
-                ? Container()
-                : RoundedPasswordField(
-                    hintText: "كلمة المرور",
-                    onChanged: (value) {
-                      password = value;
-                    },
-                    focusNode: passwordNode,
-                  ),
+            RoundedPasswordField(
+              hintText: "كلمة المرور",
+              onChanged: (value) {
+                password = value;
+              },
+              focusNode: passwordNode,
+            ),
             _isProcessing
                 ? Padding(
                     padding: const EdgeInsets.all(12.0),
@@ -179,9 +177,7 @@ class _BodyState extends State<Body> {
                     ),
                   )
                 : RoundedButton(
-                    text: _enableResetPassword
-                        ? "تغير كلمة المرور"
-                        : "تسجيل الدخول",
+                    text: "تسجيل الدخول",
                     press: () async {
                       if (_enableResetPassword) {
                         await resetPassword();
@@ -190,26 +186,6 @@ class _BodyState extends State<Body> {
                       }
                     },
                   ),
-            _isProcessing
-                ? Container()
-                : _isForgotPassword
-                    ? FlatButton(
-                        child: Text(
-                          _enableResetPassword
-                              ? "العودة الى تسجيل الدخول"
-                              : "هل نسيت كلمة المرور ؟",
-                          textScaleFactor: 1,
-                          style: TextStyle(
-                            color: Colors.indigo,
-                          ),
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            _enableResetPassword = !_enableResetPassword;
-                          });
-                        },
-                      )
-                    : Container(),
             SizedBox(
               height: 10,
             ),

@@ -177,14 +177,18 @@ class _BodyState extends State<Body> {
                     title: "الوصف",
                     productModel: widget.productMap["value"],
                   ),
-                  Divider(
-                    color: Colors.grey,
-                  ),
-                  QuantityCard(
-                    onChangeValue: (value) {
-                      selectedQuantityValue = value;
-                    },
-                  ),
+                  widget.productMap["value"].type == "external"
+                      ? Container()
+                      : Divider(
+                          color: Colors.grey,
+                        ),
+                  widget.productMap["value"].type == "external"
+                      ? Container()
+                      : QuantityCard(
+                          onChangeValue: (value) {
+                            selectedQuantityValue = value;
+                          },
+                        ),
                   Divider(
                     color: Colors.grey,
                   ),

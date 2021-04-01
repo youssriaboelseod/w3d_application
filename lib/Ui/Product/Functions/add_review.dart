@@ -69,20 +69,32 @@ Future<dynamic> showAddReviewForm({BuildContext context, int productId}) {
                   ),
                 ),
               ),
-              RatingBar.builder(
-                initialRating: 5,
-                minRating: 1,
-                direction: Axis.horizontal,
-                allowHalfRating: false,
-                itemCount: 5,
-                itemPadding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 5),
-                itemBuilder: (context, _) => Icon(
-                  Icons.star,
-                  color: Colors.amber,
+              Container(
+                padding: EdgeInsets.all(5),
+                margin: EdgeInsets.symmetric(vertical: 6),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  border: Border.all(
+                    width: 2,
+                    color: Colors.grey,
+                  ),
                 ),
-                onRatingUpdate: (ratingInp) {
-                  rating = ratingInp;
-                },
+                child: RatingBar.builder(
+                  initialRating: 5,
+                  minRating: 1,
+                  direction: Axis.horizontal,
+                  allowHalfRating: false,
+                  itemCount: 5,
+                  itemPadding:
+                      EdgeInsets.symmetric(horizontal: 4.0, vertical: 5),
+                  itemBuilder: (context, _) => Icon(
+                    Icons.star,
+                    color: Colors.amber,
+                  ),
+                  onRatingUpdate: (ratingInp) {
+                    rating = ratingInp;
+                  },
+                ),
               ),
               RaisedButton(
                 shape: RoundedRectangleBorder(

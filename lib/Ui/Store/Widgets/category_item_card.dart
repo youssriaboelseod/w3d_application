@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts_arabic/fonts.dart';
 import 'package:woocommerce/woocommerce.dart';
 //
 import '../../1MainHelper/Helpers/helper.dart';
@@ -17,12 +18,18 @@ class _CategoriesCardState extends State<CategoriesCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 44,
+      height: 50,
       margin: EdgeInsets.symmetric(
         horizontal: 8,
         vertical: 4,
       ),
+      padding: EdgeInsets.symmetric(
+        horizontal: 8,
+        vertical: 4,
+      ),
       decoration: BoxDecoration(
+        color: Colors.grey[400],
+        borderRadius: BorderRadius.circular(25),
         border: Border.all(
           width: 2,
           color: Colors.grey[400],
@@ -117,8 +124,7 @@ class CategoryItemCard extends StatelessWidget {
         mainCategories[index]["id"],
       ),
       child: Container(
-        height: 44,
-        color: isSelected ? Colors.grey[600] : Colors.grey[400],
+        height: 50,
         child: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 6,
@@ -127,10 +133,14 @@ class CategoryItemCard extends StatelessWidget {
             child: Text(
               mainCategories[index]["name"],
               textAlign: TextAlign.center,
+              textDirection: TextDirection.rtl,
+              textScaleFactor: 1,
               style: TextStyle(
+                fontFamily: ArabicFonts.Cairo,
+                package: 'google_fonts_arabic',
                 color: isSelected ? Colors.white : Colors.black,
                 fontWeight: FontWeight.bold,
-                fontSize: 20,
+                fontSize: 18,
               ),
             ),
           ),

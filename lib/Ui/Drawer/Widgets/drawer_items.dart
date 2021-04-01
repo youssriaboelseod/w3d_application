@@ -324,7 +324,7 @@ class DrawerItems extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                "https://050saa.com/",
+                "www.050saa.com",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.white,

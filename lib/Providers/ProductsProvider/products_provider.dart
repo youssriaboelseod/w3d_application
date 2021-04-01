@@ -124,14 +124,19 @@ class ProductsProvider with ChangeNotifier {
 
         outputProducts.forEach(
           (element) {
-            WooProduct wooProduct = WooProduct.fromJson(element);
-            vendorProducts.add(
-              {
-                "vendorId": element["store"]["vendor_id"],
-                "vendorName": element["store"]["vendor_shop_name"],
-                "value": wooProduct,
-              },
-            );
+            try {
+              WooProduct wooProduct = WooProduct.fromJson(element);
+              vendorProducts.add(
+                {
+                  "vendorId": element["store"]["vendor_id"],
+                  "vendorName": element["store"]["vendor_shop_name"],
+                  "value": wooProduct,
+                },
+              );
+            } catch (e) {
+              print("--------------An error ---------");
+              print(e);
+            }
           },
         );
       } else {
@@ -181,6 +186,7 @@ class ProductsProvider with ChangeNotifier {
         if (outputProduct == null) {
           return null;
         }
+
         WooProduct wooProduct = WooProduct.fromJson(outputProduct);
 
         Map<String, dynamic> productMap = {
@@ -228,14 +234,19 @@ class ProductsProvider with ChangeNotifier {
 
         outputProducts.forEach(
           (element) {
-            WooProduct wooProduct = WooProduct.fromJson(element);
-            fetchedProductsList.add(
-              {
-                "vendorId": element["store"]["vendor_id"],
-                "vendorName": element["store"]["vendor_shop_name"],
-                "value": wooProduct,
-              },
-            );
+            try {
+              WooProduct wooProduct = WooProduct.fromJson(element);
+              fetchedProductsList.add(
+                {
+                  "vendorId": element["store"]["vendor_id"],
+                  "vendorName": element["store"]["vendor_shop_name"],
+                  "value": wooProduct,
+                },
+              );
+            } catch (e) {
+              print("--------------An error ---------");
+              print(e);
+            }
           },
         );
       }
@@ -318,16 +329,23 @@ class ProductsProvider with ChangeNotifier {
             //print(k);
             //print(v);
             //});
-            WooProduct wooProduct = WooProduct.fromJson(element);
+            //
+            try {
+              WooProduct wooProduct = WooProduct.fromJson(element);
 
-            tempListForProductsByCategory.add(
-              {
-                "vendorId": element["store"]["vendor_id"],
-                "vendorName": element["store"]["vendor_shop_name"],
-                "value": wooProduct,
-              },
-            );
-            productsByCategory[index]["value"] = tempListForProductsByCategory;
+              tempListForProductsByCategory.add(
+                {
+                  "vendorId": element["store"]["vendor_id"],
+                  "vendorName": element["store"]["vendor_shop_name"],
+                  "value": wooProduct,
+                },
+              );
+              productsByCategory[index]["value"] =
+                  tempListForProductsByCategory;
+            } catch (e) {
+              print("--------------An error ---------");
+              print(e);
+            }
           },
         );
 
@@ -387,42 +405,47 @@ class ProductsProvider with ChangeNotifier {
 
         outputProducts.forEach(
           (element) {
-            WooProduct wooProduct = WooProduct.fromJson(element);
-            // vendor_shop_name
-            // vendor_display_name
+            try {
+              WooProduct wooProduct = WooProduct.fromJson(element);
+              // vendor_shop_name
+              // vendor_display_name
 
-            if (type == "onSale") {
-              onSaleProducts.add(
-                {
-                  "vendorId": element["store"]["vendor_id"],
-                  "vendorName": element["store"]["vendor_shop_name"],
-                  "value": wooProduct,
-                },
-              );
-            } else if (type == "mostViewd") {
-              homePageMostViewedProducts.add(
-                {
-                  "vendorId": element["store"]["vendor_id"],
-                  "vendorName": element["store"]["vendor_shop_name"],
-                  "value": wooProduct,
-                },
-              );
-            } else if (type == "popular") {
-              homePagePopularProducts.add(
-                {
-                  "vendorId": element["store"]["vendor_id"],
-                  "vendorName": element["store"]["vendor_shop_name"],
-                  "value": wooProduct,
-                },
-              );
-            } else if (type == "souq") {
-              homePageSouqProducts.add(
-                {
-                  "vendorId": element["store"]["vendor_id"],
-                  "vendorName": element["store"]["vendor_shop_name"],
-                  "value": wooProduct,
-                },
-              );
+              if (type == "onSale") {
+                onSaleProducts.add(
+                  {
+                    "vendorId": element["store"]["vendor_id"],
+                    "vendorName": element["store"]["vendor_shop_name"],
+                    "value": wooProduct,
+                  },
+                );
+              } else if (type == "mostViewd") {
+                homePageMostViewedProducts.add(
+                  {
+                    "vendorId": element["store"]["vendor_id"],
+                    "vendorName": element["store"]["vendor_shop_name"],
+                    "value": wooProduct,
+                  },
+                );
+              } else if (type == "popular") {
+                homePagePopularProducts.add(
+                  {
+                    "vendorId": element["store"]["vendor_id"],
+                    "vendorName": element["store"]["vendor_shop_name"],
+                    "value": wooProduct,
+                  },
+                );
+              } else if (type == "souq") {
+                homePageSouqProducts.add(
+                  {
+                    "vendorId": element["store"]["vendor_id"],
+                    "vendorName": element["store"]["vendor_shop_name"],
+                    "value": wooProduct,
+                  },
+                );
+              }
+            } catch (e) {
+              print("--------------An error ---------");
+              print(e);
             }
           },
         );

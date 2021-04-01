@@ -49,7 +49,7 @@ class Bottom extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(4.0),
               child: Card(
-                color: Color(0xffb3c4c4),
+                color: Colors.grey,
                 child: Padding(
                   padding: const EdgeInsets.only(
                     top: 8.0,
@@ -70,7 +70,7 @@ class Bottom extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(4.0),
               child: Card(
-                color: Color(0xffb3c4c4),
+                color: Colors.grey,
                 child: Padding(
                   padding: const EdgeInsets.only(
                     top: 8.0,
@@ -91,7 +91,7 @@ class Bottom extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(4.0),
               child: Card(
-                color: Color(0xffb3c4c4),
+                color: Colors.grey,
                 child: Padding(
                     padding: const EdgeInsets.only(
                       top: 8.0,
@@ -162,7 +162,7 @@ class Top extends StatelessWidget {
               Container(
                 height: 80,
                 decoration: BoxDecoration(
-                  color: Colors.blueGrey,
+                  color: Colors.grey[800],
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(width),
                     bottomRight: Radius.circular(width),
