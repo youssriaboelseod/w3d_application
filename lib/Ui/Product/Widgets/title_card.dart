@@ -162,7 +162,7 @@ class TitleCard extends StatelessWidget {
                         fontFamily: ArabicFonts.Cairo,
                         package: 'google_fonts_arabic',
                         fontSize: 18,
-                        color: Colors.blueGrey,
+                        color: Colors.blue[700],
                       ),
                     ),
                   ),

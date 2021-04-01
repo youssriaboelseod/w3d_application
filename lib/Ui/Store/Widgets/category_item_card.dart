@@ -28,7 +28,6 @@ class _CategoriesCardState extends State<CategoriesCard> {
         vertical: 4,
       ),
       decoration: BoxDecoration(
-        color: Colors.grey[400],
         borderRadius: BorderRadius.circular(25),
         border: Border.all(
           width: 2,
@@ -138,7 +137,7 @@ class CategoryItemCard extends StatelessWidget {
               style: TextStyle(
                 fontFamily: ArabicFonts.Cairo,
                 package: 'google_fonts_arabic',
-                color: isSelected ? Colors.white : Colors.black,
+                color: isSelected ? Colors.black : Colors.grey,
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
               ),

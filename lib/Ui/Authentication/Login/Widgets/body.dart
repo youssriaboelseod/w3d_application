@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts_arabic/fonts.dart';
 //
 import '../../../1MainHelper/Snacks/snackbar.dart';
 import '../../../Home/Screen/home_screen.dart';
@@ -33,7 +34,6 @@ class _BodyState extends State<Body> {
   String password;
   bool _isProcessing = false;
   bool _isForgotPassword = false;
-  bool _enableResetPassword = false;
 
   Future<void> login(BuildContext context) async {
     UserAuthModel userAuthModel = UserAuthModel(
@@ -90,52 +90,6 @@ class _BodyState extends State<Body> {
     }
   }
 
-  Future<void> resetPassword() async {
-    // Remove spaces
-    email = email.trim();
-
-    String output;
-    FocusScope.of(context).unfocus();
-    // validate user's inputs
-    output = validateEmail(
-      email: email,
-    );
-    if (output != null) {
-      showAlertNoAction(
-        context: context,
-        message: output,
-      );
-
-      return;
-    } else {
-      setState(() {
-        _isProcessing = true;
-      });
-      output = await resetPasswordFn(
-        email: email,
-      );
-      if (output != null) {
-        showAlertNoAction(
-          context: context,
-          message: output,
-        );
-        return;
-      } else {
-        setState(() {
-          _isForgotPassword = false;
-          _enableResetPassword = false;
-          _isProcessing = false;
-        });
-
-        showTopSnackBar(
-          context: context,
-          body: "",
-          title: "",
-        );
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -179,13 +133,31 @@ class _BodyState extends State<Body> {
                 : RoundedButton(
                     text: "تسجيل الدخول",
                     press: () async {
-                      if (_enableResetPassword) {
-                        await resetPassword();
-                      } else {
-                        await login(context);
-                      }
+                      await login(context);
                     },
                   ),
+            _isForgotPassword
+                ? Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        contactToResetPassword(email);
+                      },
+                      child: Text(
+                        "هل نسيت كلمة المرور ؟",
+                        textAlign: TextAlign.center,
+                        textDirection: TextDirection.rtl,
+                        textScaleFactor: 1,
+                        style: TextStyle(
+                          fontFamily: ArabicFonts.Cairo,
+                          package: 'google_fonts_arabic',
+                          color: Colors.grey,
+                          fontSize: 17,
+                        ),
+                      ),
+                    ),
+                  )
+                : Container(),
             SizedBox(
               height: 10,
             ),
