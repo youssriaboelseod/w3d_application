@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts_arabic/fonts.dart';
 import 'package:provider/provider.dart';
 //
 import '../../1MainHelper/Functions/main_functions.dart';
@@ -67,26 +68,45 @@ class _BodyState extends State<Body> {
     return Consumer<ProductsProvider>(
       builder: (context, value, child) {
         products = value.vendorProducts;
-        return GridView(
-          padding: const EdgeInsets.all(2),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: ratio,
-            crossAxisSpacing: 2,
-            mainAxisSpacing: 2,
-          ),
-          controller: _scrollController,
+        return ListView(
           shrinkWrap: true,
-          primary: false,
-          children: List.generate(
-            products.length,
-            (index) => ProductItemGrid(
-              productMap: products[index],
-              key: ValueKey(
-                products[index]["value"].id,
+          controller: _scrollController,
+          children: [
+            GridView(
+              padding: const EdgeInsets.all(2),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: ratio,
+                crossAxisSpacing: 2,
+                mainAxisSpacing: 2,
+              ),
+              shrinkWrap: true,
+              primary: false,
+              children: List.generate(
+                products.length,
+                (index) => ProductItemGrid(
+                  productMap: products[index],
+                  key: ValueKey(
+                    products[index]["value"].id,
+                  ),
+                ),
               ),
             ),
-          ),
+            products.length < 6
+                ? Container()
+                : Text(
+                    "جاري تحميل المزيد",
+                    textAlign: TextAlign.center,
+                    textDirection: TextDirection.rtl,
+                    textScaleFactor: 1,
+                    style: TextStyle(
+                      fontFamily: ArabicFonts.Cairo,
+                      package: 'google_fonts_arabic',
+                      fontSize: 15,
+                      color: Colors.grey,
+                    ),
+                  ),
+          ],
         );
       },
     );

@@ -1,5 +1,6 @@
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:google_fonts_arabic/fonts.dart';
@@ -73,7 +74,7 @@ class ContactButton extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "للتواصل",
+                "تواصل مع البائع",
                 textScaleFactor: 1,
                 textDirection: TextDirection.rtl,
                 style: TextStyle(
@@ -87,9 +88,9 @@ class ContactButton extends StatelessWidget {
               SizedBox(
                 width: 25,
               ),
-              Icon(
-                Icons.call,
-                color: Colors.white,
+              SvgPicture.asset(
+                "assets/icons/whatsapp_black.svg",
+                height: 35,
               ),
             ],
           ),

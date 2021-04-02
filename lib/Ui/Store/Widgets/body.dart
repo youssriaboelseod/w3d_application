@@ -155,18 +155,20 @@ class _BodyState extends State<Body> {
                         ),
                       ),
                     ),
-                    Text(
-                      "جاري تحميل المزيد",
-                      textAlign: TextAlign.center,
-                      textDirection: TextDirection.rtl,
-                      textScaleFactor: 1,
-                      style: TextStyle(
-                        fontFamily: ArabicFonts.Cairo,
-                        package: 'google_fonts_arabic',
-                        fontSize: 15,
-                        color: Colors.grey,
-                      ),
-                    ),
+                    products.length < 6
+                        ? Container()
+                        : Text(
+                            "جاري تحميل المزيد",
+                            textAlign: TextAlign.center,
+                            textDirection: TextDirection.rtl,
+                            textScaleFactor: 1,
+                            style: TextStyle(
+                              fontFamily: ArabicFonts.Cairo,
+                              package: 'google_fonts_arabic',
+                              fontSize: 15,
+                              color: Colors.grey,
+                            ),
+                          ),
                   ],
                 ),
               ),
