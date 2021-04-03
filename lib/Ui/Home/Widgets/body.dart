@@ -167,8 +167,8 @@ class FeaturedProductsFrame extends StatelessWidget {
 
   void getProducts(BuildContext context) {
     if (type == "onSale") {
-      products =
-          Provider.of<ProductsProvider>(context, listen: false).onSaleProducts;
+      products = Provider.of<ProductsProvider>(context, listen: false)
+          .homePageOnSaleProducts;
     } else if (type == "mostViewd") {
       products = Provider.of<ProductsProvider>(context, listen: false)
           .homePageMostViewedProducts;

@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'Ui/Sales/Screen/sales_products_screen.dart';
 import 'Providers/DynamicLinksProvider/dynamic_links_provider.dart';
 import 'Providers/ReviewsProvider/reviews_provider.dart';
 import 'Ui/Design/Screen/design_screen.dart';
@@ -124,6 +125,7 @@ class MyApp extends StatelessWidget {
           SellerProductsScreen.routeName: (ctx) => SellerProductsScreen(),
           ProductViaDynamicLinkScreen.routeName: (ctx) =>
               ProductViaDynamicLinkScreen(),
+          SalesProductsScreen.routeName: (ctx) => SalesProductsScreen(),
         },
         home: StartAppScreen(),
       ),

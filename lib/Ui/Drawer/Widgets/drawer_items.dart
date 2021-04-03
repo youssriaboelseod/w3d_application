@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:google_fonts_arabic/fonts.dart';
 import 'package:provider/provider.dart';
+import '../../Sales/Screen/sales_products_screen.dart';
 //
 import '../../Favourites/Screen/favourites_screen.dart';
 import '../../1MainHelper/Snacks/snackbar.dart';
@@ -41,11 +43,14 @@ class DrawerItems extends StatelessWidget {
                         ),
                         label: Text(
                           "حسابي",
+                          textScaleFactor: 1,
+                          textDirection: TextDirection.rtl,
                           style: TextStyle(
+                            fontFamily: ArabicFonts.Cairo,
+                            package: 'google_fonts_arabic',
                             fontSize: _fontSize,
                             color: Colors.white,
                           ),
-                          textScaleFactor: 1,
                         ),
                         onPressed: () {
                           if (!checkIfSignedIn) {
@@ -71,17 +76,51 @@ class DrawerItems extends StatelessWidget {
                   Row(
                     children: [
                       FlatButton.icon(
+                        icon: Image.asset(
+                          "assets/icons/sale.png",
+                          fit: BoxFit.contain,
+                        ),
+                        label: Text(
+                          "العروض",
+                          textScaleFactor: 1,
+                          textDirection: TextDirection.rtl,
+                          style: TextStyle(
+                            fontFamily: ArabicFonts.Cairo,
+                            package: 'google_fonts_arabic',
+                            fontSize: _fontSize,
+                            color: Color(0xFFe74c3c),
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.of(context)
+                              .pushNamed(SalesProductsScreen.routeName);
+                        },
+                      ),
+                    ],
+                  ),
+                  const Divider(
+                    thickness: 3,
+                    color: Colors.black38,
+                    indent: 15,
+                    endIndent: 60,
+                  ),
+                  Row(
+                    children: [
+                      FlatButton.icon(
                         icon: const Icon(
                           Icons.payment,
                           color: Colors.white,
                         ),
                         label: Text(
                           "طلباتي",
+                          textScaleFactor: 1,
+                          textDirection: TextDirection.rtl,
                           style: TextStyle(
+                            fontFamily: ArabicFonts.Cairo,
+                            package: 'google_fonts_arabic',
                             fontSize: _fontSize,
                             color: Colors.white,
                           ),
-                          textScaleFactor: 1,
                         ),
                         onPressed: () {
                           if (!checkIfSignedIn) {
@@ -113,11 +152,14 @@ class DrawerItems extends StatelessWidget {
                         ),
                         label: Text(
                           "طرق الدفع",
+                          textScaleFactor: 1,
+                          textDirection: TextDirection.rtl,
                           style: TextStyle(
+                            fontFamily: ArabicFonts.Cairo,
+                            package: 'google_fonts_arabic',
                             fontSize: _fontSize,
                             color: Colors.white,
                           ),
-                          textScaleFactor: 1,
                         ),
                         onPressed: () {
                           Navigator.of(context)
@@ -141,11 +183,14 @@ class DrawerItems extends StatelessWidget {
                         ),
                         label: Text(
                           "المفضلة",
+                          textScaleFactor: 1,
+                          textDirection: TextDirection.rtl,
                           style: TextStyle(
+                            fontFamily: ArabicFonts.Cairo,
+                            package: 'google_fonts_arabic',
                             fontSize: _fontSize,
                             color: Colors.white,
                           ),
-                          textScaleFactor: 1,
                         ),
                         onPressed: () {
                           if (!checkIfSignedIn) {
@@ -177,11 +222,14 @@ class DrawerItems extends StatelessWidget {
                         ),
                         label: Text(
                           "تواصل معانا",
+                          textScaleFactor: 1,
+                          textDirection: TextDirection.rtl,
                           style: TextStyle(
+                            fontFamily: ArabicFonts.Cairo,
+                            package: 'google_fonts_arabic',
                             fontSize: _fontSize,
                             color: Colors.white,
                           ),
-                          textScaleFactor: 1,
                         ),
                         onPressed: () {
                           showContact(context);
@@ -204,11 +252,14 @@ class DrawerItems extends StatelessWidget {
                         ),
                         label: Text(
                           "عن الواعد",
+                          textScaleFactor: 1,
+                          textDirection: TextDirection.rtl,
                           style: TextStyle(
+                            fontFamily: ArabicFonts.Cairo,
+                            package: 'google_fonts_arabic',
                             fontSize: _fontSize,
                             color: Colors.white,
                           ),
-                          textScaleFactor: 1,
                         ),
                         onPressed: () {
                           showAboutW3d(context);
@@ -231,11 +282,14 @@ class DrawerItems extends StatelessWidget {
                         ),
                         label: Text(
                           "مشاركة التطبيق",
+                          textScaleFactor: 1,
+                          textDirection: TextDirection.rtl,
                           style: TextStyle(
+                            fontFamily: ArabicFonts.Cairo,
+                            package: 'google_fonts_arabic',
                             fontSize: _fontSize,
                             color: Colors.white,
                           ),
-                          textScaleFactor: 1,
                         ),
                         onPressed: () {
                           shareAppDialog(context);
@@ -259,11 +313,14 @@ class DrawerItems extends StatelessWidget {
                               ),
                               label: Text(
                                 "تسجيل الدخول",
+                                textScaleFactor: 1,
+                                textDirection: TextDirection.rtl,
                                 style: TextStyle(
+                                  fontFamily: ArabicFonts.Cairo,
+                                  package: 'google_fonts_arabic',
                                   fontSize: _fontSize,
                                   color: Colors.white,
                                 ),
-                                textScaleFactor: 1,
                               ),
                               onPressed: () async {
                                 Navigator.of(context).pushNamed(
@@ -282,11 +339,14 @@ class DrawerItems extends StatelessWidget {
                               ),
                               label: Text(
                                 "تسجيل الخروج",
+                                textScaleFactor: 1,
+                                textDirection: TextDirection.rtl,
                                 style: TextStyle(
+                                  fontFamily: ArabicFonts.Cairo,
+                                  package: 'google_fonts_arabic',
                                   fontSize: _fontSize,
                                   color: Colors.white,
                                 ),
-                                textScaleFactor: 1,
                               ),
                               onPressed: () async {
                                 await Provider.of<AuthDataProvider>(context,

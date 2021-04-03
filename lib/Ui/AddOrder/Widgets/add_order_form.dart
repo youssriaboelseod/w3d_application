@@ -195,6 +195,18 @@ class _AddOrderFormState extends State<AddOrderForm> {
                   thickness: 1,
                 ),
                 InputTextCard(
+                  hintText: "ادخل المنطقة",
+                  type: "المنطقة",
+                  initialText: location,
+                  onChange: (value) {
+                    location = value;
+                  },
+                ),
+                const Divider(
+                  color: Colors.blueGrey,
+                  thickness: 1,
+                ),
+                InputTextCard(
                   hintText: "ادخل اسم المدينة",
                   type: "المدينة",
                   initialText: city,
@@ -219,22 +231,10 @@ class _AddOrderFormState extends State<AddOrderForm> {
                   thickness: 1,
                 ),
                 InputTextCard(
-                  hintText: "ادخل المنطقة",
-                  type: "المنطقة",
-                  initialText: location,
-                  onChange: (value) {
-                    location = value;
-                  },
-                ),
-                const Divider(
-                  color: Colors.blueGrey,
-                  thickness: 1,
-                ),
-                InputTextCard(
                   type: "الهاتف",
                   initialText: phoneNumber,
                   //hintText: phoneNumber,
-                  //readOnly: true,
+                  readOnly: true,
                 ),
                 const Divider(
                   color: Colors.blueGrey,

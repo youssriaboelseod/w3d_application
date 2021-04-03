@@ -17,11 +17,12 @@ class ProductsProvider with ChangeNotifier {
     consumerSecret: "cs_aa9486fe01e314e72b5b2d50ae109c84a682f749",
   );
 
-  List<Map<String, dynamic>> onSaleProducts = [];
+  List<Map<String, dynamic>> homePageOnSaleProducts = [];
   List<Map<String, dynamic>> homePageSouqProducts = [];
   List<Map<String, dynamic>> homePageMostViewedProducts = [];
   List<Map<String, dynamic>> homePagePopularProducts = [];
   List<Map<String, dynamic>> vendorProducts = [];
+  List<Map<String, dynamic>> onSaleProducts = [];
   //
   List<Map<String, dynamic>> exampleForProductsList = [
     {
@@ -62,7 +63,7 @@ class ProductsProvider with ChangeNotifier {
     },
   ];
   void resetHomePageProducts() {
-    onSaleProducts.clear();
+    homePageOnSaleProducts.clear();
     homePageMostViewedProducts.clear();
     homePageSouqProducts.clear();
     homePagePopularProducts.clear();
@@ -118,9 +119,14 @@ class ProductsProvider with ChangeNotifier {
       );
 
       if (response.statusCode == 200) {
-        vendorPageNumber += 1;
         final outputProducts = json.decode(response.body);
-        print("outputProducts.length = " + outputProducts.length.toString());
+        if (outputProducts.length == 0) {
+          return false;
+        }
+
+        vendorPageNumber += 1;
+
+        //print("outputProducts.length = " + outputProducts.length.toString());
 
         outputProducts.forEach(
           (element) {
@@ -134,8 +140,8 @@ class ProductsProvider with ChangeNotifier {
                 },
               );
             } catch (e) {
-              print("--------------An error ---------");
-              print(e);
+              //print("--------------An error ---------");
+              //print(e);
             }
           },
         );
@@ -165,7 +171,6 @@ class ProductsProvider with ChangeNotifier {
     try {
       String basicAuth =
           'Basic ' + base64Encode(utf8.encode('$username:$password'));
-      print(basicAuth);
 
       //https: //050saa.com/wp-json/wcfmmp/v1/products/?
       String url = "https://050saa.com/wp-json/wcfmmp/v1/products/$productId";
@@ -179,7 +184,7 @@ class ProductsProvider with ChangeNotifier {
         url,
         headers: headerCreate,
       );
-      print("Status Code: " + response.statusCode.toString());
+      //print("Status Code: " + response.statusCode.toString());
 
       if (response.statusCode == 200) {
         final outputProduct = json.decode(response.body);
@@ -226,11 +231,11 @@ class ProductsProvider with ChangeNotifier {
         url,
         headers: headerCreate,
       );
-      print("Status Code: " + response.statusCode.toString());
+      //print("Status Code: " + response.statusCode.toString());
 
       if (response.statusCode == 200) {
         final outputProducts = json.decode(response.body);
-        print("outputProducts.length = " + outputProducts.length.toString());
+        //print("outputProducts.length = " + outputProducts.length.toString());
 
         outputProducts.forEach(
           (element) {
@@ -244,8 +249,8 @@ class ProductsProvider with ChangeNotifier {
                 },
               );
             } catch (e) {
-              print("--------------An error ---------");
-              print(e);
+              //print("--------------An error ---------");
+              //print(e);
             }
           },
         );
@@ -256,6 +261,73 @@ class ProductsProvider with ChangeNotifier {
     } catch (e) {
       return [];
     }
+  }
+
+  int onSalePageNumber = 1;
+  Future<bool> fetchOnSaleProducts() async {
+    // Check internet connection
+    bool check = await checkInternetConnection();
+    if (!check) {
+      return false;
+    }
+    try {
+      String basicAuth =
+          'Basic ' + base64Encode(utf8.encode('$username:$password'));
+
+      final Map<String, String> headerCreate = {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'authorization': basicAuth,
+      };
+      String url =
+          "https://050saa.com/wp-json/wc/v3/products?page=$onSalePageNumber&on_sale=true";
+
+      response = await http.get(
+        url,
+        headers: headerCreate,
+      );
+
+      //print("Status Code: " + response.statusCode.toString());
+
+      if (response.statusCode == 200) {
+        final outputProducts = json.decode(response.body);
+        if (outputProducts.length == 0) {
+          return false;
+        }
+        onSalePageNumber += 1;
+        print("outputProducts.length = " + outputProducts.length.toString());
+
+        outputProducts.forEach(
+          (element) {
+            try {
+              WooProduct wooProduct = WooProduct.fromJson(element);
+              onSaleProducts.add(
+                {
+                  "vendorId": element["store"]["vendor_id"],
+                  "vendorName": element["store"]["vendor_shop_name"],
+                  "value": wooProduct,
+                },
+              );
+            } catch (e) {
+              //print("--------------An error ---------");
+              //print(e);
+            }
+          },
+        );
+      } else {
+        return false;
+      }
+
+      return true;
+    } on SocketException catch (_) {
+      return false;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  void resetOnSaleProducts() {
+    onSalePageNumber = 1;
+    onSaleProducts.clear();
   }
 
   void removeProductById({int productId}) {
@@ -313,18 +385,17 @@ class ProductsProvider with ChangeNotifier {
         url,
         headers: headerCreate,
       );
-      print("Status Code: " + response.statusCode.toString());
+      //print("Status Code: " + response.statusCode.toString());
 
       if (response.statusCode == 200) {
         final outputProducts = json.decode(response.body);
-        print("outputProducts.length = " + outputProducts.length.toString());
+        //print("outputProducts.length = " + outputProducts.length.toString());
 
         int index = productsByCategory
             .indexWhere((element) => element["id"] == categoryId);
 
         outputProducts.forEach(
           (element) {
-            print("---- let us see ---- ");
             // element.forEach((k, v) {
             //print(k);
             //print(v);
@@ -343,8 +414,8 @@ class ProductsProvider with ChangeNotifier {
               productsByCategory[index]["value"] =
                   tempListForProductsByCategory;
             } catch (e) {
-              print("--------------An error ---------");
-              print(e);
+              //print("--------------An error ---------");
+              //print(e);
             }
           },
         );
@@ -397,11 +468,11 @@ class ProductsProvider with ChangeNotifier {
         url,
         headers: headerCreate,
       );
-      print("Status Code: " + response.statusCode.toString());
+      //print("Status Code: " + response.statusCode.toString());
 
       if (response.statusCode == 200) {
         final outputProducts = json.decode(response.body);
-        print("outputProducts.length = " + outputProducts.length.toString());
+        //print("outputProducts.length = " + outputProducts.length.toString());
 
         outputProducts.forEach(
           (element) {
@@ -411,7 +482,7 @@ class ProductsProvider with ChangeNotifier {
               // vendor_display_name
 
               if (type == "onSale") {
-                onSaleProducts.add(
+                homePageOnSaleProducts.add(
                   {
                     "vendorId": element["store"]["vendor_id"],
                     "vendorName": element["store"]["vendor_shop_name"],
@@ -444,8 +515,8 @@ class ProductsProvider with ChangeNotifier {
                 );
               }
             } catch (e) {
-              print("--------------An error ---------");
-              print(e);
+              //print("--------------An error ---------");
+              //print(e);
             }
           },
         );

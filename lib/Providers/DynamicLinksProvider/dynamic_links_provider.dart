@@ -32,7 +32,7 @@ class DynamicLinksProvider with ChangeNotifier {
         campaignToken: 'example-promo',
       ),
       socialMetaTagParameters: SocialMetaTagParameters(
-        title: 'تطبيق الواعد',
+        title: 'الواعد',
         description: itemName,
         imageUrl: itemUrl,
       ),
