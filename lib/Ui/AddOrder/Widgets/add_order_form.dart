@@ -272,7 +272,7 @@ class _AddOrderFormState extends State<AddOrderForm> {
                   thickness: 1,
                 ),
                 const Text(
-                  "تنويه : يتم الشحن ما بين 3 ايام الى 7 ايام",
+                  "تنويه : يتم الشحن ما بين 3 ايام الى 7 ايام بعد أتمام عملية الدفع",
                   overflow: TextOverflow.fade,
                   textDirection: TextDirection.rtl,
                   style: TextStyle(

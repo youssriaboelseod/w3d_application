@@ -38,11 +38,14 @@ class _BodyState extends State<Body> {
     _scrollController.dispose();
   }
 
+  bool _isShowLoadMore = true;
+  int tempLength;
   bool _isLoading = false;
   Future<void> fetchMoreProducts() async {
     if (_isLoading) {
       return;
     }
+    tempLength = products.length;
     _isLoading = true;
 
     await Provider.of<ProductsProvider>(context, listen: false)
@@ -51,6 +54,9 @@ class _BodyState extends State<Body> {
     setState(() {
       products =
           Provider.of<ProductsProvider>(context, listen: false).onSaleProducts;
+      if (tempLength == products.length) {
+        _isShowLoadMore = false;
+      }
       _isLoading = false;
     });
     return;
@@ -88,20 +94,22 @@ class _BodyState extends State<Body> {
                 ),
               ),
             ),
-            products.length < 6
+            products.length < 8
                 ? Container()
-                : Text(
-                    "جاري تحميل المزيد",
-                    textAlign: TextAlign.center,
-                    textDirection: TextDirection.rtl,
-                    textScaleFactor: 1,
-                    style: TextStyle(
-                      fontFamily: ArabicFonts.Cairo,
-                      package: 'google_fonts_arabic',
-                      fontSize: 15,
-                      color: Colors.grey,
-                    ),
-                  ),
+                : !_isShowLoadMore
+                    ? Container()
+                    : Text(
+                        "جاري تحميل المزيد",
+                        textAlign: TextAlign.center,
+                        textDirection: TextDirection.rtl,
+                        textScaleFactor: 1,
+                        style: TextStyle(
+                          fontFamily: ArabicFonts.Cairo,
+                          package: 'google_fonts_arabic',
+                          fontSize: 15,
+                          color: Colors.grey,
+                        ),
+                      ),
           ],
         );
       },

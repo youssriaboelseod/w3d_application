@@ -88,7 +88,7 @@ class DrawerItems extends StatelessWidget {
                             fontFamily: ArabicFonts.Cairo,
                             package: 'google_fonts_arabic',
                             fontSize: _fontSize,
-                            color: Color(0xFFe74c3c),
+                            color: Color(0xFFf1c40f),
                           ),
                         ),
                         onPressed: () {

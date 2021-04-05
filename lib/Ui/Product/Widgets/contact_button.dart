@@ -88,9 +88,9 @@ class ContactButton extends StatelessWidget {
               SizedBox(
                 width: 25,
               ),
-              SvgPicture.asset(
-                "assets/icons/whatsapp_black.svg",
-                height: 35,
+              Image.asset(
+                "assets/icons/whatsapp.png",
+                height: 30,
               ),
             ],
           ),
