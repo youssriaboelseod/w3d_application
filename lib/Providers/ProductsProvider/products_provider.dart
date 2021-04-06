@@ -36,32 +36,7 @@ class ProductsProvider with ChangeNotifier {
   int vendorPageNumber = 1;
   int pageNumber = 1;
 
-  List<Map<String, dynamic>> productsByCategory = [
-    {
-      "id": "0",
-      "value": <Map>[],
-    },
-    {
-      "id": "154",
-      "value": <Map>[],
-    },
-    {
-      "id": "198",
-      "value": <Map>[],
-    },
-    {
-      "id": "152",
-      "value": <Map>[],
-    },
-    {
-      "id": "151",
-      "value": <Map>[],
-    },
-    {
-      "id": "149",
-      "value": <Map>[],
-    },
-  ];
+  List<Map<String, dynamic>> productsByCategory = [];
   void resetHomePageProducts() {
     homePageOnSaleProducts.clear();
     homePageMostViewedProducts.clear();
@@ -344,7 +319,6 @@ class ProductsProvider with ChangeNotifier {
   }
 
   //
-  List<Map<String, dynamic>> tempListForProductsByCategory = [];
   Future<void> fetchProductsByCategory(
       {String categoryId, bool resetCategoryPageNumber}) async {
     // Check internet connection
@@ -356,17 +330,12 @@ class ProductsProvider with ChangeNotifier {
 
     try {
       String url = "";
+
       // reset category page number only when switching between categories
       if (resetCategoryPageNumber) {
         categoryPageNumber = 1;
-        int index = productsByCategory
-            .indexWhere((element) => element["id"] == categoryId);
-        tempListForProductsByCategory.clear();
-        productsByCategory[index]["value"].clear();
+        productsByCategory.clear();
       }
-
-      String basicAuth =
-          'Basic ' + base64Encode(utf8.encode('$username:$password'));
 
       if (categoryId == "0") {
         url =
@@ -376,6 +345,8 @@ class ProductsProvider with ChangeNotifier {
             "https://050saa.com/wp-json/wc/v3/products?page=$categoryPageNumber&category=$categoryId";
       }
 
+      String basicAuth =
+          'Basic ' + base64Encode(utf8.encode('$username:$password'));
       final Map<String, String> headerCreate = {
         'Content-Type': 'application/json; charset=UTF-8',
         'authorization': basicAuth,
@@ -391,9 +362,6 @@ class ProductsProvider with ChangeNotifier {
         final outputProducts = json.decode(response.body);
         //print("outputProducts.length = " + outputProducts.length.toString());
 
-        int index = productsByCategory
-            .indexWhere((element) => element["id"] == categoryId);
-
         outputProducts.forEach(
           (element) {
             // element.forEach((k, v) {
@@ -404,15 +372,13 @@ class ProductsProvider with ChangeNotifier {
             try {
               WooProduct wooProduct = WooProduct.fromJson(element);
 
-              tempListForProductsByCategory.add(
+              productsByCategory.add(
                 {
                   "vendorId": element["store"]["vendor_id"],
                   "vendorName": element["store"]["vendor_shop_name"],
                   "value": wooProduct,
                 },
               );
-              productsByCategory[index]["value"] =
-                  tempListForProductsByCategory;
             } catch (e) {
               //print("--------------An error ---------");
               //print(e);
@@ -432,11 +398,8 @@ class ProductsProvider with ChangeNotifier {
     }
   }
 
-  List<Map<String, dynamic>> getProductsByCategory({String categoryId}) {
-    int index =
-        productsByCategory.indexWhere((element) => element["id"] == categoryId);
-
-    return [...productsByCategory[index]["value"]];
+  List<Map<String, dynamic>> getProductsByCategory() {
+    return [...productsByCategory];
   }
 
   Future<String> fetchAndSetProducts({

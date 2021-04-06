@@ -32,6 +32,7 @@ class _BodyState extends State<Body> {
       selectedIndex = index;
       _isLoading = true;
       resetCategoryPageNumber = true;
+      _isShowLoadMore = true;
     });
     await getProductsAdvanced();
     resetCategoryPageNumber = false;
@@ -43,9 +44,7 @@ class _BodyState extends State<Body> {
   void initState() {
     super.initState();
     products = Provider.of<ProductsProvider>(context, listen: false)
-        .getProductsByCategory(
-      categoryId: mainCategories[selectedIndex]["id"],
-    );
+        .getProductsByCategory();
 
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
@@ -61,8 +60,10 @@ class _BodyState extends State<Body> {
     _scrollController.dispose();
   }
 
+  // These to show is loading more
   bool _isShowLoadMore = true;
   int tempLength;
+
   bool _isFetchingMore = false;
 
   getProductsAdvanced() async {
@@ -80,9 +81,7 @@ class _BodyState extends State<Body> {
 
     setState(() {
       products = Provider.of<ProductsProvider>(context, listen: false)
-          .getProductsByCategory(
-        categoryId: mainCategories[selectedIndex]["id"],
-      );
+          .getProductsByCategory();
       if (tempLength == products.length) {
         _isShowLoadMore = false;
       }
