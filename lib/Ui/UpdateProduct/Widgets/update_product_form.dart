@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:woocommerce/models/products.dart';
 import 'package:html/parser.dart' show parse;
 //
@@ -203,10 +204,8 @@ class _UpdateButtonState extends State<UpdateButton> {
     return _isLoading
         ? Padding(
             padding: const EdgeInsets.all(8.0),
-            child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(
-                Colors.black,
-              ),
+            child: SpinKitChasingDots(
+              color: Colors.black,
             ),
           )
         : Button(

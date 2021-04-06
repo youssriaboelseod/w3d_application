@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts_arabic/fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:woocommerce/models/cart_item.dart';
@@ -416,10 +417,8 @@ class _RemoveIconState extends State<RemoveIcon> {
         ),
       ),
       child: _isLoading
-          ? CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(
-                Colors.black,
-              ),
+          ? SpinKitChasingDots(
+              color: Colors.black,
             )
           : IconButton(
               icon: Icon(

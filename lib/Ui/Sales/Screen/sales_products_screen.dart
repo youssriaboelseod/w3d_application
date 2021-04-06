@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts_arabic/fonts.dart';
 import 'package:provider/provider.dart';
 //
@@ -40,10 +41,8 @@ class SalesProductsScreen extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
-              child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(
-                  Colors.black,
-                ),
+              child: SpinKitChasingDots(
+                color: Colors.black,
               ),
             );
           } else {

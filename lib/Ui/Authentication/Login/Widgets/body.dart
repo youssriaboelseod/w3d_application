@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts_arabic/fonts.dart';
 //
 import '../../../1MainHelper/Snacks/snackbar.dart';
@@ -124,10 +125,8 @@ class _BodyState extends State<Body> {
             _isProcessing
                 ? Padding(
                     padding: const EdgeInsets.all(12.0),
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        Colors.black,
-                      ),
+                    child: SpinKitChasingDots(
+                      color: Colors.black,
                     ),
                   )
                 : RoundedButton(

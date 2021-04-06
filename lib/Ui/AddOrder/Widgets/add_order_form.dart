@@ -1,3 +1,4 @@
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts_arabic/fonts.dart';
 import 'package:flutter/material.dart';
@@ -290,10 +291,8 @@ class _AddOrderFormState extends State<AddOrderForm> {
                 _isLoading
                     ? Padding(
                         padding: const EdgeInsets.all(12.0),
-                        child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            Colors.black,
-                          ),
+                        child: SpinKitChasingDots(
+                          color: Colors.black,
                         ),
                       )
                     : Button(

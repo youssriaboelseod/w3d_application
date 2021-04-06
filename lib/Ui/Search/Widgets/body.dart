@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 //
 import '../../../Providers/ProductsProvider/products_provider.dart';
@@ -58,10 +59,8 @@ class _BodyState extends State<Body> {
                 padding: const EdgeInsets.only(
                   top: 30,
                 ),
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    Colors.black,
-                  ),
+                child: SpinKitChasingDots(
+                  color: Colors.black,
                 ),
               )
             : Expanded(

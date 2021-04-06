@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 //
@@ -194,10 +195,8 @@ class _AddProductFormState extends State<AddProductForm> {
                 _isLoading
                     ? Padding(
                         padding: const EdgeInsets.all(12.0),
-                        child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            Colors.black,
-                          ),
+                        child: SpinKitChasingDots(
+                          color: Colors.black,
                         ),
                       )
                     : Button(

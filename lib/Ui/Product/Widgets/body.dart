@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'options_button.dart';
 import 'reviews.dart';
 import 'description_card.dart';
@@ -202,10 +203,8 @@ class _BodyState extends State<Body> {
           _isLoading
               ? Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                      Colors.black,
-                    ),
+                  child: SpinKitChasingDots(
+                    color: Colors.black,
                   ),
                 )
               : widget.productMap["value"].type == "external"

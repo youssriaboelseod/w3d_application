@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts_arabic/fonts.dart';
 
 class SubmitButton extends StatefulWidget {
@@ -29,10 +30,8 @@ class _SubmitButtonState extends State<SubmitButton> {
     return _isLoading
         ? Padding(
             padding: const EdgeInsets.all(16.0),
-            child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(
-                Color(0xFF416D6D),
-              ),
+            child: SpinKitChasingDots(
+              color: Color(0xFF416D6D),
             ),
           )
         : Padding(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts_arabic/fonts.dart';
 import 'package:provider/provider.dart';
 //
@@ -82,7 +83,9 @@ class _BodyState extends State<Body> {
     setState(() {
       products = Provider.of<ProductsProvider>(context, listen: false)
           .getProductsByCategory();
+
       if (tempLength == products.length) {
+        print("---------------false--------------");
         _isShowLoadMore = false;
       }
       _isLoading = false;
@@ -129,10 +132,8 @@ class _BodyState extends State<Body> {
                 padding: const EdgeInsets.only(
                   top: 100,
                 ),
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    Colors.black,
-                  ),
+                child: SpinKitChasingDots(
+                  color: Colors.black,
                 ),
               )
             : Expanded(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts_arabic/fonts.dart';
 import 'package:woocommerce/woocommerce.dart';
@@ -43,10 +44,8 @@ class _BodyState extends State<Body> {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
-            child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(
-                Colors.black,
-              ),
+            child: SpinKitChasingDots(
+              color: Colors.black,
             ),
           );
         } else {

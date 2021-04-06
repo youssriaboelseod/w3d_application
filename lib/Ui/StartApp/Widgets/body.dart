@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 //
 import '../../Authentication/Login_Or_Signup/Screen/login_or_signup_screen.dart';
 import '../../Home/Screen/home_screen.dart';
@@ -54,10 +55,8 @@ class Body extends StatelessWidget {
                 if (snap.connectionState == ConnectionState.waiting) {
                   return Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        Colors.black,
-                      ),
+                    child: SpinKitChasingDots(
+                      color: Colors.black,
                     ),
                   );
                 } else {
