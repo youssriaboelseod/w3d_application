@@ -1,10 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:provider/provider.dart';
-
 //
-import '../../../Providers/ProductsProvider/products_provider.dart';
 import '../../AddProduct/Screen/add_product_screen.dart';
 import '../../MyProducts/Screen/my_products_screen.dart';
 import '../Widgets/body.dart';
@@ -33,16 +29,6 @@ class StoreScreen extends StatelessWidget {
     }
   }
 
-  Future<void> fetchProductsForFirstTime(BuildContext context) async {
-    await Provider.of<ProductsProvider>(context, listen: false)
-        .fetchProductsByCategory(
-      categoryId: "0",
-      resetCategoryPageNumber: true,
-    );
-
-    return;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,20 +36,7 @@ class StoreScreen extends StatelessWidget {
       appBar: buildAppBar(context),
       drawer: DrawerApp(),
       backgroundColor: Colors.grey[200],
-      body: FutureBuilder(
-        future: fetchProductsForFirstTime(context),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: SpinKitChasingDots(
-                color: Colors.black,
-              ),
-            );
-          } else {
-            return Body();
-          }
-        },
-      ),
+      body: Body(),
       bottomNavigationBar: buildBottomNavigationBar(context),
     );
   }

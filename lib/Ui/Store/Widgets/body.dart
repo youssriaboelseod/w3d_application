@@ -19,38 +19,30 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   ScrollController _scrollController = new ScrollController();
-  bool _isLoading = false;
-  bool resetCategoryPageNumber = false;
+
+  List<Map<String, dynamic>> products = [];
+
   int selectedIndex = 0;
 
   void onChange(int index) async {
-    if (_isLoading) {
+    if (selectedIndex == index) {
       return;
-    } else if (selectedIndex == index) {
-      return;
+    } else {
+      setState(() {
+        selectedIndex = index;
+        _isInit = false;
+        _isShowLoadMore = true;
+      });
     }
-    setState(() {
-      selectedIndex = index;
-      _isLoading = true;
-      resetCategoryPageNumber = true;
-      _isShowLoadMore = true;
-    });
-    await getProductsAdvanced();
-    resetCategoryPageNumber = false;
   }
-
-  List<Map<String, dynamic>> products = [];
 
   @override
   void initState() {
     super.initState();
-    products = Provider.of<ProductsProvider>(context, listen: false)
-        .getProductsByCategory();
-
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        getProductsAdvanced();
+        fetchMoreProducts();
       }
     });
   }
@@ -67,8 +59,8 @@ class _BodyState extends State<Body> {
 
   bool _isFetchingMore = false;
 
-  getProductsAdvanced() async {
-    if (_isFetchingMore && !_isLoading) {
+  fetchMoreProducts() async {
+    if (_isFetchingMore) {
       return;
     }
     tempLength = products.length;
@@ -77,20 +69,51 @@ class _BodyState extends State<Body> {
     await Provider.of<ProductsProvider>(context, listen: false)
         .fetchProductsByCategory(
       categoryId: mainCategories[selectedIndex]["id"],
-      resetCategoryPageNumber: resetCategoryPageNumber,
+      resetCategoryPageNumber: false,
     );
 
-    setState(() {
+    products = Provider.of<ProductsProvider>(context, listen: false)
+        .getProductsByCategory();
+
+    // This is to avoid duplicates elements in a list
+    // List<Map<String, dynamic>> tempList = products;
+    //products.map((e) => e["value"].id).toList();
+    //products = tempList.toSet().toList();
+
+    if (tempLength == products.length) {
+      _isShowLoadMore = false;
+    }
+
+    _isFetchingMore = false;
+    //  To preview the reset of fetched products
+    setState(() {});
+    return;
+  }
+
+  bool _isInit = false;
+  Future<void> fetchProductsForFirstTime() async {
+    if (_isInit) {
+      return;
+    } else {
+      print("again");
+      print(_isInit);
+      // Clear
+      products.clear();
+      // Then fetch
+      await Provider.of<ProductsProvider>(context, listen: false)
+          .fetchProductsByCategory(
+        categoryId: mainCategories[selectedIndex]["id"],
+        resetCategoryPageNumber: true,
+      );
+      // Then get
       products = Provider.of<ProductsProvider>(context, listen: false)
           .getProductsByCategory();
+      print("----- Store products length --------");
+      print(products.length);
 
-      if (tempLength == products.length) {
-        print("---------------false--------------");
-        _isShowLoadMore = false;
-      }
-      _isLoading = false;
-      _isFetchingMore = false;
-    });
+      // set _isinit to confirm fetching data for first time only
+      _isInit = true;
+    }
     return;
   }
 
@@ -98,8 +121,6 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     double ratio = getRatio(size.width);
-    print("----- Store products length --------");
-    print(products.length);
 
     return Column(
       children: [
@@ -127,59 +148,70 @@ class _BodyState extends State<Body> {
           select: onChange,
           selectedIndex: selectedIndex,
         ),
-        _isLoading
-            ? Padding(
+        FutureBuilder(
+          future: fetchProductsForFirstTime(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting &&
+                !_isInit) {
+              return Padding(
                 padding: const EdgeInsets.only(
-                  top: 100,
+                  top: 120,
                 ),
                 child: SpinKitChasingDots(
                   color: Colors.black,
                 ),
-              )
-            : Expanded(
-                child: ListView(
-                  shrinkWrap: true,
-                  controller: _scrollController,
-                  children: [
-                    GridView(
-                      padding: const EdgeInsets.all(2),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: ratio,
-                        crossAxisSpacing: 2,
-                        mainAxisSpacing: 2,
-                      ),
-                      shrinkWrap: true,
-                      primary: false,
-                      children: List.generate(
-                        products.length,
-                        (index) => ProductItemGrid(
-                          productMap: products[index],
-                          key: ValueKey(
-                            products[index]["value"].id,
-                          ),
-                        ),
-                      ),
-                    ),
-                    products.length < 8
-                        ? Container()
-                        : !_isShowLoadMore
-                            ? Container()
-                            : Text(
-                                "جاري تحميل المزيد",
-                                textAlign: TextAlign.center,
-                                textDirection: TextDirection.rtl,
-                                textScaleFactor: 1,
-                                style: TextStyle(
-                                  fontFamily: ArabicFonts.Cairo,
-                                  package: 'google_fonts_arabic',
-                                  fontSize: 15,
-                                  color: Colors.grey,
+              );
+            } else {
+              return !_isInit
+                  ? Container()
+                  : Expanded(
+                      child: ListView(
+                        shrinkWrap: true,
+                        controller: _scrollController,
+                        children: [
+                          GridView(
+                            padding: const EdgeInsets.all(2),
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              childAspectRatio: ratio,
+                              crossAxisSpacing: 2,
+                              mainAxisSpacing: 2,
+                            ),
+                            shrinkWrap: true,
+                            primary: false,
+                            children: List.generate(
+                              products.length,
+                              (index) => ProductItemGrid(
+                                productMap: products[index],
+                                key: ValueKey(
+                                  products[index]["value"].id,
                                 ),
                               ),
-                  ],
-                ),
-              ),
+                            ),
+                          ),
+                          products.length < 8
+                              ? Container()
+                              : !_isShowLoadMore
+                                  ? Container()
+                                  : Text(
+                                      "جاري تحميل المزيد",
+                                      textAlign: TextAlign.center,
+                                      textDirection: TextDirection.rtl,
+                                      textScaleFactor: 1,
+                                      style: TextStyle(
+                                        fontFamily: ArabicFonts.Cairo,
+                                        package: 'google_fonts_arabic',
+                                        fontSize: 15,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                        ],
+                      ),
+                    );
+            }
+          },
+        ),
       ],
     );
   }
