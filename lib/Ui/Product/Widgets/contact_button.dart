@@ -1,6 +1,7 @@
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:community_material_icon/community_material_icon.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:google_fonts_arabic/fonts.dart';
@@ -88,9 +89,9 @@ class ContactButton extends StatelessWidget {
               SizedBox(
                 width: 25,
               ),
-              Image.asset(
-                "assets/icons/whatsapp.png",
-                height: 30,
+              Icon(
+                CommunityMaterialIcons.whatsapp,
+                color: Colors.white,
               ),
             ],
           ),

@@ -1,9 +1,12 @@
+import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts_arabic/fonts.dart';
 import 'package:provider/provider.dart';
-import '../../Sales/Screen/sales_products_screen.dart';
+
 //
+import '../../Sales/Screen/sales_products_screen.dart';
+
 import '../../Favourites/Screen/favourites_screen.dart';
 import '../../1MainHelper/Snacks/snackbar.dart';
 import '../../Authentication/Login_Or_Signup/Screen/login_or_signup_screen.dart';
@@ -76,9 +79,9 @@ class DrawerItems extends StatelessWidget {
                   Row(
                     children: [
                       FlatButton.icon(
-                        icon: Image.asset(
-                          "assets/icons/sale.png",
-                          fit: BoxFit.contain,
+                        icon: Icon(
+                          CommunityMaterialIcons.sale,
+                          color: Color(0xFFf1c40f),
                         ),
                         label: Text(
                           "العروض",
