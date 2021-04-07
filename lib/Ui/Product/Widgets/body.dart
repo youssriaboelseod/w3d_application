@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'options_button.dart';
 import 'reviews.dart';
 import 'description_card.dart';
@@ -200,35 +199,15 @@ class _BodyState extends State<Body> {
               ),
             ),
           ),
-          _isLoading
-              ? Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SpinKitChasingDots(
-                    color: Colors.black,
-                  ),
+          widget.productMap["value"].type == "external"
+              ? ContactButton(
+                  product: widget.productMap["value"],
                 )
-              : widget.productMap["value"].type == "external"
-                  ? ContactButton(
-                      product: widget.productMap["value"],
-                    )
-                  : AddToCartButton(
-                      function: addToCartFunction,
-                    ),
+              : AddToCartButton(
+                  function: addToCartFunction,
+                ),
         ],
       ),
     );
   }
 }
-//AddToCartButton(
-//                   function: addToCartFunction,
-//               ),
-//RaisedButton(
-//                    onPressed: () async {
-// //                   await Provider.of<ReviewsProvider>(context,
-//                       listen: false)
-//                 .getProductReviews(
-//             productId: widget.productMap["value"].id,
-//        );
-//    },
-//  child: Text("555"),
-//)

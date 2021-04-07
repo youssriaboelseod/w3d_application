@@ -218,7 +218,10 @@ class FeaturedProductsFrame extends StatelessWidget {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Container(
                   height: 220,
-                  child: PlayStoreShimmer(),
+                  child: Directionality(
+                    textDirection: TextDirection.rtl,
+                    child: PlayStoreShimmer(),
+                  ),
                 );
               } else {
                 return Container(

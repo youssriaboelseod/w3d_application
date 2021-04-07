@@ -160,7 +160,7 @@ class ExpressCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 70,
+      width: 65,
       padding: EdgeInsets.all(
         5,
       ),
@@ -169,7 +169,7 @@ class ExpressCard extends StatelessWidget {
         "Express",
         style: TextStyle(
           color: Colors.white,
-          fontSize: 16,
+          fontSize: 14,
           fontWeight: FontWeight.bold,
         ),
       ),

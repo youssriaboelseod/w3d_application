@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_fonts_arabic/fonts.dart';
 //
 import '../../Authentication/Login_Or_Signup/Screen/login_or_signup_screen.dart';
 import '../../Home/Screen/home_screen.dart';
@@ -37,10 +38,13 @@ class Body extends StatelessWidget {
           children: <Widget>[
             Text(
               "مرحبا بك في الواعد",
+              textDirection: TextDirection.rtl,
               textScaleFactor: 1,
               style: TextStyle(
-                fontWeight: FontWeight.bold,
+                fontFamily: ArabicFonts.Cairo,
+                package: 'google_fonts_arabic',
                 fontSize: 20,
+                color: Colors.black,
               ),
             ),
             SizedBox(height: size.height * 0.05),

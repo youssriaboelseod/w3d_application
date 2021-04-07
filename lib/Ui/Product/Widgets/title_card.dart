@@ -3,14 +3,10 @@ import 'package:google_fonts_arabic/fonts.dart';
 import 'package:provider/provider.dart';
 
 //
-import '../../1MainHelper/Alerts/alerts.dart';
 import '../../1MainHelper/Snacks/snackbar.dart';
-
-//
 import '../Functions/add_review.dart';
 import 'rating_stars.dart';
 import '../../Seller/Screen/seller_products_screen.dart';
-
 import '../../../Providers/AuthDataProvider/auth_data_provider.dart';
 
 // ignore: must_be_immutable

@@ -49,7 +49,7 @@ class ReviewsProvider with ChangeNotifier {
       print(productId);
 
       String url =
-          "https://050saa.com//wp-json/wc/v3/products/reviews?product=$productId";
+          "https://050saa.com//wp-json/wc/v3/products/reviews?product=$productId&per_page=100";
 
       final Map<String, String> headerCreate = {
         'Content-Type': 'application/json; charset=UTF-8',
@@ -64,6 +64,7 @@ class ReviewsProvider with ChangeNotifier {
 
       if (response.statusCode == 200) {
         final outputProduct = json.decode(response.body);
+        reviews.clear();
 
         outputProduct.forEach((element) {
           WooProductReview review = WooProductReview.fromJson(element);
