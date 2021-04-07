@@ -76,8 +76,7 @@ class _BodyState extends State<Body> {
         .getProductsByCategory();
 
     // This is to avoid duplicates elements in a list
-    // List<Map<String, dynamic>> tempList = products;
-    //products.map((e) => e["value"].id).toList();
+    removeRepeatedProducts();
     //products = tempList.toSet().toList();
 
     if (tempLength == products.length) {
@@ -108,6 +107,10 @@ class _BodyState extends State<Body> {
       // Then get
       products = Provider.of<ProductsProvider>(context, listen: false)
           .getProductsByCategory();
+
+      // This is to avoid duplicates elements in a list
+      removeRepeatedProducts();
+
       print("----- Store products length --------");
       print(products.length);
 
@@ -115,6 +118,21 @@ class _BodyState extends State<Body> {
       _isInit = true;
     }
     return;
+  }
+
+  // This is to avoid duplicates elements in a list
+  void removeRepeatedProducts() {
+    List<Map<String, dynamic>> tempList = [];
+
+    products.forEach((e) {
+      int temporaryIndex = tempList
+          .indexWhere((element) => element["value"].id == e["value"].id);
+      print(temporaryIndex);
+      if (temporaryIndex == -1) {
+        tempList.add(e);
+      }
+    });
+    products = tempList;
   }
 
   @override
