@@ -160,13 +160,15 @@ class ExpressCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 65,
+      width: 60,
       padding: EdgeInsets.all(
         5,
       ),
       color: Colors.grey,
       child: Text(
         "Express",
+        textAlign: TextAlign.center,
+        textDirection: TextDirection.ltr,
         style: TextStyle(
           color: Colors.white,
           fontSize: 12,

@@ -1,20 +1,74 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_open_whatsapp/flutter_open_whatsapp.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'dart:io' show Platform;
 
-void whatsAppOpen() async {
-  const url = "whatsapp://send?phone=218911299270";
-  if (await canLaunch(url)) {
-    await launch(url, forceSafariVC: false);
-  } else {
-    throw 'Could not launch $url';
+void openWhatAppMain({String phoneNumber, String message}) async {
+  if (Platform.isAndroid) {
+    openWhatsAppUsingPlugin(
+      phoneNumber: phoneNumber,
+      message: message,
+    );
+  } else if (Platform.isIOS) {
+    openWhatsAppUsingUrl(
+      phoneNumber: phoneNumber,
+      message: message,
+    );
   }
 }
 
-void whatsAppOpenNew({String phoneNumber, String message}) async {
-  FlutterOpenWhatsapp.sendSingleMessage(
-    phoneNumber,
-    message,
-  );
+void openWhatsAppUsingPlugin({String phoneNumber, String message}) async {
+  try {
+    await FlutterOpenWhatsapp.sendSingleMessage(
+      phoneNumber,
+      message,
+    );
+  } catch (_) {
+    // Nothing to do
+  }
+}
+
+void openWhatsAppUsingUrl({String phoneNumber, String message}) async {
+  String url0 = "whatsapp://send?phone=" + phoneNumber + "&text=" + message;
+  //
+  String url1 = "https://wa.me/" + phoneNumber + "?text=" + message;
+  //
+
+  String url2 = "https://api.whatsapp.com/send?phone=" +
+      phoneNumber +
+      "=" +
+      Uri.parse(message).toString();
+  //
+  String url3 = "https://wsend.co/" + phoneNumber + "&text=" + message;
+
+  //"whatsapp://send?phone=213793187939&text=$message";
+  // "https://wa.me/201146448864?text=Hello"),
+  // https://api.whatsapp.com/send?phone=$phone=${Uri.parse(message)}";
+  try {
+    await launch(url0, forceSafariVC: false);
+  } catch (_) {
+    try {
+      await launch(url1, forceSafariVC: false);
+    } catch (_) {
+      try {
+        await launch(url2, forceSafariVC: false);
+      } catch (_) {
+        try {
+          await launch(url3, forceSafariVC: false);
+        } catch (_) {
+          // That's it ,
+        }
+      }
+    }
+  }
+}
+
+void openUrl({@required String url}) async {
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
+  }
 }
 
 double getRatio(double width) {

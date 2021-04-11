@@ -7,14 +7,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:share/share.dart';
 import '../../1MainHelper/Functions/main_functions.dart';
 
-void whatsAppOpen() async {
-  whatsAppOpenNew(
-    phoneNumber: "+966501722732",
-    message: "تواصل معانا",
-  );
-  return null;
-}
-
 shareAppAndroid() async {
   await Share.share(
       "https://play.google.com/store/apps/details?id=com.moadawy.W3d");
@@ -205,7 +197,10 @@ void showContact(BuildContext context) {
                         "assets/icons/whatsapp1.svg",
                       ),
                       onPressed: () {
-                        whatsAppOpen();
+                        openWhatAppMain(
+                          phoneNumber: "966501722732",
+                          message: "تواصل معانا",
+                        );
                       },
                     ),
                   ),

@@ -7,6 +7,7 @@ import 'package:google_fonts_arabic/fonts.dart';
 //
 import '../../../Providers/ProductsProvider/products_provider.dart';
 import '../../1MainHelper/Widgets/featured_product_card.dart';
+import '../../Sales/Screen/sales_products_screen.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -62,6 +63,7 @@ class _BodyState extends State<Body> {
               title: "العروض",
               type: "onSale",
               refresh: refresh,
+              isShowMore: true,
               function: () async {
                 randomNumber = getRandomNumber(5);
                 numbers.add(randomNumber);
@@ -79,6 +81,7 @@ class _BodyState extends State<Body> {
               title: "أحدث الزيارات",
               type: "mostViewd",
               refresh: refresh,
+              isShowMore: false,
               function: () async {
                 randomNumber = getRandomNumber(14);
 
@@ -97,6 +100,7 @@ class _BodyState extends State<Body> {
               title: "الأكثر رواجا",
               type: "popular",
               refresh: refresh,
+              isShowMore: false,
               function: () async {
                 randomNumber = getRandomNumber(14);
 
@@ -114,6 +118,7 @@ class _BodyState extends State<Body> {
             FeaturedProductsFrame(
               title: "السوق",
               type: "souq",
+              isShowMore: false,
               refresh: refresh,
               function: () async {
                 randomNumber = getRandomNumber(14);
@@ -140,6 +145,7 @@ class FeaturedProductsFrame extends StatelessWidget {
   final String title;
   final String type;
   final bool refresh;
+  final bool isShowMore;
 
   final Future<dynamic> Function() function;
 
@@ -149,6 +155,7 @@ class FeaturedProductsFrame extends StatelessWidget {
     this.function,
     this.type,
     this.refresh,
+    this.isShowMore,
   }) : super(key: key);
 
   List<Map<String, dynamic>> products = [];
@@ -189,28 +196,56 @@ class FeaturedProductsFrame extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                  top: 12,
-                  right: 14,
-                ),
-                child: Text(
-                  title,
-                  textScaleFactor: 1,
-                  textDirection: TextDirection.rtl,
-                  style: TextStyle(
-                    fontFamily: ArabicFonts.Cairo,
-                    package: 'google_fonts_arabic',
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 21,
+          Directionality(
+            textDirection: TextDirection.rtl,
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 12,
+                    right: 14,
+                  ),
+                  child: Text(
+                    title,
+                    textScaleFactor: 1,
+                    textDirection: TextDirection.rtl,
+                    style: TextStyle(
+                      fontFamily: ArabicFonts.Cairo,
+                      package: 'google_fonts_arabic',
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 21,
+                    ),
                   ),
                 ),
-              ),
-            ],
+                !isShowMore ? Container() : Spacer(),
+                !isShowMore
+                    ? Container()
+                    : GestureDetector(
+                        onTap: () {
+                          Navigator.of(context)
+                              .pushNamed(SalesProductsScreen.routeName);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            top: 12,
+                            left: 12,
+                          ),
+                          child: Text(
+                            "مشاهدة المزيد",
+                            textScaleFactor: 1,
+                            textDirection: TextDirection.rtl,
+                            style: TextStyle(
+                              fontFamily: ArabicFonts.Cairo,
+                              package: 'google_fonts_arabic',
+                              color: Colors.grey[600],
+                              fontSize: 17,
+                            ),
+                          ),
+                        ),
+                      ),
+              ],
+            ),
           ),
           FutureBuilder(
             future: future(context),

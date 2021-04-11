@@ -40,12 +40,19 @@ class ContactButton extends StatelessWidget {
       myUrl = _parseHtmlString(product.description);
     }
     phoneNumber = myUrl.replaceAll("whatsapp://send?phone=", "");
+    phoneNumber = phoneNumber.replaceAll("+", "");
+    phoneNumber.trim();
+    print("-------------------");
+    print(phoneNumber);
+    print(product.externalUrl);
+    //966553390543
+    //966567966552
+    //https://wsend.co/
 
-    whatsAppOpenNew(
+    openWhatAppMain(
       phoneNumber: phoneNumber,
       message: productDynamicLink,
     );
-    return null;
   }
 
   @override

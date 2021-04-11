@@ -22,6 +22,8 @@ Future<String> addProductFn({
   if (phoneNumber.isEmpty) {
     return "من فضلك قم باضافة رقم هاتفك اولا , لكي يستطيع المشتري ان يتواصل معك";
   }
+
+  phoneNumber = phoneNumber.replaceAll("+", "");
   //
   Map productMap = {
     "name": name,
@@ -35,7 +37,7 @@ Future<String> addProductFn({
     "external_url": "https://wsend.co/" + phoneNumber, // phoneNumber,
 
     "button_text": "للتواصل",
-    "description": "whatsapp://send?phone=" + phoneNumber,
+    "description": "https://wsend.co/" + phoneNumber,
   };
   int counter = 0;
   List<String> imagesUrl = [];
