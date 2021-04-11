@@ -113,13 +113,13 @@ class _BodyState extends State<Body> {
                     productMap: widget.productMap,
                   ),
                   Positioned(
-                    top: 15,
+                    top: 20,
                     left: 0,
                     child: IconButton(
                       icon: Icon(
                         Icons.arrow_back,
-                        size: 32,
-                        color: Colors.grey,
+                        size: 37,
+                        color: Colors.grey[700],
                       ),
                       onPressed: () {
                         Navigator.of(context).pop();

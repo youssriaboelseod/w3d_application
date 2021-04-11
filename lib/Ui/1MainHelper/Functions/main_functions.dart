@@ -1,3 +1,4 @@
+import 'package:flutter_open_whatsapp/flutter_open_whatsapp.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 void whatsAppOpen() async {
@@ -7,6 +8,13 @@ void whatsAppOpen() async {
   } else {
     throw 'Could not launch $url';
   }
+}
+
+void whatsAppOpenNew({String phoneNumber, String message}) async {
+  FlutterOpenWhatsapp.sendSingleMessage(
+    phoneNumber,
+    message,
+  );
 }
 
 double getRatio(double width) {

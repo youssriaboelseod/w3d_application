@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 final List<Map> mainCategories = [
   {
     "id": "0",

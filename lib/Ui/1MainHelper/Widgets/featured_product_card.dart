@@ -169,7 +169,7 @@ class ExpressCard extends StatelessWidget {
         "Express",
         style: TextStyle(
           color: Colors.white,
-          fontSize: 14,
+          fontSize: 12,
           fontWeight: FontWeight.bold,
         ),
       ),
@@ -263,7 +263,6 @@ class DetailsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Container(
       width: 180,
       //height: 80,

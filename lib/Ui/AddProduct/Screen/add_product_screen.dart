@@ -36,10 +36,15 @@ class AddProductScreen extends StatelessWidget {
       appBar: buildAppBar(context),
       backgroundColor: Colors.grey[200],
       drawer: DrawerApp(),
-      body: Column(
-        children: [
-          AddProductForm(),
-        ],
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).requestFocus(new FocusNode());
+        },
+        child: Column(
+          children: [
+            AddProductForm(),
+          ],
+        ),
       ),
       bottomNavigationBar: buildBottomNavigationBar(context),
     );

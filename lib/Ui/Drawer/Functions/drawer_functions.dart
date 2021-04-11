@@ -5,14 +5,14 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:share/share.dart';
+import '../../1MainHelper/Functions/main_functions.dart';
 
 void whatsAppOpen() async {
-  const url = "whatsapp://send?phone=966501722732";
-  if (await canLaunch(url)) {
-    await launch(url, forceSafariVC: false);
-  } else {
-    throw 'Could not launch $url';
-  }
+  whatsAppOpenNew(
+    phoneNumber: "+966501722732",
+    message: "تواصل معانا",
+  );
+  return null;
 }
 
 shareAppAndroid() async {
@@ -22,7 +22,7 @@ shareAppAndroid() async {
 
 shareAppIos() async {
   await Share.share(
-      "https://play.google.com/store/apps/details?id=com.moadawy.W3d");
+      "https://apps.apple.com/us/app/%D8%A7%D9%84%D9%88%D8%A7%D8%B9%D8%AF/id1561982511");
 }
 
 updateAppUrl() async {

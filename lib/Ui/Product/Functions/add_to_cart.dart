@@ -1,9 +1,7 @@
 import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 //
-import '../../../Providers/AuthDataProvider/auth_data_provider.dart';
 import '../../../Models/Cart/cart_model.dart';
 
 Future<void> startFireBase() async {
@@ -29,9 +27,6 @@ Future<bool> addProductToCart(
     if (!check) {
       return false;
     }
-
-    String uid =
-        Provider.of<AuthDataProvider>(context, listen: false).currentUser.id;
 
     return true;
   } catch (error) {

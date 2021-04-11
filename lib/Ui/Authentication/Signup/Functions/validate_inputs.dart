@@ -6,7 +6,7 @@ String validateInputs({
   UserAuthModel userAuthModel,
   String passwordConfirmation,
 }) {
-  var special_characters = new RegExp(r'[^\w\s]+');
+  //var special_characters = new RegExp(r'[^\w\s]+');
 
   if (userAuthModel.userName.isEmpty) {
     return "من فضلك ادخل اسم المستخدم";

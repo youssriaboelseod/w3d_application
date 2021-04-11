@@ -86,7 +86,7 @@ class _MultiSelectImagesCardState extends State<MultiSelectImagesCard> {
           selectCircleStrokeColor: "#000000",
         ),
       );
-    } on Exception catch (e) {
+    } on Exception catch (_) {
       //
     }
 

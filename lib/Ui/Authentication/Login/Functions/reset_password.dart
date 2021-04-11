@@ -1,13 +1,11 @@
-import 'package:url_launcher/url_launcher.dart';
+import '../../../1MainHelper/Functions/main_functions.dart';
 
 //
 
 void contactToResetPassword(String email) async {
-  final String url =
-      "whatsapp://send?phone=966501722732&text=نسيت كلمة المرور$email";
-  if (await canLaunch(url)) {
-    await launch(url, forceSafariVC: false);
-  } else {
-    throw 'Could not launch $url';
-  }
+  whatsAppOpenNew(
+    phoneNumber: "+966501722732",
+    message: "نسيت كلمة المرور",
+  );
+  return null;
 }

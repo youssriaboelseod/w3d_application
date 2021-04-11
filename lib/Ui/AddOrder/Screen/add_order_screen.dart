@@ -15,10 +15,15 @@ class AddOrderScreen extends StatelessWidget {
       key: _scaffoldKey,
       appBar: buildAppBar(context),
       backgroundColor: Colors.grey[200],
-      body: Column(
-        children: [
-          AddOrderForm(),
-        ],
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).requestFocus(new FocusNode());
+        },
+        child: Column(
+          children: [
+            AddOrderForm(),
+          ],
+        ),
       ),
     );
   }
